@@ -5,7 +5,10 @@
 }
 
 body {
-  background-color: #0a0a1a;
+  background-color: #090b12;
+  background-image:
+    radial-gradient(ellipse at 15% 50%, rgba(100, 222, 180, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.04) 0%, transparent 55%);
   color: #ffffff;
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
