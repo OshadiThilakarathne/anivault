@@ -13,3 +13,13 @@ body {
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
 }
+
+:root {
+  --color-bg: #090b12;
+  --color-surface: #0f1218;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-text: #e8eaf0;
+  --color-text-muted: #6b7280;
+  --color-accent-mint: #64deb4;
+  --color-accent-lavender: #a78bfa;
+}
