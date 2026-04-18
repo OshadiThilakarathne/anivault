@@ -1,10 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { AnimeProvider } from "./context/AnimeContext";
+import App from "./App.jsx";
+import "./index.css";
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <AnimeProvider>
+      <App />
+    </AnimeProvider>
+  </StrictMode>
+);
