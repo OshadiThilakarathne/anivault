@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAnime } from "../../hooks/useAnime";
 import { Trash2, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import "./Library.css";
 
 const STATUS_TABS = [
@@ -23,8 +24,6 @@ export default function Library() {
 
     return (
         <div className="library-page">
-
-            {/* ── Header ── */}
             <div className="library-page__header">
                 <div>
                     <h1 className="library-page__title">My Library</h1>
@@ -34,7 +33,6 @@ export default function Library() {
                 </div>
             </div>
 
-            {/* ── Status Tabs ── */}
             <div className="library-page__tabs">
                 {STATUS_TABS.map((tab) => {
                     const count =
@@ -57,7 +55,6 @@ export default function Library() {
                 })}
             </div>
 
-            {/* ── Empty State ── */}
             {filtered.length === 0 && (
                 <div className="library-page__empty">
                     <p className="library-page__empty-icon">鬼</p>
@@ -69,19 +66,18 @@ export default function Library() {
                 </div>
             )}
 
-            {/* ── Grid ── */}
             <div className="library-page__grid">
                 {filtered.map((anime) => (
                     <LibraryCard key={anime.malId} anime={anime} onRemove={removeAnime} />
                 ))}
             </div>
-
         </div>
     );
 }
 
-// ── Library Card ─────────────────────────────────────────────────────────────
 function LibraryCard({ anime, onRemove }) {
+    const navigate = useNavigate();
+
     const STATUS_LABELS = {
         watching: { label: "Watching", color: "#64deb4" },
         completed: { label: "Completed", color: "#a78bfa" },
@@ -94,46 +90,55 @@ function LibraryCard({ anime, onRemove }) {
 
     return (
         <div className="library-card">
-            <img
-                src={anime.coverImage}
-                alt={anime.title}
-                className="library-card__cover"
-            />
+            {/* Clickable area — cover + info */}
+            <div
+                className="library-card__clickable"
+                onClick={() => navigate(`/anime/${anime.malId}`)}
+            >
+                <img
+                    src={anime.coverImage}
+                    alt={anime.title}
+                    className="library-card__cover"
+                />
+                <div className="library-card__info">
+                    <h3 className="library-card__title">{anime.title}</h3>
 
-            <div className="library-card__info">
-                <h3 className="library-card__title">{anime.title}</h3>
+                    <span
+                        className="library-card__status"
+                        style={{ color: statusInfo.color, borderColor: statusInfo.color + "40" }}
+                    >
+                        {statusInfo.label}
+                    </span>
 
-                <span
-                    className="library-card__status"
-                    style={{ color: statusInfo.color, borderColor: statusInfo.color + "40" }}
-                >
-                    {statusInfo.label}
-                </span>
+                    <div className="library-card__meta">
+                        {anime.userRating && (
+                            <span className="library-card__rating">
+                                <Star size={12} fill="#fbbf24" color="#fbbf24" />
+                                {anime.userRating}/10
+                            </span>
+                        )}
+                        {anime.episodeProgress > 0 && (
+                            <span className="library-card__eps">
+                                {anime.episodeProgress}{anime.episodes ? `/${anime.episodes}` : ""} eps
+                            </span>
+                        )}
+                    </div>
 
-                <div className="library-card__meta">
-                    {anime.userRating && (
-                        <span className="library-card__rating">
-                            <Star size={12} fill="#fbbf24" color="#fbbf24" />
-                            {anime.userRating}/10
-                        </span>
-                    )}
-                    {anime.episodeProgress > 0 && (
-                        <span className="library-card__eps">
-                            {anime.episodeProgress}{anime.episodes ? `/${anime.episodes}` : ""} eps
-                        </span>
-                    )}
-                </div>
-
-                <div className="library-card__genres">
-                    {anime.genres?.slice(0, 2).map((g) => (
-                        <span key={g} className="library-card__genre-tag">{g}</span>
-                    ))}
+                    <div className="library-card__genres">
+                        {anime.genres?.slice(0, 2).map((g) => (
+                            <span key={g} className="library-card__genre-tag">{g}</span>
+                        ))}
+                    </div>
                 </div>
             </div>
 
+            {/* Remove button sits outside clickable area so it doesn't trigger navigation */}
             <button
                 className="library-card__remove"
-                onClick={() => onRemove(anime.malId)}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onRemove(anime.malId);
+                }}
                 title="Remove from library"
             >
                 <Trash2 size={14} />
