@@ -1,0 +1,135 @@
+/* ── CSS Variables ── */
+:root {
+    --bg-primary: #090b12;
+    --bg-secondary: #0e1020;
+    --bg-card: #111428;
+    --accent-mint: #64deb4;
+    --accent-lavender: #a78bfa;
+    --text-primary: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.35);
+    --border-color: rgba(100, 222, 180, 0.15);
+    --active-bg: rgba(100, 222, 180, 0.1);
+    --active-border: rgba(100, 222, 180, 0.25);
+    --radius-pill: 20px;
+    --radius-md: 12px;
+}
+
+/* ── Sidebar (desktop) ── */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 220px;
+    background: var(--bg-secondary);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.2rem;
+    z-index: 100;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+    padding-left: 0.5rem;
+}
+
+.logo-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    background: linear-gradient(135deg, #64deb4, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.7rem 1rem;
+    border-radius: var(--radius-pill);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+}
+
+.sidebar-link:hover {
+    color: var(--text-primary);
+    background: rgba(100, 222, 180, 0.06);
+}
+
+.sidebar-link.active {
+    color: var(--accent-mint);
+    background: var(--active-bg);
+    border-color: var(--active-border);
+}
+
+.sidebar-footer {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    padding-left: 0.5rem;
+    letter-spacing: 0.05em;
+}
+
+/* ── Bottom nav (mobile) ── */
+.bottom-nav {
+    display: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: var(--bg-secondary);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid var(--border-color);
+        justify-content: space-around;
+        align-items: center;
+        z-index: 100;
+    }
+
+    .bottom-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.68rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .bottom-link.active {
+        color: var(--accent-mint);
+    }
+}

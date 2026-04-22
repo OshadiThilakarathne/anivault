@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #090b12;
+  background-image:
+    radial-gradient(ellipse at 15% 50%, rgba(100, 222, 180, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.04) 0%, transparent 55%);
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+:root {
+  --color-bg: #090b12;
+  --color-surface: #0f1218;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-text: #e8eaf0;
+  --color-text-muted: #6b7280;
+  --color-accent-mint: #64deb4;
+  --color-accent-lavender: #a78bfa;
+}

@@ -1,0 +1,125 @@
+.search-page {
+    padding: 2rem;
+    max-width: 1200px;
+}
+
+.search-page__header {
+    margin-bottom: 2rem;
+}
+
+.search-page__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.search-page__subtitle {
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.search-page__form {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.search-page__input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.search-page__input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+.search-page__input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.search-page__input:focus {
+    border-color: var(--color-accent-mint);
+}
+
+.search-page__btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--color-accent-mint);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+}
+
+.search-page__btn:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
+.search-page__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.search-page__error {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.08);
+    border: 1px solid rgba(248, 113, 113, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+}
+
+.search-page__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem;
+    color: var(--color-text-muted);
+}
+
+.search-page__spinner {
+    animation: spin 1s linear infinite;
+    color: var(--color-accent-mint);
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.search-page__empty {
+    text-align: center;
+    color: var(--color-text-muted);
+    padding: 3rem;
+}
+
+.search-page__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
+}
