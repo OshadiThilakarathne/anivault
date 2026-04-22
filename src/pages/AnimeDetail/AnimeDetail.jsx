@@ -100,7 +100,18 @@ export default function AnimeDetail() {
                                 <button
                                     key={opt.key}
                                     className={`detail-page__status-btn ${form.status === opt.key ? "detail-page__status-btn--active" : ""}`}
-                                    onClick={() => setForm((f) => ({ ...f, status: opt.key }))}
+                                    onClick={() => {
+                                        const isCompleted = opt.key === "completed";
+                                        setForm((f) => ({
+                                            ...f,
+                                            status: opt.key,
+                                            episodeProgress: isCompleted
+                                                ? (anime.episodes || f.episodeProgress)
+                                                : opt.key === "watching" || opt.key === "plan_to_watch"
+                                                    ? 0
+                                                    : f.episodeProgress,
+                                        }));
+                                    }}
                                 >
                                     {opt.label}
                                 </button>

@@ -120,3 +120,38 @@
     color: var(--color-text-muted);
     cursor: default;
 }
+
+.anime-card__dropdown-wrapper {
+    position: relative;
+    margin-top: auto;
+}
+
+.anime-card__dropdown {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #0f1218;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 50;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.anime-card__dropdown-item {
+    width: 100%;
+    padding: 0.6rem 0.875rem;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: #e8eaf0;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.anime-card__dropdown-item:hover {
+    background: rgba(100, 222, 180, 0.1);
+    color: #64deb4;
+}
