@@ -1,16 +1,18 @@
-# React + Vite
+# AniVault 🗃️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal anime tracker that counts **unique titles**, not seasons.
 
-Currently, two official plugins are available:
+🔗 **Live:** https://anivault-ochre.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
+- Search anime via Jikan API
+- Library with status tabs (Watching, Completed, Plan to Watch, On Hold, Dropped)
+- Per-anime rating, review, episode progress, and dates
+- Stats page with genre breakdown and rating distribution charts
 
-## React Compiler
+## Tech Stack
+React, Vite, React Router, Recharts, Axios, Lucide React
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Roadmap
+- Phase 2: Node.js + Express backend
+- Phase 3: MongoDB + JWT auth (multi-user)
