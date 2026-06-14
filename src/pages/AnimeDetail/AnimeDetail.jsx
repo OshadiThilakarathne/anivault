@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useAnime } from "../../hooks/useAnime";
-import { useState } from "react";
-import { ArrowLeft, Star, BookOpen, Calendar, Tv, Building2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowLeft, BookOpen, Calendar, Tv, Building2, Plus } from "lucide-react";
+import { getAnimeById } from "../../services/jikanService";
 import "./AnimeDetail.css";
 
 const STATUS_OPTIONS = [
@@ -15,27 +16,80 @@ const STATUS_OPTIONS = [
 export default function AnimeDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { getAnimeById, updateAnime } = useAnime();
+    const { getAnimeById: getFromLibrary, updateAnime, addAnime, isInLibrary } = useAnime();
 
-    const anime = getAnimeById(Number(id));
+    const malId = Number(id);
+    const libraryAnime = getFromLibrary(malId);
+    const inLibrary = isInLibrary(malId);
 
-    // Local state mirrors the saved data — only saved when user clicks Save
+    // Remote data fetched from Jikan (used when not in library)
+    const [remoteAnime, setRemoteAnime] = useState(null);
+    const [loading, setLoading] = useState(!libraryAnime);
+    const [error, setError] = useState(null);
+
+    const anime = libraryAnime || remoteAnime;
+
+    useEffect(() => {
+        if (!libraryAnime) {
+            setLoading(true);
+            getAnimeById(malId)
+                .then((data) => {
+                    const d = data.data;
+                    setRemoteAnime({
+                        malId: d.mal_id,
+                        title: d.title,
+                        titleEnglish: d.title_english || d.title,
+                        coverImage: d.images?.jpg?.large_image_url || "",
+                        synopsis: d.synopsis || "",
+                        genres: d.genres?.map((g) => g.name) || [],
+                        episodes: d.episodes || null,
+                        studio: d.studios?.[0]?.name || "Unknown",
+                        year: d.year || null,
+                    });
+                })
+                .catch(() => setError("Failed to load anime details."))
+                .finally(() => setLoading(false));
+        }
+    }, [malId, libraryAnime]);
+
     const [form, setForm] = useState({
-        status: anime?.status ?? "plan_to_watch",
-        userRating: anime?.userRating ?? null,
-        review: anime?.review ?? "",
-        episodeProgress: anime?.episodeProgress ?? 0,
-        startDate: anime?.startDate ?? "",
-        finishDate: anime?.finishDate ?? "",
+        status: libraryAnime?.status ?? "plan_to_watch",
+        userRating: libraryAnime?.userRating ?? null,
+        review: libraryAnime?.review ?? "",
+        episodeProgress: libraryAnime?.episodeProgress ?? 0,
+        startDate: libraryAnime?.startDate ?? "",
+        finishDate: libraryAnime?.finishDate ?? "",
     });
 
     const [saved, setSaved] = useState(false);
 
-    if (!anime) {
+    // Sync form if library entry loads after remote
+    useEffect(() => {
+        if (libraryAnime) {
+            setForm({
+                status: libraryAnime.status ?? "plan_to_watch",
+                userRating: libraryAnime.userRating ?? null,
+                review: libraryAnime.review ?? "",
+                episodeProgress: libraryAnime.episodeProgress ?? 0,
+                startDate: libraryAnime.startDate ?? "",
+                finishDate: libraryAnime.finishDate ?? "",
+            });
+        }
+    }, [libraryAnime]);
+
+    if (loading) {
         return (
             <div className="detail-page detail-page--not-found">
-                <p>Anime not found in your library.</p>
-                <button onClick={() => navigate("/library")}>← Back to Library</button>
+                <p style={{ color: "var(--color-text-muted)" }}>Loading...</p>
+            </div>
+        );
+    }
+
+    if (error || !anime) {
+        return (
+            <div className="detail-page detail-page--not-found">
+                <p>{error || "Anime not found."}</p>
+                <button onClick={() => navigate(-1)}>← Go back</button>
             </div>
         );
     }
@@ -50,151 +104,165 @@ export default function AnimeDetail() {
         setTimeout(() => setSaved(false), 2000);
     };
 
+    const handleAddToLibrary = () => {
+        const isCompleted = form.status === "completed";
+        addAnime({
+            ...anime,
+            status: form.status,
+            userRating: form.userRating ? Number(form.userRating) : null,
+            episodeProgress: isCompleted ? (anime.episodes || 0) : 0,
+            review: form.review,
+            startDate: form.startDate,
+            finishDate: form.finishDate,
+        });
+    };
+
     return (
         <div className="detail-page">
-
-            {/* ── Back button ── */}
             <button className="detail-page__back" onClick={() => navigate(-1)}>
                 <ArrowLeft size={16} /> Back
             </button>
 
             <div className="detail-page__layout">
 
-                {/* ── Left: Cover + quick meta ── */}
+                {/* ── Left sidebar ── */}
                 <div className="detail-page__sidebar">
                     <img
                         src={anime.coverImage}
                         alt={anime.title}
                         className="detail-page__cover"
                     />
+
+                    {/* Add to library button if not in library */}
+                    {!inLibrary && (
+                        <button className="detail-page__add-btn" onClick={handleAddToLibrary}>
+                            <Plus size={15} /> Add to Library
+                        </button>
+                    )}
+
                     <div className="detail-page__quick-meta">
                         <MetaRow icon={<Tv size={14} />} label="Episodes" value={anime.episodes ?? "Unknown"} />
                         <MetaRow icon={<Building2 size={14} />} label="Studio" value={anime.studio || "Unknown"} />
                         <MetaRow icon={<Calendar size={14} />} label="Year" value={anime.year ?? "Unknown"} />
-                        <MetaRow
-                            icon={<BookOpen size={14} />}
-                            label="Genres"
-                            value={anime.genres?.join(", ") || "—"}
-                        />
+                        <MetaRow icon={<BookOpen size={14} />} label="Genres" value={anime.genres?.join(", ") || "—"} />
                     </div>
                 </div>
 
-                {/* ── Right: Info + form ── */}
+                {/* ── Right main ── */}
                 <div className="detail-page__main">
                     <h1 className="detail-page__title">{anime.title}</h1>
                     {anime.titleEnglish && anime.titleEnglish !== anime.title && (
                         <p className="detail-page__title-en">{anime.titleEnglish}</p>
                     )}
-
                     {anime.synopsis && (
                         <p className="detail-page__synopsis">{anime.synopsis}</p>
                     )}
 
                     <div className="detail-page__divider" />
 
-                    {/* Status */}
-                    <div className="detail-page__field">
-                        <label className="detail-page__label">Status</label>
-                        <div className="detail-page__status-options">
-                            {STATUS_OPTIONS.map((opt) => (
-                                <button
-                                    key={opt.key}
-                                    className={`detail-page__status-btn ${form.status === opt.key ? "detail-page__status-btn--active" : ""}`}
-                                    onClick={() => {
-                                        const isCompleted = opt.key === "completed";
-                                        setForm((f) => ({
-                                            ...f,
-                                            status: opt.key,
-                                            episodeProgress: isCompleted
-                                                ? (anime.episodes || f.episodeProgress)
-                                                : opt.key === "watching" || opt.key === "plan_to_watch"
-                                                    ? 0
-                                                    : f.episodeProgress,
-                                        }));
-                                    }}
-                                >
-                                    {opt.label}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+                    {/* Show form only if in library */}
+                    {inLibrary ? (
+                        <>
+                            <div className="detail-page__field">
+                                <label className="detail-page__label">Status</label>
+                                <div className="detail-page__status-options">
+                                    {STATUS_OPTIONS.map((opt) => (
+                                        <button
+                                            key={opt.key}
+                                            className={`detail-page__status-btn ${form.status === opt.key ? "detail-page__status-btn--active" : ""}`}
+                                            onClick={() => {
+                                                const isCompleted = opt.key === "completed";
+                                                setForm((f) => ({
+                                                    ...f,
+                                                    status: opt.key,
+                                                    episodeProgress: isCompleted
+                                                        ? (anime.episodes || f.episodeProgress)
+                                                        : opt.key === "watching" || opt.key === "plan_to_watch"
+                                                            ? 0
+                                                            : f.episodeProgress,
+                                                }));
+                                            }}
+                                        >
+                                            {opt.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
 
-                    {/* Rating */}
-                    <div className="detail-page__field">
-                        <label className="detail-page__label">Your Rating</label>
-                        <StarRating
-                            value={form.userRating}
-                            onChange={(val) => setForm((f) => ({ ...f, userRating: val }))}
-                        />
-                    </div>
+                            <div className="detail-page__field">
+                                <label className="detail-page__label">Your Rating</label>
+                                <StarRating
+                                    value={form.userRating}
+                                    onChange={(val) => setForm((f) => ({ ...f, userRating: val }))}
+                                />
+                            </div>
 
-                    {/* Episode Progress */}
-                    <div className="detail-page__field">
-                        <label className="detail-page__label">
-                            Episode Progress
-                            {anime.episodes && (
-                                <span className="detail-page__label-hint"> / {anime.episodes} total</span>
-                            )}
-                        </label>
-                        <input
-                            type="number"
-                            min={0}
-                            max={anime.episodes || 9999}
-                            className="detail-page__input"
-                            value={form.episodeProgress}
-                            onChange={(e) => setForm((f) => ({ ...f, episodeProgress: e.target.value }))}
-                        />
-                    </div>
+                            <div className="detail-page__field">
+                                <label className="detail-page__label">
+                                    Episode Progress
+                                    {anime.episodes && (
+                                        <span className="detail-page__label-hint"> / {anime.episodes} total</span>
+                                    )}
+                                </label>
+                                <input
+                                    type="number"
+                                    min={0}
+                                    max={anime.episodes || 9999}
+                                    className="detail-page__input"
+                                    value={form.episodeProgress}
+                                    onChange={(e) => setForm((f) => ({ ...f, episodeProgress: e.target.value }))}
+                                />
+                            </div>
 
-                    {/* Dates */}
-                    <div className="detail-page__dates">
-                        <div className="detail-page__field">
-                            <label className="detail-page__label">Start Date</label>
-                            <input
-                                type="date"
-                                className="detail-page__input"
-                                value={form.startDate}
-                                onChange={(e) => setForm((f) => ({ ...f, startDate: e.target.value }))}
-                            />
-                        </div>
-                        <div className="detail-page__field">
-                            <label className="detail-page__label">Finish Date</label>
-                            <input
-                                type="date"
-                                className="detail-page__input"
-                                value={form.finishDate}
-                                onChange={(e) => setForm((f) => ({ ...f, finishDate: e.target.value }))}
-                            />
-                        </div>
-                    </div>
+                            <div className="detail-page__dates">
+                                <div className="detail-page__field">
+                                    <label className="detail-page__label">Start Date</label>
+                                    <input
+                                        type="date"
+                                        className="detail-page__input"
+                                        value={form.startDate}
+                                        onChange={(e) => setForm((f) => ({ ...f, startDate: e.target.value }))}
+                                    />
+                                </div>
+                                <div className="detail-page__field">
+                                    <label className="detail-page__label">Finish Date</label>
+                                    <input
+                                        type="date"
+                                        className="detail-page__input"
+                                        value={form.finishDate}
+                                        onChange={(e) => setForm((f) => ({ ...f, finishDate: e.target.value }))}
+                                    />
+                                </div>
+                            </div>
 
-                    {/* Review */}
-                    <div className="detail-page__field">
-                        <label className="detail-page__label">Review / Notes</label>
-                        <textarea
-                            className="detail-page__textarea"
-                            placeholder="What did you think? Any thoughts, favourite moments..."
-                            rows={4}
-                            value={form.review}
-                            onChange={(e) => setForm((f) => ({ ...f, review: e.target.value }))}
-                        />
-                    </div>
+                            <div className="detail-page__field">
+                                <label className="detail-page__label">Review / Notes</label>
+                                <textarea
+                                    className="detail-page__textarea"
+                                    placeholder="What did you think? Any thoughts, favourite moments..."
+                                    rows={4}
+                                    value={form.review}
+                                    onChange={(e) => setForm((f) => ({ ...f, review: e.target.value }))}
+                                />
+                            </div>
 
-                    {/* Save */}
-                    <button
-                        className={`detail-page__save-btn ${saved ? "detail-page__save-btn--saved" : ""}`}
-                        onClick={handleSave}
-                    >
-                        {saved ? "✓ Saved!" : "Save Changes"}
-                    </button>
-
+                            <button
+                                className={`detail-page__save-btn ${saved ? "detail-page__save-btn--saved" : ""}`}
+                                onClick={handleSave}
+                            >
+                                {saved ? "✓ Saved!" : "Save Changes"}
+                            </button>
+                        </>
+                    ) : (
+                        <p className="detail-page__not-in-library">
+                            Add this anime to your library to track your progress, rating, and notes.
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
     );
 }
-
-// ── Sub-components ────────────────────────────────────────────────────────────
 
 function MetaRow({ icon, label, value }) {
     return (
@@ -207,26 +275,23 @@ function MetaRow({ icon, label, value }) {
 }
 
 function StarRating({ value, onChange }) {
-    const [hovered, setHovered] = useState(null);
-    const display = hovered ?? value ?? 0;
-
     return (
-        <div className="star-rating">
-            {Array.from({ length: 10 }, (_, i) => i + 1).map((star) => (
-                <button
-                    key={star}
-                    className={`star-rating__star ${display >= star ? "star-rating__star--filled" : ""}`}
-                    onMouseEnter={() => setHovered(star)}
-                    onMouseLeave={() => setHovered(null)}
-                    onClick={() => onChange(star === value ? null : star)}
-                    title={`${star}/10`}
-                >
-                    <Star size={20} />
-                </button>
-            ))}
-            {value && (
-                <span className="star-rating__value">{value}/10</span>
-            )}
-        </div>
+        <select
+            className="detail-page__rating-select"
+            value={value ?? ""}
+            onChange={(e) => onChange(e.target.value ? Number(e.target.value) : null)}
+        >
+            <option value="">Select rating</option>
+            <option value="10">10 — Masterpiece</option>
+            <option value="9">9 — Great</option>
+            <option value="8">8 — Very Good</option>
+            <option value="7">7 — Good</option>
+            <option value="6">6 — Fine</option>
+            <option value="5">5 — Average</option>
+            <option value="4">4 — Bad</option>
+            <option value="3">3 — Poor</option>
+            <option value="2">2 — Terrible</option>
+            <option value="1">1 — Awful</option>
+        </select>
     );
 }
