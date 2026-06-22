@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAnime } from "../../hooks/useAnime";
-import { Plus, Check, ChevronDown } from "lucide-react";
+import { Plus, Check, ChevronDown, ChevronLeft, Layers } from "lucide-react";
 import "./AnimeCard.css";
 
 const STATUS_OPTIONS = [
@@ -13,67 +13,90 @@ const STATUS_OPTIONS = [
 ];
 
 export default function AnimeCard({ anime }) {
-    const { addAnime, isInLibrary } = useAnime();
+    const { addAnime, addToGroup, isInLibrary, library } = useAnime();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [rating, setRating] = useState(null);
-    const [step, setStep] = useState("status");
+    const [step, setStep] = useState("status"); // "status" | "rating" | "group"
+    const [newGroupName, setNewGroupName] = useState("");
     const dropdownRef = useRef(null);
 
     const inLibrary = isInLibrary(anime.mal_id);
 
+    // All existing groups from library
+    const groups = library.filter((item) => item.isGroup);
+
     useEffect(() => {
         function handleClickOutside(e) {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-                setOpen(false);
-                setStep("status");
-                setRating(null);
+                resetDropdown();
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+    const resetDropdown = () => {
+        setOpen(false);
+        setStep("status");
+        setRating(null);
+        setNewGroupName("");
+    };
+
+    // Build the anime data object once — reused in multiple handlers
+    const buildAnimeData = () => ({
+        malId: anime.mal_id,
+        title: anime.title,
+        titleEnglish: anime.title_english || anime.title,
+        coverImage: anime.images?.jpg?.large_image_url || "",
+        synopsis: anime.synopsis || "",
+        genres: anime.genres?.map((g) => g.name) || [],
+        episodes: anime.episodes || null,
+        studio: anime.studios?.[0]?.name || "Unknown",
+        year: anime.year || null,
+    });
+
     const handleStatusPick = (statusKey) => {
         if (statusKey === "completed") {
             setStep("rating");
         } else {
             addAnime({
-                malId: anime.mal_id,
-                title: anime.title,
-                titleEnglish: anime.title_english || anime.title,
-                coverImage: anime.images?.jpg?.large_image_url || "",
-                synopsis: anime.synopsis || "",
-                genres: anime.genres?.map((g) => g.name) || [],
-                episodes: anime.episodes || null,
-                studio: anime.studios?.[0]?.name || "Unknown",
-                year: anime.year || null,
+                ...buildAnimeData(),
                 status: statusKey,
                 episodeProgress: 0,
             });
-            setOpen(false);
-            setStep("status");
+            resetDropdown();
         }
     };
 
     const handleConfirmCompleted = () => {
         addAnime({
-            malId: anime.mal_id,
-            title: anime.title,
-            titleEnglish: anime.title_english || anime.title,
-            coverImage: anime.images?.jpg?.large_image_url || "",
-            synopsis: anime.synopsis || "",
-            genres: anime.genres?.map((g) => g.name) || [],
-            episodes: anime.episodes || null,
-            studio: anime.studios?.[0]?.name || "Unknown",
-            year: anime.year || null,
+            ...buildAnimeData(),
             status: "completed",
             userRating: rating,
             episodeProgress: anime.episodes || 0,
         });
-        setOpen(false);
-        setStep("status");
-        setRating(null);
+        resetDropdown();
+    };
+
+    const handleAddToExistingGroup = (groupId) => {
+        addToGroup(groupId, {
+            ...buildAnimeData(),
+            status: "completed",
+            episodeProgress: anime.episodes || 0,
+        });
+        resetDropdown();
+    };
+
+    const handleCreateAndAddGroup = () => {
+        if (!newGroupName.trim()) return;
+
+        addAnime({
+            ...buildAnimeData(),
+            status: "completed",
+            episodeProgress: anime.episodes || 0,
+        });
+        resetDropdown();
     };
 
     return (
@@ -137,6 +160,7 @@ export default function AnimeCard({ anime }) {
                             />
                         </button>
 
+                        {/* ── Step 1: Status picker ── */}
                         {open && step === "status" && (
                             <div className="anime-card__dropdown">
                                 {STATUS_OPTIONS.map((opt) => (
@@ -151,11 +175,34 @@ export default function AnimeCard({ anime }) {
                                         {opt.label}
                                     </button>
                                 ))}
+                                {/* Add to group option — only shows if groups exist */}
+                                {groups.length > 0 && (
+                                    <>
+                                        <div className="anime-card__dropdown-divider" />
+                                        <button
+                                            className="anime-card__dropdown-item anime-card__dropdown-item--group"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setStep("group");
+                                            }}
+                                        >
+                                            <Layers size={13} />
+                                            Add to Group
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         )}
 
+                        {/* ── Step 2: Rating (for completed) ── */}
                         {open && step === "rating" && (
                             <div className="anime-card__dropdown anime-card__dropdown--rating">
+                                <button
+                                    className="anime-card__back-btn"
+                                    onClick={(e) => { e.stopPropagation(); setStep("status"); }}
+                                >
+                                    <ChevronLeft size={13} /> Back
+                                </button>
                                 <p className="anime-card__rating-label">Rate it</p>
                                 <select
                                     className="anime-card__rating-select"
@@ -179,23 +226,56 @@ export default function AnimeCard({ anime }) {
                                 <div className="anime-card__rating-actions">
                                     <button
                                         className="anime-card__rating-skip"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleConfirmCompleted();
-                                        }}
+                                        onClick={(e) => { e.stopPropagation(); handleConfirmCompleted(); }}
                                     >
                                         Skip
                                     </button>
                                     <button
                                         className="anime-card__rating-confirm"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleConfirmCompleted();
-                                        }}
+                                        onClick={(e) => { e.stopPropagation(); handleConfirmCompleted(); }}
                                         disabled={!rating}
                                     >
                                         Add
                                     </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* ── Step 3: Group picker ── */}
+                        {open && step === "group" && (
+                            <div className="anime-card__dropdown anime-card__dropdown--group">
+                                <button
+                                    className="anime-card__back-btn"
+                                    onClick={(e) => { e.stopPropagation(); setStep("status"); }}
+                                >
+                                    <ChevronLeft size={13} /> Back
+                                </button>
+                                <p className="anime-card__rating-label">Add to Group</p>
+
+                                {/* Existing groups */}
+                                <div className="anime-card__group-list">
+                                    {groups.map((group) => (
+                                        <button
+                                            key={group.id}
+                                            className="anime-card__group-item"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleAddToExistingGroup(group.id);
+                                            }}
+                                        >
+                                            <img
+                                                src={group.coverImage}
+                                                alt={group.title}
+                                                className="anime-card__group-cover"
+                                            />
+                                            <div className="anime-card__group-info">
+                                                <p className="anime-card__group-name">{group.title}</p>
+                                                <p className="anime-card__group-count">
+                                                    {group.seasons.length} seasons
+                                                </p>
+                                            </div>
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
                         )}
