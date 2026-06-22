@@ -22,7 +22,6 @@ export default function AnimeDetail() {
     const libraryAnime = getFromLibrary(malId);
     const inLibrary = isInLibrary(malId);
 
-    // Remote data fetched from Jikan (used when not in library)
     const [remoteAnime, setRemoteAnime] = useState(null);
     const [loading, setLoading] = useState(!libraryAnime);
     const [error, setError] = useState(null);
@@ -63,7 +62,6 @@ export default function AnimeDetail() {
 
     const [saved, setSaved] = useState(false);
 
-    // Sync form if library entry loads after remote
     useEffect(() => {
         if (libraryAnime) {
             setForm({
@@ -95,7 +93,8 @@ export default function AnimeDetail() {
     }
 
     const handleSave = () => {
-        updateAnime(anime.malId, {
+        // Use _id for MongoDB, fall back to malId for safety
+        updateAnime(libraryAnime._id, {
             ...form,
             userRating: form.userRating ? Number(form.userRating) : null,
             episodeProgress: Number(form.episodeProgress),
@@ -133,7 +132,6 @@ export default function AnimeDetail() {
                         className="detail-page__cover"
                     />
 
-                    {/* Add to library button if not in library */}
                     {!inLibrary && (
                         <button className="detail-page__add-btn" onClick={handleAddToLibrary}>
                             <Plus size={15} /> Add to Library
@@ -160,7 +158,6 @@ export default function AnimeDetail() {
 
                     <div className="detail-page__divider" />
 
-                    {/* Show form only if in library */}
                     {inLibrary ? (
                         <>
                             <div className="detail-page__field">
