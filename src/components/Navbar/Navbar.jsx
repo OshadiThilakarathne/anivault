@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
-import { House, BookOpen, Search, BarChart2, Upload } from 'lucide-react'
+import { House, BookOpen, Search, BarChart2, Upload, LogOut } from 'lucide-react'
+import { useAuth } from "../../context/AuthContext"
 import './Navbar.css'
 
 const navItems = [
@@ -11,9 +12,10 @@ const navItems = [
 ]
 
 function Navbar() {
+    const { logout, user } = useAuth(); // ← moved inside the component
+
     return (
         <>
-            {/* Sidebar — desktop */}
             <aside className="sidebar">
                 <div className="sidebar-logo">
                     <span className="logo-icon">鬼</span>
@@ -35,11 +37,18 @@ function Navbar() {
                     ))}
                 </nav>
                 <div className="sidebar-footer">
+                    {user && (
+                        <div className="sidebar-user">
+                            <p className="sidebar-username">{user.username}</p>
+                            <button className="sidebar-logout" onClick={logout} title="Logout">
+                                <LogOut size={16} />
+                            </button>
+                        </div>
+                    )}
                     <p>AniVault v1.0</p>
                 </div>
             </aside>
 
-            {/* Bottom bar — mobile */}
             <nav className="bottom-nav">
                 {navItems.map(({ to, icon: Icon, label }) => (
                     <NavLink
