@@ -23,7 +23,11 @@ export default function Search() {
             const data = await searchAnime(query);
             setResults(data.data || []);
         } catch (err) {
-            setError("Something went wrong. Jikan may be rate-limiting — wait a moment and try again.");
+            if (err.response?.status === 429) {
+                setError("Jikan is rate-limiting — wait 10 seconds and try again.");
+            } else {
+                setError("Something went wrong. Please try again.");
+            }
             setResults([]);
         } finally {
             setLoading(false);

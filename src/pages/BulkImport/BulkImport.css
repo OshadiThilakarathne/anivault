@@ -1,0 +1,380 @@
+.bulk-page {
+    padding: 2rem;
+    max-width: 800px;
+}
+
+.bulk-page__header {
+    margin-bottom: 2rem;
+}
+
+.bulk-page__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.bulk-page__subtitle {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* ── Step 1: Input ── */
+.bulk-step {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.bulk-step__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bulk-step__label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bulk-step__textarea {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    color: var(--color-text);
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    line-height: 1.7;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.bulk-step__textarea:focus {
+    border-color: var(--color-accent-mint);
+}
+
+.bulk-step__hint {
+    font-size: 0.8rem;
+    color: var(--color-accent-mint);
+    font-weight: 500;
+}
+
+.bulk-step__select {
+    padding: 0.65rem 0.875rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    max-width: 220px;
+    transition: border-color 0.2s ease;
+}
+
+.bulk-step__select:focus {
+    border-color: var(--color-accent-mint);
+}
+
+.bulk-step__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: var(--color-accent-mint);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: fit-content;
+    transition: opacity 0.2s ease;
+}
+
+.bulk-step__btn:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
+.bulk-step__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ── Step 2: Matching ── */
+.bulk-matching {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 4rem 2rem;
+}
+
+.bulk-matching__spinner {
+    color: var(--color-accent-mint);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.bulk-matching__text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.bulk-matching__bar-track {
+    width: 100%;
+    max-width: 400px;
+    height: 6px;
+    background: var(--color-border);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.bulk-matching__bar-fill {
+    height: 100%;
+    background: var(--color-accent-mint);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+
+.bulk-matching__hint {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+/* ── Step 3: Review ── */
+.bulk-review__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.bulk-review__summary {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+}
+
+.bulk-review__count {
+    color: var(--color-accent-mint);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.bulk-review__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.bulk-review__select-all,
+.bulk-review__select-none {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    border-radius: 8px;
+    padding: 0.4rem 0.875rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.bulk-review__select-all:hover,
+.bulk-review__select-none:hover {
+    border-color: var(--color-accent-mint);
+    color: var(--color-accent-mint);
+}
+
+.bulk-review__import-btn {
+    background: var(--color-accent-mint);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.bulk-review__import-btn:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
+.bulk-review__import-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.bulk-review__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* ── Bulk Item ── */
+.bulk-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 0.75rem;
+    transition: border-color 0.2s ease;
+}
+
+.bulk-item--confirmed {
+    border-color: rgba(100, 222, 180, 0.3);
+}
+
+.bulk-item--in-library {
+    opacity: 0.5;
+}
+
+.bulk-item--no-match {
+    opacity: 0.5;
+}
+
+.bulk-item__cover {
+    width: 42px;
+    height: 58px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.bulk-item__cover--empty {
+    background: var(--color-border);
+}
+
+.bulk-item__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.bulk-item__query {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.bulk-item__match-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bulk-item__match-meta {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.bulk-item__no-match {
+    font-size: 0.82rem;
+    color: #f87171;
+}
+
+.bulk-item__already {
+    font-size: 0.75rem;
+    color: var(--color-accent-lavender);
+}
+
+.bulk-item__toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    color: var(--color-border);
+    display: flex;
+    transition: color 0.2s ease, transform 0.15s ease;
+    flex-shrink: 0;
+}
+
+.bulk-item__toggle:hover {
+    transform: scale(1.1);
+}
+
+.bulk-item__toggle--confirmed {
+    color: var(--color-accent-mint);
+}
+
+/* ── Step 4: Done ── */
+.bulk-done {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 5rem 2rem;
+    text-align: center;
+}
+
+.bulk-done__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(100, 222, 180, 0.12);
+    border: 2px solid var(--color-accent-mint);
+    color: var(--color-accent-mint);
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bulk-done__title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.bulk-done__sub {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+}
+
+.bulk-done__count {
+    color: var(--color-accent-mint);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.bulk-done__btn {
+    margin-top: 0.5rem;
+    padding: 0.65rem 1.5rem;
+    background: var(--color-accent-mint);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.bulk-done__btn:hover {
+    opacity: 0.85;
+}

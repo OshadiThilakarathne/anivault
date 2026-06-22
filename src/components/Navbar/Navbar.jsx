@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { House, BookOpen, Search, BarChart2 } from 'lucide-react'
+import { House, BookOpen, Search, BarChart2, Upload } from 'lucide-react'
 import './Navbar.css'
 
 const navItems = [
@@ -7,6 +7,7 @@ const navItems = [
     { to: '/library', icon: BookOpen, label: 'Library' },
     { to: '/search', icon: Search, label: 'Search' },
     { to: '/stats', icon: BarChart2, label: 'Stats' },
+    { to: '/bulk-import', icon: Upload, label: 'Import' },
 ]
 
 function Navbar() {

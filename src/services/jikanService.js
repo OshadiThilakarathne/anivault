@@ -7,7 +7,7 @@ const BASE_URL = "https://api.jikan.moe/v4";
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const searchAnime = async (query, page = 1) => {
-    await delay(500);
+    await delay(1000); // increased from 500ms to 1000ms
     const response = await axios.get(`${BASE_URL}/anime`, {
         params: { q: query, page, limit: 12, sfw: true },
     });
@@ -15,7 +15,7 @@ export const searchAnime = async (query, page = 1) => {
 };
 
 export const getAnimeById = async (malId) => {
-    await delay(500);
+    await delay(1000);
     const response = await axios.get(`${BASE_URL}/anime/${malId}`);
     return response.data;
 };

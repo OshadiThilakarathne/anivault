@@ -5,6 +5,7 @@ import Search from './pages/Search/Search'
 import Stats from './pages/Stats/Stats'
 import AnimeDetail from './pages/AnimeDetail/AnimeDetail'
 import Layout from './components/Layout/Layout'
+import BulkImport from "./pages/BulkImport/BulkImport.jsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="stats" element={<Stats />} />
           <Route path="anime/:id" element={<AnimeDetail />} />
+          <Route path="/bulk-import" element={<BulkImport />} />
         </Route>
       </Routes>
     </BrowserRouter>
