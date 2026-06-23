@@ -9,6 +9,7 @@ export default function Register() {
     const [form, setForm] = useState({ username: "", email: "", password: "" });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const apiBase = import.meta.env.VITE_API_URL?.replace("/api", "") || "http://localhost:5000";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -80,11 +81,29 @@ export default function Register() {
                     </button>
                 </form>
 
-                <p className="auth-switch">
-                    Already have an account?{" "}
-                    <Link to="/login" className="auth-link">Sign in</Link>
-                </p>
-            </div>
+                <div className="auth-divider">
+                    <span>or</span>
+                </div>
+
+
+                <a
+                    href={`${apiBase}/api/auth/google`}
+                    className="auth-google-btn"
+                >
+                    <img
+                        src="https://www.google.com/favicon.ico"
+                        alt="Google"
+                        width={18}
+                        height={18}
+                    />
+                    Continue with Google
+                </a>
+
+            <p className="auth-switch">
+                Already have an account?{" "}
+                <Link to="/login" className="auth-link">Sign in</Link>
+            </p>
         </div>
+        </div >
     );
 }

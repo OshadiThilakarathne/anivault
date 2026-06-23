@@ -9,6 +9,7 @@ import AnimeDetail from "./pages/AnimeDetail/AnimeDetail";
 import BulkImport from "./pages/BulkImport/BulkImport";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import Callback from "./pages/Auth/Callback";
 
 // Redirect to login if not authenticated
 function ProtectedRoute({ children }) {
@@ -32,6 +33,7 @@ export default function App() {
       {/* Public routes — no layout */}
       <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
       <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+      <Route path="/auth/callback" element={<Callback />} />
 
       {/* Protected routes — with layout */}
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
