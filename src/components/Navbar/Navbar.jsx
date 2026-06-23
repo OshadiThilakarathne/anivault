@@ -39,6 +39,17 @@ function Navbar() {
                 <div className="sidebar-footer">
                     {user && (
                         <div className="sidebar-user">
+                            {user.avatar ? (
+                                <img
+                                    src={user.avatar}
+                                    alt={user.username}
+                                    className="sidebar-avatar"
+                                />
+                            ) : (
+                                <div className="sidebar-avatar sidebar-avatar--placeholder">
+                                    {user.username?.charAt(0).toUpperCase()}
+                                </div>
+                            )}
                             <p className="sidebar-username">{user.username}</p>
                             <button className="sidebar-logout" onClick={logout} title="Logout">
                                 <LogOut size={16} />
