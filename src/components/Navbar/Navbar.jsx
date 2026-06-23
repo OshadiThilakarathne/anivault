@@ -1,6 +1,9 @@
+import { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom'
 import { House, BookOpen, Search, BarChart2, Upload, LogOut } from 'lucide-react'
 import { useAuth } from "../../context/AuthContext"
+import AvatarPicker from "../AvatarPicker/AvatarPicker";
+import axios from "axios";
 import './Navbar.css'
 
 const navItems = [
@@ -12,7 +15,24 @@ const navItems = [
 ]
 
 function Navbar() {
-    const { logout, user } = useAuth(); // ← moved inside the component
+    const { logout, user } = useAuth();
+    const [showPicker, setShowPicker] = useState(false);
+    const [avatars, setAvatars] = useState([]);
+
+    // Pre-fetch avatars on mount so picker opens instantly
+    useEffect(() => {
+        if (!user) return;
+        axios.get("https://api.jikan.moe/v4/top/characters?limit=24")
+            .then((res) => {
+                const chars = res.data.data.map((c) => ({
+                    id: c.mal_id,
+                    name: c.name,
+                    url: c.images?.jpg?.image_url || "",
+                }));
+                setAvatars(chars);
+            })
+            .catch(() => { });
+    }, [user]);
 
     return (
         <>
@@ -39,17 +59,23 @@ function Navbar() {
                 <div className="sidebar-footer">
                     {user && (
                         <div className="sidebar-user">
-                            {user.avatar ? (
-                                <img
-                                    src={user.avatar}
-                                    alt={user.username}
-                                    className="sidebar-avatar"
-                                />
-                            ) : (
-                                <div className="sidebar-avatar sidebar-avatar--placeholder">
-                                    {user.username?.charAt(0).toUpperCase()}
-                                </div>
-                            )}
+                            <button
+                                className="sidebar-avatar-btn"
+                                onClick={() => setShowPicker(true)}
+                                title="Change avatar"
+                            >
+                                {user.avatar ? (
+                                    <img
+                                        src={user.avatar}
+                                        alt={user.username}
+                                        className="sidebar-avatar"
+                                    />
+                                ) : (
+                                    <div className="sidebar-avatar sidebar-avatar--placeholder">
+                                        {user.username?.charAt(0).toUpperCase()}
+                                    </div>
+                                )}
+                            </button>
                             <p className="sidebar-username">{user.username}</p>
                             <button className="sidebar-logout" onClick={logout} title="Logout">
                                 <LogOut size={16} />
@@ -75,6 +101,13 @@ function Navbar() {
                     </NavLink>
                 ))}
             </nav>
+
+            {showPicker && (
+                <AvatarPicker
+                    avatars={avatars}
+                    onClose={() => setShowPicker(false)}
+                />
+            )}
         </>
     )
 }
