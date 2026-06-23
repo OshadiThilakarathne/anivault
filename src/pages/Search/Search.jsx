@@ -17,7 +17,6 @@ export default function Search() {
     const [page, setPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(false);
 
-    // Auto-search if query exists in URL on mount
     useEffect(() => {
         const q = searchParams.get("q");
         if (q) {
@@ -52,7 +51,7 @@ export default function Search() {
     const handleSearch = useCallback(async (e) => {
         e.preventDefault();
         if (!query.trim()) return;
-        setSearchParams({ q: query }); // save query to URL
+        setSearchParams({ q: query });
         doSearch(query, 1);
     }, [query]);
 
@@ -96,10 +95,12 @@ export default function Search() {
 
             {error && <p className="search-page__error">{error}</p>}
 
+            {/* Skeleton loading */}
             {loading && (
-                <div className="search-page__loading">
-                    <Loader size={32} className="search-page__spinner" />
-                    <p>Fetching from Jikan...</p>
+                <div className="search-page__grid">
+                    {Array.from({ length: 24 }).map((_, i) => (
+                        <div key={i} className="anime-card-skeleton" />
+                    ))}
                 </div>
             )}
 
@@ -107,11 +108,13 @@ export default function Search() {
                 <p className="search-page__empty">No results found for "{query}".</p>
             )}
 
-            <div className="search-page__grid">
-                {results.map((anime) => (
-                    <AnimeCard key={anime.mal_id} anime={anime} />
-                ))}
-            </div>
+            {!loading && (
+                <div className="search-page__grid">
+                    {results.map((anime) => (
+                        <AnimeCard key={anime.mal_id} anime={anime} />
+                    ))}
+                </div>
+            )}
 
             {hasNextPage && !loading && results.length > 0 && (
                 <div className="search-page__load-more">

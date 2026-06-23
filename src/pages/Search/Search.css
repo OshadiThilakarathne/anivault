@@ -158,3 +158,30 @@
 .search-page__spinner--sm {
     animation: spin 1s linear infinite;
 }
+
+.anime-card-skeleton {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    aspect-ratio: 3 / 5;
+    position: relative;
+    overflow: hidden;
+}
+
+.anime-card-skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.04) 50%,
+            transparent 100%);
+    animation: shimmer 1.5s infinite;
+    transform: translateX(-100%);
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
