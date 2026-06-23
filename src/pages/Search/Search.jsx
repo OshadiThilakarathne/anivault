@@ -1,11 +1,14 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { searchAnime } from "../../services/jikanService";
 import AnimeCard from "../../components/AnimeCard/AnimeCard";
 import { Search as SearchIcon, Loader } from "lucide-react";
 import "./Search.css";
 
 export default function Search() {
-    const [query, setQuery] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [query, setQuery] = useState(searchParams.get("q") || "");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
@@ -14,10 +17,16 @@ export default function Search() {
     const [page, setPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(false);
 
-    const handleSearch = useCallback(async (e) => {
-        e.preventDefault();
-        if (!query.trim()) return;
+    // Auto-search if query exists in URL on mount
+    useEffect(() => {
+        const q = searchParams.get("q");
+        if (q) {
+            setQuery(q);
+            doSearch(q, 1);
+        }
+    }, []);
 
+    const doSearch = async (q, pageNum) => {
         setLoading(true);
         setError(null);
         setSearched(true);
@@ -25,7 +34,7 @@ export default function Search() {
         setResults([]);
 
         try {
-            const data = await searchAnime(query, 1);
+            const data = await searchAnime(q, pageNum);
             setResults(data.data || []);
             setHasNextPage(data.pagination?.has_next_page || false);
         } catch (err) {
@@ -38,6 +47,13 @@ export default function Search() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleSearch = useCallback(async (e) => {
+        e.preventDefault();
+        if (!query.trim()) return;
+        setSearchParams({ q: query }); // save query to URL
+        doSearch(query, 1);
     }, [query]);
 
     const handleLoadMore = async () => {
@@ -97,7 +113,6 @@ export default function Search() {
                 ))}
             </div>
 
-            {/* Load More */}
             {hasNextPage && !loading && results.length > 0 && (
                 <div className="search-page__load-more">
                     <button
