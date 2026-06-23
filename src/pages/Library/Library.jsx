@@ -139,12 +139,12 @@ export default function Library() {
                         />
                     ) : (
                         <LibraryCard
-                            key={item.malId}
+                            key={item._id}
                             anime={item}
-                            onRemove={removeAnime}
+                            onRemove={() => removeAnime(item._id)}
                             selectMode={selectMode}
-                            selected={selected.includes(item.malId)}
-                            onToggleSelect={() => toggleSelect(item.malId)}
+                            selected={selected.includes(item._id)}
+                            onToggleSelect={() => toggleSelect(item._id)}
                         />
                     )
                 )}
