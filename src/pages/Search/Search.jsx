@@ -8,8 +8,11 @@ export default function Search() {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [loadingMore, setLoadingMore] = useState(false);
     const [error, setError] = useState(null);
     const [searched, setSearched] = useState(false);
+    const [page, setPage] = useState(1);
+    const [hasNextPage, setHasNextPage] = useState(false);
 
     const handleSearch = useCallback(async (e) => {
         e.preventDefault();
@@ -18,10 +21,13 @@ export default function Search() {
         setLoading(true);
         setError(null);
         setSearched(true);
+        setPage(1);
+        setResults([]);
 
         try {
-            const data = await searchAnime(query);
+            const data = await searchAnime(query, 1);
             setResults(data.data || []);
+            setHasNextPage(data.pagination?.has_next_page || false);
         } catch (err) {
             if (err.response?.status === 429) {
                 setError("Jikan is rate-limiting — wait 10 seconds and try again.");
@@ -33,6 +39,21 @@ export default function Search() {
             setLoading(false);
         }
     }, [query]);
+
+    const handleLoadMore = async () => {
+        const nextPage = page + 1;
+        setLoadingMore(true);
+        try {
+            const data = await searchAnime(query, nextPage);
+            setResults((prev) => [...prev, ...(data.data || [])]);
+            setPage(nextPage);
+            setHasNextPage(data.pagination?.has_next_page || false);
+        } catch (err) {
+            setError("Failed to load more results.");
+        } finally {
+            setLoadingMore(false);
+        }
+    };
 
     return (
         <div className="search-page">
@@ -75,6 +96,23 @@ export default function Search() {
                     <AnimeCard key={anime.mal_id} anime={anime} />
                 ))}
             </div>
+
+            {/* Load More */}
+            {hasNextPage && !loading && results.length > 0 && (
+                <div className="search-page__load-more">
+                    <button
+                        className="search-page__load-more-btn"
+                        onClick={handleLoadMore}
+                        disabled={loadingMore}
+                    >
+                        {loadingMore ? (
+                            <><Loader size={14} className="search-page__spinner--sm" /> Loading...</>
+                        ) : (
+                            "Load More"
+                        )}
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
