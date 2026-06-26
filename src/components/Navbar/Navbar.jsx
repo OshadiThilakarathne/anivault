@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom'
-import { House, BookOpen, Search, BarChart2, Upload, LogOut } from 'lucide-react'
+import { House, BookOpen, Search, BarChart2, Upload, LogOut, Sparkles } from 'lucide-react'
 import { useAuth } from "../../context/AuthContext"
 import AvatarPicker from "../AvatarPicker/AvatarPicker";
 import axios from "axios";
@@ -12,6 +12,7 @@ const navItems = [
     { to: '/search', icon: Search, label: 'Search' },
     { to: '/stats', icon: BarChart2, label: 'Stats' },
     { to: '/bulk-import', icon: Upload, label: 'Import' },
+    { to: '/recommendations', icon: Sparkles, label: 'For You' },
 ]
 
 function Navbar() {

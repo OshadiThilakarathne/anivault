@@ -2,7 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAnime } from "../../hooks/useAnime";
 import { useState, useEffect } from "react";
 import { ArrowLeft, BookOpen, Calendar, Tv, Building2, Plus } from "lucide-react";
-import { getAnimeById } from "../../services/jikanService";
+import { getAnimeById, getAnimeRecommendations } from "../../services/jikanService";
+import AnimeCard from "../../components/AnimeCard/AnimeCard";
 import "./AnimeDetail.css";
 
 const STATUS_OPTIONS = [
@@ -25,9 +26,11 @@ export default function AnimeDetail() {
     const [remoteAnime, setRemoteAnime] = useState(null);
     const [loading, setLoading] = useState(!libraryAnime);
     const [error, setError] = useState(null);
+    const [moreLikeThis, setMoreLikeThis] = useState([]);
 
     const anime = libraryAnime || remoteAnime;
 
+    // Fetch anime from Jikan if not in library
     useEffect(() => {
         if (!libraryAnime) {
             setLoading(true);
@@ -50,6 +53,15 @@ export default function AnimeDetail() {
                 .finally(() => setLoading(false));
         }
     }, [malId, libraryAnime]);
+
+    // Fetch recommendations
+    useEffect(() => {
+        getAnimeRecommendations(malId)
+            .then((data) => {
+                setMoreLikeThis((data.data || []).slice(0, 6));
+            })
+            .catch(() => { });
+    }, [malId]);
 
     const [form, setForm] = useState({
         status: libraryAnime?.status ?? "plan_to_watch",
@@ -93,7 +105,6 @@ export default function AnimeDetail() {
     }
 
     const handleSave = () => {
-        // Use _id for MongoDB, fall back to malId for safety
         updateAnime(libraryAnime._id, {
             ...form,
             userRating: form.userRating ? Number(form.userRating) : null,
@@ -257,6 +268,18 @@ export default function AnimeDetail() {
                     )}
                 </div>
             </div>
+
+            {/* ── More like this ── */}
+            {moreLikeThis.length > 0 && (
+                <div className="detail-page__more">
+                    <h2 className="detail-page__more-title">More like this</h2>
+                    <div className="detail-page__more-grid">
+                        {moreLikeThis.map((rec) => (
+                            <AnimeCard key={rec.entry.mal_id} anime={rec.entry} />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
