@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
-    House, BookOpen, Search, BarChart2,
-    Upload, Sparkles, LogOut, Menu, X
+    House, BookOpen, BarChart2,
+    Upload, Sparkles, LogOut, Menu, X, Search
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import AvatarPicker from "../AvatarPicker/AvatarPicker";
 import axios from "axios";
-import { useEffect } from "react";
 import "./Navbar.css";
 
 const navItems = [
@@ -16,7 +15,6 @@ const navItems = [
     { to: "/stats", label: "Stats", icon: BarChart2 },
     { to: "/bulk-import", label: "Import", icon: Upload },
     { to: "/recommendations", label: "For You", icon: Sparkles },
-    { to: "/search", label: "Search", icon: Search },
 ];
 
 export default function Navbar() {
@@ -25,6 +23,8 @@ export default function Navbar() {
     const [showPicker, setShowPicker] = useState(false);
     const [avatars, setAvatars] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [query, setQuery] = useState("");
+    const searchRef = useRef(null);
 
     useEffect(() => {
         if (!user) return;
@@ -38,6 +38,14 @@ export default function Navbar() {
             })
             .catch(() => { });
     }, [user]);
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (!query.trim()) return;
+        navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+        setQuery("");
+        setMenuOpen(false);
+    };
 
     return (
         <>
@@ -65,6 +73,19 @@ export default function Navbar() {
                             </NavLink>
                         ))}
                     </nav>
+
+                    {/* ── Search bar ── */}
+                    <form className="topnav__search" onSubmit={handleSearch}>
+                        <Search size={15} className="topnav__search-icon" />
+                        <input
+                            ref={searchRef}
+                            type="text"
+                            className="topnav__search-input"
+                            placeholder="Search anime..."
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
+                    </form>
 
                     {/* ── Right side ── */}
                     <div className="topnav__right">
@@ -98,7 +119,6 @@ export default function Navbar() {
                             </>
                         )}
 
-                        {/* Mobile hamburger */}
                         <button
                             className="topnav__hamburger"
                             onClick={() => setMenuOpen((o) => !o)}
@@ -111,6 +131,16 @@ export default function Navbar() {
                 {/* ── Mobile menu ── */}
                 {menuOpen && (
                     <div className="topnav__mobile-menu">
+                        <form className="topnav__mobile-search" onSubmit={handleSearch}>
+                            <Search size={15} />
+                            <input
+                                type="text"
+                                placeholder="Search anime..."
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                className="topnav__mobile-search-input"
+                            />
+                        </form>
                         {navItems.map(({ to, label, icon: Icon }) => (
                             <NavLink
                                 key={to}
