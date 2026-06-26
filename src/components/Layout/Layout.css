@@ -1,27 +1,26 @@
 .app-layout {
     display: flex;
     min-height: 100vh;
+    background: var(--color-bg);
 }
 
 .main-wrapper {
+    margin-left: 220px;
     flex: 1;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden;
-    margin-left: 220px;
-    width: calc(100% - 220px);
+    min-width: 0;
 }
 
 .main-content {
     flex: 1;
-    padding-bottom: 2rem;
+    width: 100%;
 }
 
 .footer {
     border-top: 1px solid var(--color-border);
-    padding: 1.5rem 2rem;
-    margin-top: auto;
+    padding: 1.25rem 2rem;
 }
 
 .footer__inner {
@@ -30,7 +29,6 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 1rem;
-    max-width: 1200px;
 }
 
 .footer__brand {
@@ -73,6 +71,6 @@
 @media (max-width: 768px) {
     .main-wrapper {
         margin-left: 0;
-        margin-bottom: 60px;
+        margin-bottom: 64px;
     }
 }
