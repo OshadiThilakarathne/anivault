@@ -22,4 +22,18 @@ body {
   --color-text-muted: #6b7280;
   --color-accent-mint: #64deb4;
   --color-accent-lavender: #a78bfa;
+
+  /* Aliases for Navbar.css */
+  --bg-primary: #090b12;
+  --bg-secondary: #0f1218;
+  --bg-card: #111428;
+  --accent-mint: #64deb4;
+  --accent-lavender: #a78bfa;
+  --text-primary: #e8eaf0;
+  --text-muted: #6b7280;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --active-bg: rgba(100, 222, 180, 0.1);
+  --active-border: rgba(100, 222, 180, 0.25);
+  --radius-pill: 20px;
+  --radius-md: 12px;
 }
