@@ -1,107 +1,141 @@
-import { useState, useEffect } from "react";
-import { NavLink } from 'react-router-dom'
-import { House, BookOpen, Search, BarChart2, Upload, LogOut, Sparkles } from 'lucide-react'
-import { useAuth } from "../../context/AuthContext"
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+    House, BookOpen, Search, BarChart2,
+    Upload, Sparkles, LogOut, Menu, X
+} from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 import AvatarPicker from "../AvatarPicker/AvatarPicker";
 import axios from "axios";
-import './Navbar.css'
+import { useEffect } from "react";
+import "./Navbar.css";
 
 const navItems = [
-    { to: '/', icon: House, label: 'Home' },
-    { to: '/library', icon: BookOpen, label: 'Library' },
-    { to: '/search', icon: Search, label: 'Search' },
-    { to: '/stats', icon: BarChart2, label: 'Stats' },
-    { to: '/bulk-import', icon: Upload, label: 'Import' },
-    { to: '/recommendations', icon: Sparkles, label: 'For You' },
-]
+    { to: "/", label: "Home", icon: House },
+    { to: "/library", label: "Library", icon: BookOpen },
+    { to: "/stats", label: "Stats", icon: BarChart2 },
+    { to: "/bulk-import", label: "Import", icon: Upload },
+    { to: "/recommendations", label: "For You", icon: Sparkles },
+    { to: "/search", label: "Search", icon: Search },
+];
 
-function Navbar() {
+export default function Navbar() {
     const { logout, user } = useAuth();
+    const navigate = useNavigate();
     const [showPicker, setShowPicker] = useState(false);
     const [avatars, setAvatars] = useState([]);
+    const [menuOpen, setMenuOpen] = useState(false);
 
-    // Pre-fetch avatars on mount so picker opens instantly
     useEffect(() => {
         if (!user) return;
         axios.get("https://api.jikan.moe/v4/top/characters?limit=24")
             .then((res) => {
-                const chars = res.data.data.map((c) => ({
+                setAvatars(res.data.data.map((c) => ({
                     id: c.mal_id,
                     name: c.name,
                     url: c.images?.jpg?.image_url || "",
-                }));
-                setAvatars(chars);
+                })));
             })
             .catch(() => { });
     }, [user]);
 
     return (
         <>
-            <aside className="sidebar">
-                <div className="sidebar-logo">
-                    <span className="logo-icon">鬼</span>
-                    <span className="logo-text">AniVault</span>
-                </div>
-                <nav className="sidebar-nav">
-                    {navItems.map(({ to, icon: Icon, label }) => (
-                        <NavLink
-                            key={to}
-                            to={to}
-                            end={to === '/'}
-                            className={({ isActive }) =>
-                                `sidebar-link ${isActive ? 'active' : ''}`
-                            }
-                        >
-                            <Icon size={20} />
-                            <span>{label}</span>
-                        </NavLink>
-                    ))}
-                </nav>
-                <div className="sidebar-footer">
-                    {user && (
-                        <div className="sidebar-user">
-                            <button
-                                className="sidebar-avatar-btn"
-                                onClick={() => setShowPicker(true)}
-                                title="Change avatar"
-                            >
-                                {user.avatar ? (
-                                    <img
-                                        src={user.avatar}
-                                        alt={user.username}
-                                        className="sidebar-avatar"
-                                    />
-                                ) : (
-                                    <div className="sidebar-avatar sidebar-avatar--placeholder">
-                                        {user.username?.charAt(0).toUpperCase()}
-                                    </div>
-                                )}
-                            </button>
-                            <p className="sidebar-username">{user.username}</p>
-                            <button className="sidebar-logout" onClick={logout} title="Logout">
-                                <LogOut size={16} />
-                            </button>
-                        </div>
-                    )}
-                    <p>AniVault v1.0</p>
-                </div>
-            </aside>
+            <header className="topnav">
+                <div className="topnav__inner">
 
-            <nav className="bottom-nav">
-                {navItems.map(({ to, icon: Icon, label }) => (
-                    <NavLink
-                        key={to}
-                        to={to}
-                        end={to === '/'}
-                        className={({ isActive }) =>
-                            `bottom-link ${isActive ? 'active' : ''}`
-                        }
-                    >
-                        <Icon size={22} />
-                        <span>{label}</span>
+                    {/* ── Brand ── */}
+                    <NavLink to="/" className="topnav__brand">
+                        <span className="topnav__brand-icon">鬼</span>
+                        <span className="topnav__brand-text">AniVault</span>
                     </NavLink>
-                ))}
-            </nav>
+
+                    {/* ── Desktop nav links ── */}
+                    <nav className="topnav__links">
+                        {navItems.map(({ to, label }) => (
+                            <NavLink
+                                key={to}
+                                to={to}
+                                end={to === "/"}
+                                className={({ isActive }) =>
+                                    `topnav__link ${isActive ? "topnav__link--active" : ""}`
+                                }
+                            >
+                                {label}
+                            </NavLink>
+                        ))}
+                    </nav>
+
+                    {/* ── Right side ── */}
+                    <div className="topnav__right">
+                        {user && (
+                            <>
+                                <button
+                                    className="topnav__avatar-btn"
+                                    onClick={() => setShowPicker(true)}
+                                    title="Change avatar"
+                                >
+                                    {user.avatar ? (
+                                        <img
+                                            src={user.avatar}
+                                            alt={user.username}
+                                            className="topnav__avatar"
+                                        />
+                                    ) : (
+                                        <div className="topnav__avatar topnav__avatar--placeholder">
+                                            {user.username?.charAt(0).toUpperCase()}
+                                        </div>
+                                    )}
+                                </button>
+                                <span className="topnav__username">{user.username}</span>
+                                <button
+                                    className="topnav__logout"
+                                    onClick={logout}
+                                    title="Logout"
+                                >
+                                    <LogOut size={16} />
+                                </button>
+                            </>
+                        )}
+
+                        {/* Mobile hamburger */}
+                        <button
+                            className="topnav__hamburger"
+                            onClick={() => setMenuOpen((o) => !o)}
+                        >
+                            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+                        </button>
+                    </div>
+                </div>
+
+                {/* ── Mobile menu ── */}
+                {menuOpen && (
+                    <div className="topnav__mobile-menu">
+                        {navItems.map(({ to, label, icon: Icon }) => (
+                            <NavLink
+                                key={to}
+                                to={to}
+                                end={to === "/"}
+                                className={({ isActive }) =>
+                                    `topnav__mobile-link ${isActive ? "topnav__mobile-link--active" : ""}`
+                                }
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                <Icon size={18} />
+                                {label}
+                            </NavLink>
+                        ))}
+                        {user && (
+                            <button
+                                className="topnav__mobile-logout"
+                                onClick={() => { logout(); setMenuOpen(false); }}
+                            >
+                                <LogOut size={18} /> Logout
+                            </button>
+                        )}
+                    </div>
+                )}
+            </header>
 
             {showPicker && (
                 <AvatarPicker
@@ -110,7 +144,5 @@ function Navbar() {
                 />
             )}
         </>
-    )
+    );
 }
-
-export default Navbar
