@@ -27,22 +27,20 @@ export default function Stats() {
     const totalMins = stats.totalEpisodes * avgEpisodeMins;
     const daysWatched = (totalMins / 60 / 24).toFixed(1);
 
-    // ── Status data ───────────────────────────────────────────────────────────
+    // ── Status rows ───────────────────────────────────────────────────────────
     const statusRows = [
-        { label: "Watching", value: stats.watching, color: "#64deb4" },
-        { label: "Completed", value: stats.completed, color: "#a78bfa" },
-        { label: "On Hold", value: stats.onHold, color: "#fbbf24" },
-        { label: "Dropped", value: stats.dropped, color: "#f87171" },
-        { label: "Plan to Watch", value: stats.planToWatch, color: "#60a5fa" },
+        { label: "Watching", key: "watching", value: stats.watching, color: "#64deb4" },
+        { label: "Completed", key: "completed", value: stats.completed, color: "#a78bfa" },
+        { label: "On Hold", key: "on_hold", value: stats.onHold, color: "#fbbf24" },
+        { label: "Dropped", key: "dropped", value: stats.dropped, color: "#f87171" },
+        { label: "Plan to Watch", key: "plan_to_watch", value: stats.planToWatch, color: "#60a5fa" },
     ];
     const maxStatus = Math.max(...statusRows.map((s) => s.value), 1);
 
     // ── Genre data ────────────────────────────────────────────────────────────
     const genreMap = {};
     library.forEach((item) => {
-        const genres = item.isGroup
-            ? item.genres
-            : item.genres || [];
+        const genres = item.isGroup ? item.genres : item.genres || [];
         genres.forEach((g) => {
             genreMap[g] = (genreMap[g] || 0) + 1;
         });
@@ -59,15 +57,14 @@ export default function Stats() {
         if (item.userRating) ratingMap[item.userRating]++;
     });
     const ratingData = Object.entries(ratingMap).map(([rating, count]) => ({
-        rating: `${rating}`,
+        rating,
         count,
     }));
 
-    // ── Score distribution donut ──────────────────────────────────────────────
-    const statusDonut = statusRows.filter((s) => s.value > 0).map((s) => ({
-        name: s.label,
-        value: s.value,
-    }));
+    // ── Status donut ──────────────────────────────────────────────────────────
+    const statusDonut = statusRows
+        .filter((s) => s.value > 0)
+        .map((s) => ({ name: s.label, value: s.value }));
 
     // ── Empty state ───────────────────────────────────────────────────────────
     if (library.length === 0) {
@@ -79,8 +76,13 @@ export default function Stats() {
                 <div className="stats-page__empty">
                     <p className="stats-page__empty-icon">鬼</p>
                     <p className="stats-page__empty-title">No data yet</p>
-                    <p className="stats-page__empty-sub">Add anime to your library to see your stats.</p>
-                    <button className="stats-page__empty-btn" onClick={() => navigate("/search")}>
+                    <p className="stats-page__empty-sub">
+                        Add anime to your library to see your stats.
+                    </p>
+                    <button
+                        className="stats-page__empty-btn"
+                        onClick={() => navigate("/search")}
+                    >
                         <Search size={15} /> Find Anime
                     </button>
                 </div>
@@ -95,12 +97,12 @@ export default function Stats() {
                 <p className="stats-page__subtitle">Your anime journey by the numbers</p>
             </div>
 
-            {/* ── Top summary ── */}
+            {/* ── Summary pills ── */}
             <div className="stats-page__summary">
                 <SummaryPill label="Days Watched" value={daysWatched} />
                 <SummaryPill label="Unique Titles" value={stats.totalUnique} />
                 <SummaryPill label="Episodes" value={stats.totalEpisodes.toLocaleString()} />
-                <SummaryPill label="Mean Score" value={stats.averageRating ? `${stats.averageRating}` : "—"} />
+                <SummaryPill label="Mean Score" value={stats.averageRating ?? "—"} />
             </div>
 
             {/* ── Status breakdown ── */}
@@ -108,7 +110,11 @@ export default function Stats() {
                 <h2 className="stats-card__title">Anime Stats</h2>
                 <div className="stats-status">
                     {statusRows.map((row) => (
-                        <div key={row.label} className="stats-status__row">
+                        <div
+                            key={row.label}
+                            className="stats-status__row stats-status__row--clickable"
+                            onClick={() => navigate(`/library?status=${row.key}`)}
+                        >
                             <span className="stats-status__label">{row.label}</span>
                             <div className="stats-status__bar-track">
                                 <div
@@ -119,7 +125,10 @@ export default function Stats() {
                                     }}
                                 />
                             </div>
-                            <span className="stats-status__value" style={{ color: row.color }}>
+                            <span
+                                className="stats-status__value"
+                                style={{ color: row.color }}
+                            >
                                 {row.value}
                             </span>
                         </div>
@@ -134,10 +143,27 @@ export default function Stats() {
                     <div className="stats-card">
                         <h2 className="stats-card__title">Score Distribution</h2>
                         <ResponsiveContainer width="100%" height={200}>
-                            <BarChart data={ratingData} margin={{ top: 0, right: 8, bottom: 0, left: -20 }}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                                <XAxis dataKey="rating" tick={{ fill: "#6b7280", fontSize: 11 }} axisLine={false} tickLine={false} />
-                                <YAxis tick={{ fill: "#6b7280", fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} />
+                            <BarChart
+                                data={ratingData}
+                                margin={{ top: 0, right: 8, bottom: 0, left: -20 }}
+                            >
+                                <CartesianGrid
+                                    strokeDasharray="3 3"
+                                    stroke="rgba(255,255,255,0.05)"
+                                    vertical={false}
+                                />
+                                <XAxis
+                                    dataKey="rating"
+                                    tick={{ fill: "#6b7280", fontSize: 11 }}
+                                    axisLine={false}
+                                    tickLine={false}
+                                />
+                                <YAxis
+                                    tick={{ fill: "#6b7280", fontSize: 11 }}
+                                    axisLine={false}
+                                    tickLine={false}
+                                    allowDecimals={false}
+                                />
                                 <Tooltip
                                     contentStyle={{
                                         background: "#0f1218",
@@ -159,10 +185,31 @@ export default function Stats() {
                     <div className="stats-card">
                         <h2 className="stats-card__title">Top Genres</h2>
                         <ResponsiveContainer width="100%" height={200}>
-                            <BarChart data={genreData} layout="vertical" margin={{ top: 0, right: 8, bottom: 0, left: 8 }}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
-                                <XAxis type="number" tick={{ fill: "#6b7280", fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} />
-                                <YAxis type="category" dataKey="name" width={80} tick={{ fill: "#e8eaf0", fontSize: 11 }} axisLine={false} tickLine={false} />
+                            <BarChart
+                                data={genreData}
+                                layout="vertical"
+                                margin={{ top: 0, right: 8, bottom: 0, left: 8 }}
+                            >
+                                <CartesianGrid
+                                    strokeDasharray="3 3"
+                                    stroke="rgba(255,255,255,0.05)"
+                                    horizontal={false}
+                                />
+                                <XAxis
+                                    type="number"
+                                    tick={{ fill: "#6b7280", fontSize: 11 }}
+                                    axisLine={false}
+                                    tickLine={false}
+                                    allowDecimals={false}
+                                />
+                                <YAxis
+                                    type="category"
+                                    dataKey="name"
+                                    width={80}
+                                    tick={{ fill: "#e8eaf0", fontSize: 11 }}
+                                    axisLine={false}
+                                    tickLine={false}
+                                />
                                 <Tooltip
                                     contentStyle={{
                                         background: "#0f1218",
@@ -179,7 +226,7 @@ export default function Stats() {
                     </div>
                 )}
 
-                {/* ── Status Donut ── */}
+                {/* ── Library Breakdown Donut ── */}
                 {statusDonut.length > 0 && (
                     <div className="stats-card">
                         <h2 className="stats-card__title">Library Breakdown</h2>
@@ -195,7 +242,10 @@ export default function Stats() {
                                     dataKey="value"
                                 >
                                     {statusDonut.map((entry) => (
-                                        <Cell key={entry.name} fill={STATUS_COLORS[entry.name] || "#6b7280"} />
+                                        <Cell
+                                            key={entry.name}
+                                            fill={STATUS_COLORS[entry.name] || "#6b7280"}
+                                        />
                                     ))}
                                 </Pie>
                                 <Tooltip
@@ -212,7 +262,10 @@ export default function Stats() {
                         <div className="stats-card__legend">
                             {statusDonut.map((entry) => (
                                 <div key={entry.name} className="stats-card__legend-item">
-                                    <span className="stats-card__legend-dot" style={{ background: STATUS_COLORS[entry.name] }} />
+                                    <span
+                                        className="stats-card__legend-dot"
+                                        style={{ background: STATUS_COLORS[entry.name] }}
+                                    />
                                     <span className="stats-card__legend-label">{entry.name}</span>
                                     <span className="stats-card__legend-value">{entry.value}</span>
                                 </div>
