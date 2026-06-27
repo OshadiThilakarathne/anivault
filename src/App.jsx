@@ -10,6 +10,7 @@ import BulkImport from "./pages/BulkImport/BulkImport";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Callback from "./pages/Auth/Callback";
+import Recommendations from "./pages/Recommendations/Recommendations.jsx";
 
 // Redirect to login if not authenticated
 function ProtectedRoute({ children }) {
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/stats" element={<Stats />} />
         <Route path="/bulk-import" element={<BulkImport />} />
         <Route path="/anime/:id" element={<AnimeDetail />} />
+        <Route path="/recommendations" element={<Recommendations />} />
       </Route>
     </Routes>
   );

@@ -5,9 +5,8 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true); // checking if already logged in
+    const [loading, setLoading] = useState(true);
 
-    // On mount — check if token exists and is valid
     useEffect(() => {
         const token = localStorage.getItem("anivault_token");
         if (!token) {
@@ -41,8 +40,13 @@ export function AuthProvider({ children }) {
         setUser(null);
     };
 
+    const updateAvatar = async (avatarUrl) => {
+        const res = await API.put("/auth/profile", { avatar: avatarUrl });
+        setUser(res.data);
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading, register, login, logout }}>
+        <AuthContext.Provider value={{ user, loading, register, login, logout, updateAvatar }}>
             {children}
         </AuthContext.Provider>
     );

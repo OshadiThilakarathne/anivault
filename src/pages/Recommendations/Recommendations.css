@@ -1,0 +1,123 @@
+.rec-page {
+    padding: 2rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.rec-page__header {
+    margin-bottom: 2rem;
+}
+
+.rec-page__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.rec-page__subtitle {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.rec-page__genres {
+    color: var(--color-accent-mint);
+    font-weight: 600;
+}
+
+.rec-page__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem;
+    color: var(--color-text-muted);
+}
+
+.rec-page__spinner {
+    animation: spin 1s linear infinite;
+    color: var(--color-accent-mint);
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rec-page__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 5rem 2rem;
+    text-align: center;
+}
+
+.rec-page__empty-icon {
+    font-size: 3rem;
+    opacity: 0.4;
+}
+
+.rec-page__empty-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.rec-page__empty-sub {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+.rec-page__empty-btn {
+    margin-top: 0.5rem;
+    padding: 0.65rem 1.5rem;
+    background: var(--color-accent-mint);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.rec-page__empty-btn:hover {
+    opacity: 0.85;
+}
+
+/* ── Sections ── */
+.rec-page__sections {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.rec-section__header {
+    margin-bottom: 1.25rem;
+}
+
+.rec-section__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.rec-section__title svg {
+    color: var(--color-accent-lavender);
+}
+
+.rec-section__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem;
+}

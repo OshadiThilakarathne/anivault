@@ -1,27 +1,41 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { searchAnime } from "../../services/jikanService";
 import AnimeCard from "../../components/AnimeCard/AnimeCard";
 import { Search as SearchIcon, Loader } from "lucide-react";
 import "./Search.css";
 
 export default function Search() {
-    const [query, setQuery] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [query, setQuery] = useState(searchParams.get("q") || "");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [loadingMore, setLoadingMore] = useState(false);
     const [error, setError] = useState(null);
     const [searched, setSearched] = useState(false);
+    const [page, setPage] = useState(1);
+    const [hasNextPage, setHasNextPage] = useState(false);
 
-    const handleSearch = useCallback(async (e) => {
-        e.preventDefault();
-        if (!query.trim()) return;
+    useEffect(() => {
+        const q = searchParams.get("q");
+        if (q) {
+            setQuery(q);
+            doSearch(q, 1);
+        }
+    }, []);
 
+    const doSearch = async (q, pageNum) => {
         setLoading(true);
         setError(null);
         setSearched(true);
+        setPage(1);
+        setResults([]);
 
         try {
-            const data = await searchAnime(query);
+            const data = await searchAnime(q, pageNum);
             setResults(data.data || []);
+            setHasNextPage(data.pagination?.has_next_page || false);
         } catch (err) {
             if (err.response?.status === 429) {
                 setError("Jikan is rate-limiting — wait 10 seconds and try again.");
@@ -32,7 +46,29 @@ export default function Search() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleSearch = useCallback(async (e) => {
+        e.preventDefault();
+        if (!query.trim()) return;
+        setSearchParams({ q: query });
+        doSearch(query, 1);
     }, [query]);
+
+    const handleLoadMore = async () => {
+        const nextPage = page + 1;
+        setLoadingMore(true);
+        try {
+            const data = await searchAnime(query, nextPage);
+            setResults((prev) => [...prev, ...(data.data || [])]);
+            setPage(nextPage);
+            setHasNextPage(data.pagination?.has_next_page || false);
+        } catch (err) {
+            setError("Failed to load more results.");
+        } finally {
+            setLoadingMore(false);
+        }
+    };
 
     return (
         <div className="search-page">
@@ -59,10 +95,12 @@ export default function Search() {
 
             {error && <p className="search-page__error">{error}</p>}
 
+            {/* Skeleton loading */}
             {loading && (
-                <div className="search-page__loading">
-                    <Loader size={32} className="search-page__spinner" />
-                    <p>Fetching from Jikan...</p>
+                <div className="search-page__grid">
+                    {Array.from({ length: 24 }).map((_, i) => (
+                        <div key={i} className="anime-card-skeleton" />
+                    ))}
                 </div>
             )}
 
@@ -70,11 +108,29 @@ export default function Search() {
                 <p className="search-page__empty">No results found for "{query}".</p>
             )}
 
-            <div className="search-page__grid">
-                {results.map((anime) => (
-                    <AnimeCard key={anime.mal_id} anime={anime} />
-                ))}
-            </div>
+            {!loading && (
+                <div className="search-page__grid">
+                    {results.map((anime) => (
+                        <AnimeCard key={anime.mal_id} anime={anime} />
+                    ))}
+                </div>
+            )}
+
+            {hasNextPage && !loading && results.length > 0 && (
+                <div className="search-page__load-more">
+                    <button
+                        className="search-page__load-more-btn"
+                        onClick={handleLoadMore}
+                        disabled={loadingMore}
+                    >
+                        {loadingMore ? (
+                            <><Loader size={14} className="search-page__spinner--sm" /> Loading...</>
+                        ) : (
+                            "Load More"
+                        )}
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

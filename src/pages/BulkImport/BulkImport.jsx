@@ -130,7 +130,7 @@ export default function BulkImport() {
             <div className="bulk-page__header">
                 <h1 className="bulk-page__title">Bulk Import</h1>
                 <p className="bulk-page__subtitle">
-                    Paste your anime titles and we'll match them automatically via Jikan
+                    Paste your anime titles — one per line
                 </p>
             </div>
 
@@ -139,7 +139,7 @@ export default function BulkImport() {
                 <div className="bulk-step">
                     <div className="bulk-step__field">
                         <label className="bulk-step__label">
-                            Paste titles — one per line
+                            Titles — one per line
                         </label>
                         <textarea
                             className="bulk-step__textarea"
@@ -180,10 +180,6 @@ export default function BulkImport() {
             {/* ══ STEP 2: MATCHING ══ */}
             {step === STEPS.MATCHING && (
                 <div className="bulk-matching">
-                    <Loader size={36} className="bulk-matching__spinner" />
-                    <p className="bulk-matching__text">
-                        Matching {progress.current} of {progress.total}...
-                    </p>
                     <div className="bulk-matching__bar-track">
                         <div
                             className="bulk-matching__bar-fill"
@@ -192,11 +188,14 @@ export default function BulkImport() {
                             }}
                         />
                     </div>
+                    <p className="bulk-matching__text">
+                        {progress.current} / {progress.total} matched
+                    </p>
                     <p className="bulk-matching__hint">
-                        Jikan rate-limits requests — this may take a minute
+                        ⚠️ Don't navigate away — matching in progress
                     </p>
                 </div>
-            )}
+            )} 
 
             {/* ══ STEP 3: REVIEW ══ */}
             {step === STEPS.REVIEW && (

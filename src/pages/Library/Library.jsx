@@ -3,6 +3,7 @@ import { useAnime } from "../../hooks/useAnime";
 import { useNavigate } from "react-router-dom";
 import { Trash2, Star, ChevronDown, ChevronUp, Layers, X, Check } from "lucide-react";
 import "./Library.css";
+import { useSearchParams } from "react-router-dom";
 
 const STATUS_TABS = [
     { key: "all", label: "All" },
@@ -23,7 +24,8 @@ const STATUS_LABELS = {
 
 export default function Library() {
     const { library, removeAnime, removeGroup, createGroup, stats } = useAnime();
-    const [activeTab, setActiveTab] = useState("all");
+    const [searchParams] = useSearchParams(); // ← moved up
+    const [activeTab, setActiveTab] = useState(searchParams.get("status") || "all"); // ← now works
     const [selectMode, setSelectMode] = useState(false);
     const [selected, setSelected] = useState([]);
     const [groupModal, setGroupModal] = useState(false);
