@@ -26,13 +26,6 @@ export default function Home() {
                         unique {stats.totalUnique === 1 ? "title" : "titles"} — not seasons, not arcs. Just anime.
                     </p>
                 </div>
-                <button
-                    className="home-page__search-btn"
-                    onClick={() => navigate("/search")}
-                >
-                    <Search size={16} />
-                    Search Anime
-                </button>
             </div>
 
             {/* ── Stat Cards ── */}
