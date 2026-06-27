@@ -80,14 +80,24 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 999px;
     padding: 0.4rem 1rem;
+    width: 100%;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.topnav__search-wrapper {
+    position: relative;
     width: 200px;
-    transition: border-color 0.2s ease, background 0.2s ease, width 0.2s ease;
+    transition: width 0.2s ease;
+}
+
+.topnav__search-wrapper:focus-within {
+    width: 280px;
 }
 
 .topnav__search:focus-within {
     border-color: rgba(100, 222, 180, 0.4);
     background: rgba(255, 255, 255, 0.07);
-    width: 280px;
+    width: 100%;
 }
 
 .topnav__search-icon {
@@ -106,6 +116,98 @@
 
 .topnav__search-input::placeholder {
     color: rgba(255, 255, 255, 0.3);
+}
+
+.topnav__search-spinner {
+    animation: spin 1s linear infinite;
+    color: rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── Suggestions dropdown ── */
+.topnav__suggestions {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: #0f1218;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 200;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    min-width: 320px;
+}
+
+.topnav__suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.6rem 0.875rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease;
+}
+
+.topnav__suggestion-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.topnav__suggestion-img {
+    width: 32px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.topnav__suggestion-info {
+    min-width: 0;
+}
+
+.topnav__suggestion-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #e8eaf0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topnav__suggestion-meta {
+    font-size: 0.72rem;
+    color: #6b7280;
+    margin-top: 0.1rem;
+}
+
+.topnav__suggestion-more {
+    width: 100%;
+    padding: 0.6rem 0.875rem;
+    background: rgba(100, 222, 180, 0.05);
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    color: #64deb4;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease;
+}
+
+.topnav__suggestion-more:hover {
+    background: rgba(100, 222, 180, 0.1);
 }
 
 /* ── Right ── */

@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import {
-    House, BookOpen, BarChart2,
-    Upload, Sparkles, LogOut, Menu, X, Search
-} from "lucide-react";
+import { House, BookOpen, BarChart2, Upload, Sparkles, LogOut, Menu, X, Search, Loader } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import AvatarPicker from "../AvatarPicker/AvatarPicker";
+import { searchAnime } from "../../services/jikanService";
 import axios from "axios";
 import "./Navbar.css";
 
@@ -24,8 +22,14 @@ export default function Navbar() {
     const [avatars, setAvatars] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
     const [query, setQuery] = useState("");
+    const [suggestions, setSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [searching, setSearching] = useState(false);
     const searchRef = useRef(null);
+    const suggestRef = useRef(null);
+    const debounceRef = useRef(null);
 
+    // Pre-fetch avatars
     useEffect(() => {
         if (!user) return;
         axios.get("https://api.jikan.moe/v4/top/characters?limit=24")
@@ -39,11 +43,50 @@ export default function Navbar() {
             .catch(() => { });
     }, [user]);
 
+    // Live suggestions
+    useEffect(() => {
+        if (!query.trim() || query.length < 2) {
+            setSuggestions([]);
+            setShowSuggestions(false);
+            return;
+        }
+        clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(async () => {
+            setSearching(true);
+            try {
+                const data = await searchAnime(query, 1);
+                setSuggestions((data.data || []).slice(0, 6));
+                setShowSuggestions(true);
+            } catch {
+                setSuggestions([]);
+            } finally {
+                setSearching(false);
+            }
+        }, 400);
+        return () => clearTimeout(debounceRef.current);
+    }, [query]);
+
+    // Close suggestions on outside click
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (
+                searchRef.current && !searchRef.current.contains(e.target) &&
+                suggestRef.current && !suggestRef.current.contains(e.target)
+            ) {
+                setShowSuggestions(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
     const handleSearch = (e) => {
         e.preventDefault();
         if (!query.trim()) return;
         navigate(`/search?q=${encodeURIComponent(query.trim())}`);
         setQuery("");
+        setSuggestions([]);
+        setShowSuggestions(false);
         setMenuOpen(false);
     };
 
@@ -74,18 +117,61 @@ export default function Navbar() {
                         ))}
                     </nav>
 
-                    {/* ── Search bar ── */}
-                    <form className="topnav__search" onSubmit={handleSearch}>
-                        <Search size={15} className="topnav__search-icon" />
-                        <input
+                    {/* ── Search bar with suggestions ── */}
+                    <div className="topnav__search-wrapper">
+                        <form
+                            className="topnav__search"
+                            onSubmit={handleSearch}
                             ref={searchRef}
-                            type="text"
-                            className="topnav__search-input"
-                            placeholder="Search anime..."
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                        />
-                    </form>
+                        >
+                            <Search size={15} className="topnav__search-icon" />
+                            <input
+                                type="text"
+                                className="topnav__search-input"
+                                placeholder="Search anime..."
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+                            />
+                            {searching && (
+                                <Loader size={13} className="topnav__search-spinner" />
+                            )}
+                        </form>
+
+                        {showSuggestions && suggestions.length > 0 && (
+                            <div className="topnav__suggestions" ref={suggestRef}>
+                                {suggestions.map((anime) => (
+                                    <button
+                                        key={anime.mal_id}
+                                        className="topnav__suggestion-item"
+                                        onClick={() => {
+                                            navigate(`/anime/${anime.mal_id}`);
+                                            setQuery("");
+                                            setShowSuggestions(false);
+                                        }}
+                                    >
+                                        <img
+                                            src={anime.images?.jpg?.image_url || ""}
+                                            alt={anime.title}
+                                            className="topnav__suggestion-img"
+                                        />
+                                        <div className="topnav__suggestion-info">
+                                            <p className="topnav__suggestion-title">{anime.title}</p>
+                                            <p className="topnav__suggestion-meta">
+                                                {anime.year || "—"} · {anime.episodes ? `${anime.episodes} eps` : "? eps"}
+                                            </p>
+                                        </div>
+                                    </button>
+                                ))}
+                                <button
+                                    className="topnav__suggestion-more"
+                                    onClick={handleSearch}
+                                >
+                                    See all results for "{query}"
+                                </button>
+                            </div>
+                        )}
+                    </div>
 
                     {/* ── Right side ── */}
                     <div className="topnav__right">
