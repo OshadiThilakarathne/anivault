@@ -1,7 +1,11 @@
 import { useAnime } from "../../hooks/useAnime";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Star, BookOpen, Clock, TrendingUp, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, BookOpen, Clock, TrendingUp, ChevronRight, Sparkles } from "lucide-react";
+import { getTopAnime, getAiringAnime } from "../../services/anilistService";
+import AnimeCard from "../../components/AnimeCard/AnimeCard";
 import "./Home.css";
 
 const STATUS_LABELS = {
@@ -12,10 +16,32 @@ const STATUS_LABELS = {
     dropped: { label: "Dropped", color: "#f87171" },
 };
 
+const fadeUp = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
+const stagger = {
+    visible: { transition: { staggerChildren: 0.08 } },
+};
+
+const cardVariant = {
+    hidden: { opacity: 0, y: 20, scale: 0.97 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
 export default function Home() {
     const { library, stats } = useAnime();
     const { user } = useAuth();
     const navigate = useNavigate();
+
+    const [trending, setTrending] = useState([]);
+
+    useEffect(() => {
+        getAiringAnime()
+            .then((data) => setTrending(data.slice(0, 8)))
+            .catch(() => { });
+    }, []);
 
     const recentlyAdded = [...library]
         .sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt))
@@ -30,9 +56,6 @@ export default function Home() {
         .sort((a, b) => b.userRating - a.userRating)
         .slice(0, 6);
 
-    const avgEpisodeMins = 24;
-    const daysWatched = ((stats.totalEpisodes * avgEpisodeMins) / 60 / 24).toFixed(1);
-
     const greeting = () => {
         const hour = new Date().getHours();
         if (hour < 12) return "Good morning";
@@ -43,64 +66,116 @@ export default function Home() {
     return (
         <div className="home">
 
-            {/* ── Hero ── */}
-            <div className="home__hero">
-                <div className="home__hero-content">
-                    <p className="home__greeting">{greeting()}, {user?.username} 👋</p>
-                    <h1 className="home__hero-title">
-                        Your Anime Vault
-                    </h1>
-                    <p className="home__hero-sub">
-                        {stats.totalUnique} unique titles · {daysWatched} days watched · {stats.totalEpisodes.toLocaleString()} episodes
-                    </p>
-                    <div className="home__hero-actions">
-                        <button className="home__hero-btn home__hero-btn--primary" onClick={() => navigate("/search")}>
-                            Discover Anime
-                        </button>
-                        <button className="home__hero-btn home__hero-btn--secondary" onClick={() => navigate("/library")}>
-                            My Library
-                        </button>
-                    </div>
+            {/* ── Animated Hero ── */}
+            <motion.div
+                className="home__hero"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+            >
+                <div className="home__hero-bg">
+                    <div className="home__hero-orb home__hero-orb--1" />
+                    <div className="home__hero-orb home__hero-orb--2" />
+                    <div className="home__hero-orb home__hero-orb--3" />
                 </div>
 
-                {/* ── Mini stat pills ── */}
-                <div className="home__hero-stats">
-                    <div className="home__mini-stat">
-                        <span className="home__mini-stat-value" style={{ color: "#a78bfa" }}>{stats.completed}</span>
-                        <span className="home__mini-stat-label">Completed</span>
-                    </div>
-                    <div className="home__mini-stat">
-                        <span className="home__mini-stat-value" style={{ color: "#64deb4" }}>{stats.watching}</span>
-                        <span className="home__mini-stat-label">Watching</span>
-                    </div>
-                    <div className="home__mini-stat">
-                        <span className="home__mini-stat-value" style={{ color: "#60a5fa" }}>{stats.planToWatch}</span>
-                        <span className="home__mini-stat-label">Plan to Watch</span>
-                    </div>
-                    <div className="home__mini-stat">
-                        <span className="home__mini-stat-value" style={{ color: "#fbbf24" }}>{stats.averageRating ?? "—"}</span>
-                        <span className="home__mini-stat-label">Mean Score</span>
-                    </div>
+                <div className="home__hero-content">
+                    <motion.p
+                        className="home__greeting"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        {greeting()}, <span className="home__greeting-name">{user?.username}</span> 👋
+                    </motion.p>
+
+                    <motion.h1
+                        className="home__hero-title"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                    >
+                        Your Anime Vault
+                    </motion.h1>
+
+                    <motion.p
+                        className="home__hero-sub"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                    >
+                        {stats.totalUnique} unique titles tracked — not seasons, not arcs. Just anime.
+                    </motion.p>
+
+                    <motion.div
+                        className="home__hero-actions"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                    >
+                        <button
+                            className="home__hero-btn home__hero-btn--primary"
+                            onClick={() => navigate("/search")}
+                        >
+                            <Sparkles size={15} /> Discover Anime
+                        </button>
+                        <button
+                            className="home__hero-btn home__hero-btn--secondary"
+                            onClick={() => navigate("/library")}
+                        >
+                            <BookOpen size={15} /> My Library
+                        </button>
+                    </motion.div>
                 </div>
-            </div>
+
+                {/* ── Floating covers ── */}
+                {recentlyAdded.slice(0, 4).length > 0 && (
+                    <motion.div
+                        className="home__hero-covers"
+                        initial={{ opacity: 0, x: 40 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4, duration: 0.7 }}
+                    >
+                        {recentlyAdded.slice(0, 4).map((anime, i) => (
+                            <motion.img
+                                key={anime._id}
+                                src={anime.coverImage}
+                                alt={anime.title}
+                                className="home__hero-cover"
+                                style={{ zIndex: 4 - i }}
+                                whileHover={{ y: -8, zIndex: 10 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            />
+                        ))}
+                    </motion.div>
+                )}
+            </motion.div>
 
             {/* ── Continue Watching ── */}
             {continueWatching.length > 0 && (
-                <section className="home__section">
+                <motion.section
+                    className="home__section"
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px" }}
+                >
                     <div className="home__section-header">
                         <div className="home__section-title-wrapper">
-                            <Clock size={18} className="home__section-icon" style={{ color: "#64deb4" }} />
+                            <Clock size={18} style={{ color: "#64deb4" }} />
                             <h2 className="home__section-title">Continue Watching</h2>
                         </div>
                         <button className="home__see-all" onClick={() => navigate("/library?status=watching")}>
                             See all <ChevronRight size={14} />
                         </button>
                     </div>
-                    <div className="home__continue-grid">
+                    <motion.div className="home__continue-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
                         {continueWatching.map((anime) => (
-                            <div
+                            <motion.div
                                 key={anime._id}
                                 className="home__continue-card"
+                                variants={cardVariant}
+                                whileHover={{ x: 6 }}
                                 onClick={() => navigate(`/anime/${anime.malId}`)}
                             >
                                 <img src={anime.coverImage} alt={anime.title} className="home__continue-cover" />
@@ -112,36 +187,53 @@ export default function Home() {
                                     </p>
                                     {anime.episodes && (
                                         <div className="home__continue-bar">
-                                            <div
+                                            <motion.div
                                                 className="home__continue-bar-fill"
-                                                style={{ width: `${Math.min(((anime.episodeProgress || 0) / anime.episodes) * 100, 100)}%` }}
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: `${Math.min(((anime.episodeProgress || 0) / anime.episodes) * 100, 100)}%` }}
+                                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                                viewport={{ once: true }}
                                             />
                                         </div>
                                     )}
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
-                </section>
+                    </motion.div>
+                </motion.section>
             )}
 
             {/* ── Recently Added ── */}
             {recentlyAdded.length > 0 && (
-                <section className="home__section">
+                <motion.section
+                    className="home__section"
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px" }}
+                >
                     <div className="home__section-header">
                         <div className="home__section-title-wrapper">
-                            <BookOpen size={18} className="home__section-icon" style={{ color: "#a78bfa" }} />
+                            <BookOpen size={18} style={{ color: "#a78bfa" }} />
                             <h2 className="home__section-title">Recently Added</h2>
                         </div>
                         <button className="home__see-all" onClick={() => navigate("/library")}>
                             See all <ChevronRight size={14} />
                         </button>
                     </div>
-                    <div className="home__recent-grid">
+                    <motion.div
+                        className="home__recent-grid"
+                        variants={stagger}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                    >
                         {recentlyAdded.map((anime) => (
-                            <div
+                            <motion.div
                                 key={anime._id}
                                 className="home__recent-card"
+                                variants={cardVariant}
+                                whileHover={{ y: -6, transition: { duration: 0.2 } }}
                                 onClick={() => navigate(`/anime/${anime.malId}`)}
                             >
                                 <div className="home__recent-cover-wrapper">
@@ -155,36 +247,50 @@ export default function Home() {
                                         </span>
                                     </div>
                                 </div>
-                                <p className="home__recent-title">{anime.isGroup ? anime.title : anime.title}</p>
+                                <p className="home__recent-title">{anime.title}</p>
                                 {anime.userRating && (
                                     <p className="home__recent-rating">
                                         <Star size={11} fill="#fbbf24" color="#fbbf24" />
                                         {anime.userRating}/10
                                     </p>
                                 )}
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
-                </section>
+                    </motion.div>
+                </motion.section>
             )}
 
             {/* ── Top Rated ── */}
             {topRated.length > 0 && (
-                <section className="home__section">
+                <motion.section
+                    className="home__section"
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px" }}
+                >
                     <div className="home__section-header">
                         <div className="home__section-title-wrapper">
-                            <TrendingUp size={18} className="home__section-icon" style={{ color: "#fbbf24" }} />
+                            <TrendingUp size={18} style={{ color: "#fbbf24" }} />
                             <h2 className="home__section-title">Your Top Rated</h2>
                         </div>
                         <button className="home__see-all" onClick={() => navigate("/stats")}>
                             View stats <ChevronRight size={14} />
                         </button>
                     </div>
-                    <div className="home__toprated-grid">
+                    <motion.div
+                        className="home__toprated-grid"
+                        variants={stagger}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                    >
                         {topRated.map((anime, i) => (
-                            <div
+                            <motion.div
                                 key={anime._id}
                                 className="home__toprated-card"
+                                variants={cardVariant}
+                                whileHover={{ x: 4, borderColor: "rgba(251,191,36,0.4)" }}
                                 onClick={() => navigate(`/anime/${anime.malId}`)}
                             >
                                 <span className="home__toprated-rank">#{i + 1}</span>
@@ -196,24 +302,57 @@ export default function Home() {
                                         {anime.userRating}/10
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </motion.section>
+            )}
+
+            {/* ── Trending This Season ── */}
+            {trending.length > 0 && (
+                <motion.section
+                    className="home__section"
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px" }}
+                >
+                    <div className="home__section-header">
+                        <div className="home__section-title-wrapper">
+                            <Sparkles size={18} style={{ color: "#f87171" }} />
+                            <h2 className="home__section-title">Trending This Season</h2>
+                        </div>
+                        <button className="home__see-all" onClick={() => navigate("/recommendations")}>
+                            See more <ChevronRight size={14} />
+                        </button>
+                    </div>
+                    <div className="home__trending-grid">
+                        {trending.map((anime) => (
+                            <AnimeCard key={anime.mal_id} anime={anime} />
                         ))}
                     </div>
-                </section>
+                </motion.section>
             )}
 
             {/* ── Empty state ── */}
             {library.length === 0 && (
-                <div className="home__empty">
+                <motion.div
+                    className="home__empty"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                >
                     <p className="home__empty-icon">鬼</p>
                     <h2 className="home__empty-title">Your vault is empty</h2>
                     <p className="home__empty-sub">Start building your anime library</p>
-                    <button className="home__hero-btn home__hero-btn--primary" onClick={() => navigate("/search")}>
-                        Discover Anime
+                    <button
+                        className="home__hero-btn home__hero-btn--primary"
+                        onClick={() => navigate("/search")}
+                    >
+                        <Sparkles size={15} /> Discover Anime
                     </button>
-                </div>
+                </motion.div>
             )}
-
         </div>
     );
 }
