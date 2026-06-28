@@ -543,3 +543,25 @@
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
 }
+
+/* ── Trending Skeleton ── */
+.home__trending-skeleton {
+    aspect-ratio: 3 / 4;
+    border-radius: 10px;
+    background: linear-gradient(90deg,
+            var(--color-surface) 25%,
+            rgba(255, 255, 255, 0.04) 50%,
+            var(--color-surface) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}

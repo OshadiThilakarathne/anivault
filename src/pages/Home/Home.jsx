@@ -36,11 +36,17 @@ export default function Home() {
     const navigate = useNavigate();
 
     const [trending, setTrending] = useState([]);
+    const [trendingLoaded, setTrendingLoaded] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         getAiringAnime()
-            .then((data) => setTrending(data.slice(0, 8)))
-            .catch(() => { });
+            .then((data) => {
+                setTrending(data.slice(0, 8));
+                setTrendingLoaded(true);
+            })
+            .catch(() => setTrendingLoaded(true));
     }, []);
 
     const recentlyAdded = [...library]
@@ -73,7 +79,6 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8 }}
             >
-                {/* Background */}
                 <div className="home__hero-bg">
                     <div className="home__hero-orb home__hero-orb--1" />
                     <div className="home__hero-orb home__hero-orb--2" />
@@ -81,7 +86,6 @@ export default function Home() {
                     <div className="home__hero-grid" />
                 </div>
 
-                {/* Left: Text */}
                 <div className="home__hero-content">
                     <motion.div
                         className="home__hero-eyebrow"
@@ -116,7 +120,7 @@ export default function Home() {
                         className="home__hero-actions"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.55 }}
+                        transition={{ delay: 0.45 }}
                     >
                         <button className="home__hero-btn home__hero-btn--primary" onClick={() => navigate("/search")}>
                             <Sparkles size={15} /> Discover Anime
@@ -127,7 +131,6 @@ export default function Home() {
                     </motion.div>
                 </div>
 
-                {/* Right: Angled cover stack */}
                 {recentlyAdded.slice(0, 4).length > 0 && (
                     <motion.div
                         className="home__hero-covers"
@@ -167,8 +170,8 @@ export default function Home() {
                 <motion.section
                     className="home__section"
                     variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
+                    initial={mounted ? "hidden" : false}
+                    whileInView={mounted ? "visible" : false}
                     viewport={{ once: true, margin: "-50px" }}
                 >
                     <div className="home__section-header">
@@ -183,8 +186,8 @@ export default function Home() {
                     <motion.div
                         className="home__continue-grid"
                         variants={stagger}
-                        initial="hidden"
-                        whileInView="visible"
+                        initial={mounted ? "hidden" : false}
+                        whileInView={mounted ? "visible" : false}
                         viewport={{ once: true }}
                     >
                         {continueWatching.map((anime) => (
@@ -225,8 +228,8 @@ export default function Home() {
                 <motion.section
                     className="home__section"
                     variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
+                    initial={mounted ? "hidden" : false}
+                    whileInView={mounted ? "visible" : false}
                     viewport={{ once: true, margin: "-50px" }}
                 >
                     <div className="home__section-header">
@@ -241,8 +244,8 @@ export default function Home() {
                     <motion.div
                         className="home__recent-grid"
                         variants={stagger}
-                        initial="hidden"
-                        whileInView="visible"
+                        initial={mounted ? "hidden" : false}
+                        whileInView={mounted ? "visible" : false}
                         viewport={{ once: true }}
                     >
                         {recentlyAdded.map((anime) => (
@@ -282,8 +285,8 @@ export default function Home() {
                 <motion.section
                     className="home__section"
                     variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
+                    initial={mounted ? "hidden" : false}
+                    whileInView={mounted ? "visible" : false}
                     viewport={{ once: true, margin: "-50px" }}
                 >
                     <div className="home__section-header">
@@ -298,8 +301,8 @@ export default function Home() {
                     <motion.div
                         className="home__toprated-grid"
                         variants={stagger}
-                        initial="hidden"
-                        whileInView="visible"
+                        initial={mounted ? "hidden" : false}
+                        whileInView={mounted ? "visible" : false}
                         viewport={{ once: true }}
                     >
                         {topRated.map((anime, i) => (
@@ -325,31 +328,34 @@ export default function Home() {
                 </motion.section>
             )}
 
-            {/* ── Trending This Season ── */}
-            {trending.length > 0 && (
-                <motion.section
-                    className="home__section"
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-50px" }}
-                >
-                    <div className="home__section-header">
-                        <div className="home__section-title-wrapper">
-                            <Sparkles size={18} style={{ color: "#f87171" }} />
-                            <h2 className="home__section-title">Trending This Season</h2>
-                        </div>
-                        <button className="home__see-all" onClick={() => navigate("/recommendations")}>
-                            See more <ChevronRight size={14} />
-                        </button>
+            {/* ── Trending This Season ── always rendered to prevent layout shift ── */}
+            <motion.section
+                className="home__section"
+                variants={fadeUp}
+                initial={mounted ? "hidden" : false}
+                whileInView={mounted ? "visible" : false}
+                viewport={{ once: true, margin: "-50px" }}
+            >
+                <div className="home__section-header">
+                    <div className="home__section-title-wrapper">
+                        <Sparkles size={18} style={{ color: "#f87171" }} />
+                        <h2 className="home__section-title">Trending This Season</h2>
                     </div>
-                    <div className="home__trending-grid">
-                        {trending.map((anime) => (
+                    <button className="home__see-all" onClick={() => navigate("/recommendations")}>
+                        See more <ChevronRight size={14} />
+                    </button>
+                </div>
+                <div className="home__trending-grid">
+                    {!trendingLoaded
+                        ? Array.from({ length: 8 }).map((_, i) => (
+                            <div key={i} className="home__trending-skeleton" />
+                        ))
+                        : trending.map((anime) => (
                             <AnimeCard key={anime.mal_id} anime={anime} />
-                        ))}
-                    </div>
-                </motion.section>
-            )}
+                        ))
+                    }
+                </div>
+            </motion.section>
 
             {/* ── Empty state ── */}
             {library.length === 0 && (
