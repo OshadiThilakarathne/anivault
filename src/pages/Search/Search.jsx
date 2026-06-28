@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { searchAnime } from "../../services/jikanService";
+import { searchAnime } from "../../services/anilistService";
 import AnimeCard from "../../components/AnimeCard/AnimeCard";
 import { Search as SearchIcon, Loader } from "lucide-react";
 import "./Search.css";

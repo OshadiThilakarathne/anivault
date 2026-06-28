@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAnime } from "../../hooks/useAnime";
 import { useState, useEffect } from "react";
 import { ArrowLeft, BookOpen, Calendar, Tv, Building2, Plus } from "lucide-react";
-import { getAnimeById, getAnimeRecommendations } from "../../services/jikanService";
+import { getAnimeById, getAnimeRecommendations } from "../../services/anilistService";
 import AnimeCard from "../../components/AnimeCard/AnimeCard";
 import "./AnimeDetail.css";
 
@@ -35,8 +35,8 @@ export default function AnimeDetail() {
         if (!libraryAnime) {
             setLoading(true);
             getAnimeById(malId)
-                .then((data) => {
-                    const d = data.data;
+                .then((result) => {
+                    const d = result.data;
                     setRemoteAnime({
                         malId: d.mal_id,
                         title: d.title,

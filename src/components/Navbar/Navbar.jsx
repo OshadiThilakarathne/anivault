@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { House, BookOpen, BarChart2, Upload, Sparkles, LogOut, Menu, X, Search, Loader } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import AvatarPicker from "../AvatarPicker/AvatarPicker";
-import { searchAnime } from "../../services/jikanService";
+import { searchAnime } from "../../services/anilistService";
 import axios from "axios";
 import "./Navbar.css";
 

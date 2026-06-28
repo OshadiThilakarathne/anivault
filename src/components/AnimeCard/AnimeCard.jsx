@@ -61,11 +61,20 @@ export default function AnimeCard({ anime }) {
             setStep("rating");
         } else {
             addAnime({
-                ...buildAnimeData(),
+                malId: anime.mal_id,
+                title: anime.title,
+                titleEnglish: anime.title_english || anime.title,
+                coverImage: anime.images?.jpg?.large_image_url || "",
+                synopsis: anime.synopsis || "",
+                genres: anime.genres?.map((g) => g.name) || [],
+                episodes: anime.episodes || null,
+                studio: anime.studios?.[0]?.name || "Unknown", // ← same
+                year: anime.year || null,
                 status: statusKey,
                 episodeProgress: 0,
             });
-            resetDropdown();
+            setOpen(false);
+            setStep("status");
         }
     };
 

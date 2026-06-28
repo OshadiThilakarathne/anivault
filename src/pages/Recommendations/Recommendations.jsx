@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react";
 import { useAnime } from "../../hooks/useAnime";
-import { useNavigate } from "react-router-dom";
-import { getAnimeByGenre, GENRE_IDS } from "../../services/jikanService";
+import { getAnimeByGenre, GENRE_IDS, getAiringAnime, getUpcomingAnime, getTopAnime } from "../../services/anilistService";
 import AnimeCard from "../../components/AnimeCard/AnimeCard";
 import { Loader } from "lucide-react";
-import axios from "axios";
 import "./Recommendations.css";
-
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 export default function Recommendations() {
     const { library, isInLibrary } = useAnime();
-    const navigate = useNavigate();
 
     const [sections, setSections] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -27,39 +22,35 @@ export default function Recommendations() {
         const fetchAll = async () => {
             setLoading(true);
 
-            // ── Top Airing ──────────────────────────────────────────────────────
+            // ── Top Airing ──
             try {
-                await delay(1000);
-                const res = await axios.get("https://api.jikan.moe/v4/top/anime?filter=airing&limit=12");
-                const filtered = (res.data.data || []).filter((a) => !isInLibrary(a.mal_id));
+                const anime = await getAiringAnime();
+                const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
                 if (filtered.length > 0) addSection({ title: "Top Airing Now", anime: filtered.slice(0, 8) });
             } catch { }
 
-            // ── Coming Soon ──────────────────────────────────────────────────────
+            // ── Coming Soon ──
             try {
-                await delay(1000);
-                const res = await axios.get("https://api.jikan.moe/v4/top/anime?filter=upcoming&limit=12");
-                const filtered = (res.data.data || []).filter((a) => !isInLibrary(a.mal_id));
+                const anime = await getUpcomingAnime();
+                const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
                 if (filtered.length > 0) addSection({ title: "Coming Soon", anime: filtered.slice(0, 8) });
             } catch { }
 
-            // ── Most Popular ─────────────────────────────────────────────────────
+            // ── Most Popular ──
             try {
-                await delay(1000);
-                const res = await axios.get("https://api.jikan.moe/v4/top/anime?filter=bypopularity&limit=12");
-                const filtered = (res.data.data || []).filter((a) => !isInLibrary(a.mal_id));
+                const anime = await getTopAnime("POPULARITY_DESC");
+                const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
                 if (filtered.length > 0) addSection({ title: "Most Popular of All Time", anime: filtered.slice(0, 8) });
             } catch { }
 
-            // ── Highest Rated ────────────────────────────────────────────────────
+            // ── Highest Rated ──
             try {
-                await delay(1000);
-                const res = await axios.get("https://api.jikan.moe/v4/top/anime?limit=12");
-                const filtered = (res.data.data || []).filter((a) => !isInLibrary(a.mal_id));
+                const anime = await getTopAnime("SCORE_DESC");
+                const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
                 if (filtered.length > 0) addSection({ title: "Highest Rated", anime: filtered.slice(0, 8) });
             } catch { }
 
-            // ── By Top Genres ────────────────────────────────────────────────────
+            // ── By Top Genres ──
             if (library.length > 0) {
                 const genreMap = {};
                 library.forEach((item) => {
@@ -75,7 +66,6 @@ export default function Recommendations() {
 
                 for (const genre of topGenres) {
                     try {
-                        await delay(1000);
                         const data = await getAnimeByGenre(GENRE_IDS[genre]);
                         const filtered = (data.data || []).filter((a) => !isInLibrary(a.mal_id));
                         if (filtered.length > 0) {
@@ -98,7 +88,6 @@ export default function Recommendations() {
                 <p className="rec-page__subtitle">Discover your next favourite anime</p>
             </div>
 
-            {/* Show spinner only if no sections loaded yet */}
             {loading && sections.length === 0 && (
                 <div className="rec-page__loading">
                     <Loader size={32} className="rec-page__spinner" />
@@ -118,7 +107,6 @@ export default function Recommendations() {
                     </div>
                 ))}
 
-                {/* Show loading indicator at bottom while more sections load */}
                 {loading && sections.length > 0 && (
                     <div className="rec-page__loading-more">
                         <Loader size={20} className="rec-page__spinner" />
