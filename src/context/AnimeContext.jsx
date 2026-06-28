@@ -4,6 +4,7 @@ import { useAuth } from "./AuthContext";
 
 const ACTIONS = {
     SET_LIBRARY: "SET_LIBRARY",
+    SET_LOADING: "SET_LOADING",
     ADD_ITEM: "ADD_ITEM",
     UPDATE_ITEM: "UPDATE_ITEM",
     REMOVE_ITEM: "REMOVE_ITEM",
@@ -13,10 +14,10 @@ function animeReducer(state, action) {
     switch (action.type) {
         case ACTIONS.SET_LIBRARY:
             return { ...state, library: action.payload };
-
+        case ACTIONS.SET_LOADING:
+            return { ...state, loading: action.payload };
         case ACTIONS.ADD_ITEM:
             return { ...state, library: [...state.library, action.payload] };
-
         case ACTIONS.UPDATE_ITEM:
             return {
                 ...state,
@@ -24,34 +25,34 @@ function animeReducer(state, action) {
                     item._id === action.payload._id ? action.payload : item
                 ),
             };
-
         case ACTIONS.REMOVE_ITEM:
             return {
                 ...state,
                 library: state.library.filter((item) => item._id !== action.payload),
             };
-
         default:
             return state;
     }
 }
 
-const initialState = { library: [] };
+const initialState = { library: [], loading: true };
 const AnimeContext = createContext(null);
 
 export function AnimeProvider({ children }) {
     const [state, dispatch] = useReducer(animeReducer, initialState);
     const { user } = useAuth();
 
-    // Load library from backend when user logs in
     useEffect(() => {
         if (!user) {
             dispatch({ type: ACTIONS.SET_LIBRARY, payload: [] });
+            dispatch({ type: ACTIONS.SET_LOADING, payload: false });
             return;
         }
+        dispatch({ type: ACTIONS.SET_LOADING, payload: true });
         API.get("/library")
             .then((res) => dispatch({ type: ACTIONS.SET_LIBRARY, payload: res.data }))
-            .catch((err) => console.error("Failed to load library:", err));
+            .catch((err) => console.error("Failed to load library:", err))
+            .finally(() => dispatch({ type: ACTIONS.SET_LOADING, payload: false }));
     }, [user]);
 
     // ── CRUD helpers ───────────────────────────────────────────────────────────
@@ -87,13 +88,9 @@ export function AnimeProvider({ children }) {
 
     const createGroup = async (groupTitle, ids) => {
         try {
-            // Get the items to group
             const toGroup = state.library.filter((item) => ids.includes(item._id));
             if (toGroup.length === 0) return;
-
             const allGenres = [...new Set(toGroup.flatMap((a) => a.genres))];
-
-            // Create group entry
             const res = await API.post("/library", {
                 isGroup: true,
                 title: groupTitle,
@@ -101,33 +98,16 @@ export function AnimeProvider({ children }) {
                 coverImage: toGroup[0].coverImage,
                 status: toGroup[0].status,
                 seasons: toGroup.map((a) => ({
-                    malId: a.malId,
-                    title: a.title,
-                    titleEnglish: a.titleEnglish,
-                    coverImage: a.coverImage,
-                    synopsis: a.synopsis,
-                    genres: a.genres,
-                    episodes: a.episodes,
-                    studio: a.studio,
-                    year: a.year,
-                    status: a.status,
-                    userRating: a.userRating,
-                    episodeProgress: a.episodeProgress,
+                    malId: a.malId, title: a.title, titleEnglish: a.titleEnglish,
+                    coverImage: a.coverImage, synopsis: a.synopsis, genres: a.genres,
+                    episodes: a.episodes, studio: a.studio, year: a.year,
+                    status: a.status, userRating: a.userRating, episodeProgress: a.episodeProgress,
                 })),
             });
-
-            // Delete the standalone entries
-            for (const item of toGroup) {
-                await API.delete(`/library/${item._id}`);
-            }
-
-            // Update state
+            for (const item of toGroup) await API.delete(`/library/${item._id}`);
             dispatch({
                 type: ACTIONS.SET_LIBRARY,
-                payload: [
-                    ...state.library.filter((item) => !ids.includes(item._id)),
-                    res.data,
-                ],
+                payload: [...state.library.filter((item) => !ids.includes(item._id)), res.data],
             });
         } catch (err) {
             console.error("Failed to create group:", err);
@@ -138,27 +118,14 @@ export function AnimeProvider({ children }) {
         try {
             const group = state.library.find((item) => item._id === groupId);
             if (!group) return;
-
             const updatedSeasons = [...group.seasons, {
-                malId: anime.malId,
-                title: anime.title,
-                titleEnglish: anime.titleEnglish,
-                coverImage: anime.coverImage,
-                synopsis: anime.synopsis,
-                genres: anime.genres,
-                episodes: anime.episodes,
-                studio: anime.studio,
-                year: anime.year,
-                status: anime.status,
-                episodeProgress: anime.episodeProgress,
+                malId: anime.malId, title: anime.title, titleEnglish: anime.titleEnglish,
+                coverImage: anime.coverImage, synopsis: anime.synopsis, genres: anime.genres,
+                episodes: anime.episodes, studio: anime.studio, year: anime.year,
+                status: anime.status, episodeProgress: anime.episodeProgress,
             }];
-
             const allGenres = [...new Set(updatedSeasons.flatMap((s) => s.genres))];
-
-            const res = await API.put(`/library/${groupId}`, {
-                seasons: updatedSeasons,
-                genres: allGenres,
-            });
+            const res = await API.put(`/library/${groupId}`, { seasons: updatedSeasons, genres: allGenres });
             dispatch({ type: ACTIONS.UPDATE_ITEM, payload: res.data });
         } catch (err) {
             console.error("Failed to add to group:", err);
@@ -178,9 +145,7 @@ export function AnimeProvider({ children }) {
         try {
             const group = state.library.find((item) => item._id === groupId);
             if (!group) return;
-
             if (ungroup) {
-                // Restore seasons as standalone entries
                 const restoredItems = [];
                 for (const season of group.seasons) {
                     const res = await API.post("/library", { ...season, isGroup: false });
@@ -189,10 +154,7 @@ export function AnimeProvider({ children }) {
                 await API.delete(`/library/${groupId}`);
                 dispatch({
                     type: ACTIONS.SET_LIBRARY,
-                    payload: [
-                        ...state.library.filter((item) => item._id !== groupId),
-                        ...restoredItems,
-                    ],
+                    payload: [...state.library.filter((item) => item._id !== groupId), ...restoredItems],
                 });
             } else {
                 await API.delete(`/library/${groupId}`);
@@ -233,6 +195,7 @@ export function AnimeProvider({ children }) {
         ) || null;
 
     // ── Derived stats ──────────────────────────────────────────────────────────
+
     const stats = {
         totalUnique: state.library.length,
         completed: state.library.filter((a) => a.status === "completed").length,
@@ -241,9 +204,8 @@ export function AnimeProvider({ children }) {
         dropped: state.library.filter((a) => a.status === "dropped").length,
         onHold: state.library.filter((a) => a.status === "on_hold").length,
         totalEpisodes: state.library.reduce((sum, item) => {
-            if (item.isGroup) {
+            if (item.isGroup)
                 return sum + (item.seasons?.reduce((s, season) => s + (season.episodeProgress || 0), 0) || 0);
-            }
             return sum + (item.episodeProgress || 0);
         }, 0),
         averageRating: (() => {
@@ -255,17 +217,10 @@ export function AnimeProvider({ children }) {
 
     const value = {
         library: state.library,
-        addAnime,
-        updateAnime,
-        removeAnime,
-        createGroup,
-        addToGroup,
-        updateGroup,
-        removeGroup,
-        isInLibrary,
-        getAnimeById,
-        getGroupById,
-        getGroupContaining,
+        loading: state.loading,
+        addAnime, updateAnime, removeAnime,
+        createGroup, addToGroup, updateGroup, removeGroup,
+        isInLibrary, getAnimeById, getGroupById, getGroupContaining,
         stats,
     };
 

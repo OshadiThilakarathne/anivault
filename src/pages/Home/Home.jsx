@@ -31,16 +31,14 @@ const cardVariant = {
 };
 
 export default function Home() {
-    const { library, stats } = useAnime();
-    const { user } = useAuth();
+    const { library, stats, loading: libraryLoading } = useAnime();
+    const { user, loading: authLoading } = useAuth();
     const navigate = useNavigate();
 
     const [trending, setTrending] = useState([]);
     const [trendingLoaded, setTrendingLoaded] = useState(false);
-    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true);
         getAiringAnime()
             .then((data) => {
                 setTrending(data.slice(0, 8));
@@ -48,6 +46,9 @@ export default function Home() {
             })
             .catch(() => setTrendingLoaded(true));
     }, []);
+
+    // Wait for auth + library before rendering anything
+    if (authLoading || libraryLoading) return null;
 
     const recentlyAdded = [...library]
         .sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt))
@@ -72,12 +73,12 @@ export default function Home() {
     return (
         <div className="home">
 
-            {/* ── Animated Hero ── */}
+            {/* ── Hero ── */}
             <motion.div
                 className="home__hero"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.6 }}
             >
                 <div className="home__hero-bg">
                     <div className="home__hero-orb home__hero-orb--1" />
@@ -91,7 +92,7 @@ export default function Home() {
                         className="home__hero-eyebrow"
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.15 }}
+                        transition={{ delay: 0.1 }}
                     >
                         <span className="home__hero-dot" />
                         {greeting()}, <span className="home__greeting-name">{user?.username}</span>
@@ -101,7 +102,7 @@ export default function Home() {
                         className="home__hero-title"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.25 }}
+                        transition={{ delay: 0.2 }}
                     >
                         Your Anime
                         <span className="home__hero-title-accent"> Vault</span>
@@ -111,7 +112,7 @@ export default function Home() {
                         className="home__hero-sub"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 0.35 }}
+                        transition={{ delay: 0.3 }}
                     >
                         Every title you've loved, ranked, and remembered — all in one place.
                     </motion.p>
@@ -120,7 +121,7 @@ export default function Home() {
                         className="home__hero-actions"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.45 }}
+                        transition={{ delay: 0.4 }}
                     >
                         <button className="home__hero-btn home__hero-btn--primary" onClick={() => navigate("/search")}>
                             <Sparkles size={15} /> Discover Anime
@@ -136,7 +137,7 @@ export default function Home() {
                         className="home__hero-covers"
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4, duration: 0.7, ease: "easeOut" }}
+                        transition={{ delay: 0.3, duration: 0.7, ease: "easeOut" }}
                     >
                         {recentlyAdded.slice(0, 4).map((anime, i) => (
                             <motion.div
@@ -150,11 +151,7 @@ export default function Home() {
                                 whileHover={{ y: -16, rotate: 0, zIndex: 10, scale: 1.06 }}
                                 transition={{ type: "spring", stiffness: 280, damping: 18 }}
                             >
-                                <img
-                                    src={anime.coverImage}
-                                    alt={anime.title}
-                                    className="home__hero-cover"
-                                />
+                                <img src={anime.coverImage} alt={anime.title} className="home__hero-cover" />
                                 <div
                                     className="home__hero-cover-glow"
                                     style={{ background: ["#64deb4", "#a78bfa", "#60a5fa", "#f87171"][i] }}
@@ -170,8 +167,8 @@ export default function Home() {
                 <motion.section
                     className="home__section"
                     variants={fadeUp}
-                    initial={mounted ? "hidden" : false}
-                    whileInView={mounted ? "visible" : false}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true, margin: "-50px" }}
                 >
                     <div className="home__section-header">
@@ -186,8 +183,8 @@ export default function Home() {
                     <motion.div
                         className="home__continue-grid"
                         variants={stagger}
-                        initial={mounted ? "hidden" : false}
-                        whileInView={mounted ? "visible" : false}
+                        initial="hidden"
+                        whileInView="visible"
                         viewport={{ once: true }}
                     >
                         {continueWatching.map((anime) => (
@@ -228,8 +225,8 @@ export default function Home() {
                 <motion.section
                     className="home__section"
                     variants={fadeUp}
-                    initial={mounted ? "hidden" : false}
-                    whileInView={mounted ? "visible" : false}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true, margin: "-50px" }}
                 >
                     <div className="home__section-header">
@@ -244,8 +241,8 @@ export default function Home() {
                     <motion.div
                         className="home__recent-grid"
                         variants={stagger}
-                        initial={mounted ? "hidden" : false}
-                        whileInView={mounted ? "visible" : false}
+                        initial="hidden"
+                        whileInView="visible"
                         viewport={{ once: true }}
                     >
                         {recentlyAdded.map((anime) => (
@@ -285,8 +282,8 @@ export default function Home() {
                 <motion.section
                     className="home__section"
                     variants={fadeUp}
-                    initial={mounted ? "hidden" : false}
-                    whileInView={mounted ? "visible" : false}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true, margin: "-50px" }}
                 >
                     <div className="home__section-header">
@@ -301,8 +298,8 @@ export default function Home() {
                     <motion.div
                         className="home__toprated-grid"
                         variants={stagger}
-                        initial={mounted ? "hidden" : false}
-                        whileInView={mounted ? "visible" : false}
+                        initial="hidden"
+                        whileInView="visible"
                         viewport={{ once: true }}
                     >
                         {topRated.map((anime, i) => (
@@ -332,8 +329,8 @@ export default function Home() {
             <motion.section
                 className="home__section"
                 variants={fadeUp}
-                initial={mounted ? "hidden" : false}
-                whileInView={mounted ? "visible" : false}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
             >
                 <div className="home__section-header">
