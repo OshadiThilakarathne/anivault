@@ -2,9 +2,9 @@ import { useAnime } from "../../hooks/useAnime";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Star, BookOpen, Clock, TrendingUp, ChevronRight, Sparkles } from "lucide-react";
-import { getTopAnime, getAiringAnime } from "../../services/anilistService";
+import { getAiringAnime } from "../../services/anilistService";
 import AnimeCard from "../../components/AnimeCard/AnimeCard";
 import "./Home.css";
 
@@ -73,79 +73,90 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8 }}
             >
+                {/* Background */}
                 <div className="home__hero-bg">
                     <div className="home__hero-orb home__hero-orb--1" />
                     <div className="home__hero-orb home__hero-orb--2" />
                     <div className="home__hero-orb home__hero-orb--3" />
+                    <div className="home__hero-grid" />
                 </div>
 
+                {/* Left: Text */}
                 <div className="home__hero-content">
-                    <motion.p
-                        className="home__greeting"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
+                    <motion.div
+                        className="home__hero-eyebrow"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.15 }}
                     >
-                        {greeting()}, <span className="home__greeting-name">{user?.username}</span> 👋
-                    </motion.p>
+                        <span className="home__hero-dot" />
+                        {greeting()}, <span className="home__greeting-name">{user?.username}</span>
+                    </motion.div>
 
                     <motion.h1
                         className="home__hero-title"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
+                        transition={{ delay: 0.25 }}
                     >
-                        Your Anime Vault
+                        Your Anime
+                        <span className="home__hero-title-accent"> Vault</span>
                     </motion.h1>
 
                     <motion.p
                         className="home__hero-sub"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 0.4 }}
+                        transition={{ delay: 0.35 }}
                     >
-                        {stats.totalUnique} unique titles tracked — not seasons, not arcs. Just anime.
+                        Every title you've loved, ranked, and remembered — all in one place.
                     </motion.p>
 
                     <motion.div
                         className="home__hero-actions"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
+                        transition={{ delay: 0.55 }}
                     >
-                        <button
-                            className="home__hero-btn home__hero-btn--primary"
-                            onClick={() => navigate("/search")}
-                        >
+                        <button className="home__hero-btn home__hero-btn--primary" onClick={() => navigate("/search")}>
                             <Sparkles size={15} /> Discover Anime
                         </button>
-                        <button
-                            className="home__hero-btn home__hero-btn--secondary"
-                            onClick={() => navigate("/library")}
-                        >
+                        <button className="home__hero-btn home__hero-btn--secondary" onClick={() => navigate("/library")}>
                             <BookOpen size={15} /> My Library
                         </button>
                     </motion.div>
                 </div>
 
-                {/* ── Floating covers ── */}
+                {/* Right: Angled cover stack */}
                 {recentlyAdded.slice(0, 4).length > 0 && (
                     <motion.div
                         className="home__hero-covers"
-                        initial={{ opacity: 0, x: 40 }}
+                        initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4, duration: 0.7 }}
+                        transition={{ delay: 0.4, duration: 0.7, ease: "easeOut" }}
                     >
                         {recentlyAdded.slice(0, 4).map((anime, i) => (
-                            <motion.img
+                            <motion.div
                                 key={anime._id}
-                                src={anime.coverImage}
-                                alt={anime.title}
-                                className="home__hero-cover"
-                                style={{ zIndex: 4 - i }}
-                                whileHover={{ y: -8, zIndex: 10 }}
-                                transition={{ type: "spring", stiffness: 300 }}
-                            />
+                                className="home__hero-cover-wrap"
+                                style={{
+                                    rotate: [-8, -3, 3, 9][i],
+                                    zIndex: 4 - i,
+                                    marginLeft: i === 0 ? 0 : "-30px",
+                                }}
+                                whileHover={{ y: -16, rotate: 0, zIndex: 10, scale: 1.06 }}
+                                transition={{ type: "spring", stiffness: 280, damping: 18 }}
+                            >
+                                <img
+                                    src={anime.coverImage}
+                                    alt={anime.title}
+                                    className="home__hero-cover"
+                                />
+                                <div
+                                    className="home__hero-cover-glow"
+                                    style={{ background: ["#64deb4", "#a78bfa", "#60a5fa", "#f87171"][i] }}
+                                />
+                            </motion.div>
                         ))}
                     </motion.div>
                 )}
@@ -169,7 +180,13 @@ export default function Home() {
                             See all <ChevronRight size={14} />
                         </button>
                     </div>
-                    <motion.div className="home__continue-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                    <motion.div
+                        className="home__continue-grid"
+                        variants={stagger}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                    >
                         {continueWatching.map((anime) => (
                             <motion.div
                                 key={anime._id}
@@ -353,6 +370,7 @@ export default function Home() {
                     </button>
                 </motion.div>
             )}
+
         </div>
     );
 }
