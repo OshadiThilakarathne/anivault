@@ -1,128 +1,119 @@
 import { useState, useEffect } from "react";
 import { useAnime } from "../../hooks/useAnime";
-import { useNavigate } from "react-router-dom";
-import { getAnimeByGenre, GENRE_IDS } from "../../services/jikanService";
+import { getAnimeByGenre, GENRE_IDS, getAiringAnime, getUpcomingAnime, getTopAnime } from "../../services/anilistService";
 import AnimeCard from "../../components/AnimeCard/AnimeCard";
-import { Loader, Sparkles } from "lucide-react";
+import { Loader } from "lucide-react";
 import "./Recommendations.css";
 
 export default function Recommendations() {
-    const { library, isInLibrary, stats } = useAnime();
-    const navigate = useNavigate();
+    const { library, isInLibrary } = useAnime();
 
-    const [recommendations, setRecommendations] = useState({});
+    const [sections, setSections] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [topGenres, setTopGenres] = useState([]);
 
     useEffect(() => {
-        if (library.length === 0) {
-            setLoading(false);
-            return;
-        }
+        const results = [];
 
-        // Find top 3 genres from library
-        const genreMap = {};
-        library.forEach((item) => {
-            const genres = item.isGroup ? item.genres : item.genres || [];
-            genres.forEach((g) => {
-                genreMap[g] = (genreMap[g] || 0) + 1;
-            });
-        });
+        const addSection = (section) => {
+            results.push(section);
+            setSections([...results]);
+        };
 
-        const sorted = Object.entries(genreMap)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 3)
-            .map(([name]) => name)
-            .filter((name) => GENRE_IDS[name]); // only genres we have IDs for
-
-        setTopGenres(sorted);
-
-        // Fetch recommendations for each top genre
         const fetchAll = async () => {
             setLoading(true);
-            const results = {};
-            for (const genre of sorted) {
-                try {
-                    const data = await getAnimeByGenre(GENRE_IDS[genre]);
-                    // Filter out anime already in library
-                    results[genre] = (data.data || []).filter(
-                        (a) => !isInLibrary(a.mal_id)
-                    ).slice(0, 8);
-                } catch {
-                    results[genre] = [];
+
+            // ── Top Airing ──
+            try {
+                const anime = await getAiringAnime();
+                const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
+                if (filtered.length > 0) addSection({ title: "Top Airing Now", anime: filtered.slice(0, 8) });
+            } catch { }
+
+            // ── Coming Soon ──
+            try {
+                const anime = await getUpcomingAnime();
+                const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
+                if (filtered.length > 0) addSection({ title: "Coming Soon", anime: filtered.slice(0, 8) });
+            } catch { }
+
+            // ── Most Popular ──
+            try {
+                const anime = await getTopAnime("POPULARITY_DESC");
+                const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
+                if (filtered.length > 0) addSection({ title: "Most Popular of All Time", anime: filtered.slice(0, 8) });
+            } catch { }
+
+            // ── Highest Rated ──
+            try {
+                const anime = await getTopAnime("SCORE_DESC");
+                const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
+                if (filtered.length > 0) addSection({ title: "Highest Rated", anime: filtered.slice(0, 8) });
+            } catch { }
+
+            // ── By Top Genres ──
+            if (library.length > 0) {
+                const genreMap = {};
+                library.forEach((item) => {
+                    const genres = item.isGroup ? item.genres : item.genres || [];
+                    genres.forEach((g) => { genreMap[g] = (genreMap[g] || 0) + 1; });
+                });
+
+                const topGenres = Object.entries(genreMap)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 2)
+                    .map(([name]) => name)
+                    .filter((name) => GENRE_IDS[name]);
+
+                for (const genre of topGenres) {
+                    try {
+                        const data = await getAnimeByGenre(GENRE_IDS[genre]);
+                        const filtered = (data.data || []).filter((a) => !isInLibrary(a.mal_id));
+                        if (filtered.length > 0) {
+                            addSection({ title: `Because You Like ${genre}`, anime: filtered.slice(0, 8) });
+                        }
+                    } catch { }
                 }
             }
-            setRecommendations(results);
+
             setLoading(false);
         };
 
         fetchAll();
     }, [library.length]);
 
-    // ── Empty state ───────────────────────────────────────────────────────────
-    if (library.length === 0) {
-        return (
-            <div className="rec-page">
-                <div className="rec-page__header">
-                    <h1 className="rec-page__title">For You</h1>
-                </div>
-                <div className="rec-page__empty">
-                    <p className="rec-page__empty-icon">✨</p>
-                    <p className="rec-page__empty-title">No recommendations yet</p>
-                    <p className="rec-page__empty-sub">
-                        Add anime to your library and we'll recommend similar titles.
-                    </p>
-                    <button
-                        className="rec-page__empty-btn"
-                        onClick={() => navigate("/search")}
-                    >
-                        Find Anime
-                    </button>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className="rec-page">
             <div className="rec-page__header">
-                <div>
-                    <h1 className="rec-page__title">For You</h1>
-                    <p className="rec-page__subtitle">
-                        Based on your top genres —{" "}
-                        <span className="rec-page__genres">
-                            {topGenres.join(", ")}
-                        </span>
-                    </p>
-                </div>
+                <h1 className="rec-page__title">For You</h1>
+                <p className="rec-page__subtitle">Discover your next favourite anime</p>
             </div>
 
-            {loading ? (
+            {loading && sections.length === 0 && (
                 <div className="rec-page__loading">
                     <Loader size={32} className="rec-page__spinner" />
                     <p>Finding recommendations...</p>
                 </div>
-            ) : (
-                <div className="rec-page__sections">
-                    {topGenres.map((genre) => (
-                        recommendations[genre]?.length > 0 && (
-                            <div key={genre} className="rec-section">
-                                <div className="rec-section__header">
-                                    <h2 className="rec-section__title">
-                                        <Sparkles size={16} />
-                                        Because you like {genre}
-                                    </h2>
-                                </div>
-                                <div className="rec-section__grid">
-                                    {recommendations[genre].map((anime) => (
-                                        <AnimeCard key={anime.mal_id} anime={anime} />
-                                    ))}
-                                </div>
-                            </div>
-                        )
-                    ))}
-                </div>
             )}
+
+            <div className="rec-page__sections">
+                {sections.map((section) => (
+                    <div key={section.title} className="rec-section">
+                        <h2 className="rec-section__title">{section.title}</h2>
+                        <div className="rec-section__grid">
+                            {section.anime.map((anime) => (
+                                <AnimeCard key={anime.mal_id} anime={anime} />
+                            ))}
+                        </div>
+                    </div>
+                ))}
+
+                {loading && sections.length > 0 && (
+                    <div className="rec-page__loading-more">
+                        <Loader size={20} className="rec-page__spinner" />
+                        <p>Loading more...</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAnime } from "../../hooks/useAnime";
-import { searchAnime } from "../../services/jikanService";
+import { searchAnime } from "../../services/anilistService";
 import { CheckCircle, XCircle, Loader, Upload } from "lucide-react";
 import "./BulkImport.css";
 
@@ -195,7 +195,7 @@ export default function BulkImport() {
                         ⚠️ Don't navigate away — matching in progress
                     </p>
                 </div>
-            )} 
+            )}
 
             {/* ══ STEP 3: REVIEW ══ */}
             {step === STEPS.REVIEW && (
