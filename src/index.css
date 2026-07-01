@@ -51,10 +51,10 @@ body[data-theme="dark"] {
 
 /* ── GHIBLI LIGHT ── */
 body[data-theme="ghibli"] {
-  background-color: #faf6ed;
+  background-color: #f0ebe0;
   background-image:
-    radial-gradient(ellipse at 20% 20%, rgba(168, 199, 161, 0.25) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(247, 207, 153, 0.2) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 20%, rgba(139, 168, 132, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(196, 158, 100, 0.15) 0%, transparent 50%);
   font-family: 'Quicksand', 'Inter', sans-serif;
 }
 
@@ -66,18 +66,18 @@ body[data-theme="ghibli"] h3 {
 }
 
 body[data-theme="ghibli"] {
-  --color-bg: #faf6ed;
-  --color-surface: #ffffff;
-  --color-surface-raised: #fefcf6;
-  --color-border: rgba(122, 142, 110, 0.18);
-  --color-border-strong: rgba(122, 142, 110, 0.3);
-  --color-text: #3d3a31;
-  --color-text-muted: #8a8478;
-  --color-accent-mint: #8aab83;
-  --color-accent-lavender: #c9a87c;
-  --color-accent-blue: #8fb8c9;
-  --color-accent-amber: #e8a854;
-  --color-accent-rose: #d98a7a;
+  --color-bg: #f0ebe0;
+  --color-surface: #e8e2d5;
+  --color-surface-raised: #dfd8c8;
+  --color-border: rgba(100, 115, 85, 0.2);
+  --color-border-strong: rgba(100, 115, 85, 0.35);
+  --color-text: #2c2a24;
+  --color-text-muted: #6b6358;
+  --color-accent-mint: #5a8a52;
+  --color-accent-lavender: #a07840;
+  --color-accent-blue: #4a7a8a;
+  --color-accent-amber: #c87820;
+  --color-accent-rose: #a85848;
   --bg-primary: var(--color-bg);
   --bg-secondary: var(--color-surface);
   --bg-card: var(--color-surface-raised);
@@ -86,8 +86,8 @@ body[data-theme="ghibli"] {
   --text-primary: var(--color-text);
   --text-muted: var(--color-text-muted);
   --border-color: var(--color-border);
-  --active-bg: rgba(138, 171, 131, 0.12);
-  --active-border: rgba(138, 171, 131, 0.3);
+  --active-bg: rgba(90, 138, 82, 0.12);
+  --active-border: rgba(90, 138, 82, 0.3);
   --radius-pill: 20px;
   --radius-md: 12px;
 }
@@ -444,583 +444,865 @@ body[data-theme="dark"] .footer__link:hover {
    GHIBLI THEME — full element overrides
 ══════════════════════════════════════════ */
 body[data-theme="ghibli"] .topnav {
-  background: rgba(250, 246, 237, 0.95) !important;
-  border-bottom: 1px solid rgba(122, 142, 110, 0.2) !important;
-  box-shadow: 0 2px 12px rgba(122, 142, 110, 0.1);
+  background: rgba(240, 235, 224, 0.95) !important;
+  border-bottom: 1px solid rgba(100, 115, 85, 0.2) !important;
+  box-shadow: 0 2px 12px rgba(100, 115, 85, 0.08) !important;
 }
 
-body[data-theme="ghibli"] .topnav__brand-icon {
-  color: #8aab83;
-}
-
-body[data-theme="ghibli"] .topnav__link {
-  color: #8a8478 !important;
-}
-
-body[data-theme="ghibli"] .topnav__link:hover {
-  color: #5a7a52 !important;
-  background: rgba(138, 171, 131, 0.08) !important;
-}
-
-body[data-theme="ghibli"] .topnav__link--active {
-  color: #5a7a52 !important;
-  background: rgba(138, 171, 131, 0.12) !important;
-  border-color: rgba(138, 171, 131, 0.3) !important;
-}
-
-body[data-theme="ghibli"] .topnav__username {
-  color: #3d3a31 !important;
-}
-
-body[data-theme="ghibli"] .topnav__logout {
-  color: #8a8478 !important;
-}
-
-body[data-theme="ghibli"] .topnav__logout:hover {
-  color: #d98a7a !important;
-  background: rgba(217, 138, 122, 0.1) !important;
-}
-
-body[data-theme="ghibli"] .topnav__search {
-  background: rgba(122, 142, 110, 0.07) !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-}
-
-body[data-theme="ghibli"] .topnav__search:focus-within {
-  border-color: rgba(138, 171, 131, 0.5) !important;
-}
-
-body[data-theme="ghibli"] .topnav__search-input {
-  color: #3d3a31 !important;
-}
-
-body[data-theme="ghibli"] .topnav__search-input::placeholder {
-  color: #a09890 !important;
-}
-
-body[data-theme="ghibli"] .topnav__search-icon {
-  color: #a09890 !important;
-}
-
-body[data-theme="ghibli"] .topnav__suggestions {
-  background: #fff !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  box-shadow: 0 8px 24px rgba(122, 142, 110, 0.15) !important;
-}
-
-body[data-theme="ghibli"] .topnav__suggestion-title {
-  color: #3d3a31 !important;
-}
-
-body[data-theme="ghibli"] .topnav__suggestion-meta {
-  color: #8a8478 !important;
-}
-
-body[data-theme="ghibli"] .topnav__suggestion-more {
-  color: #8aab83 !important;
-  border-top-color: rgba(122, 142, 110, 0.1) !important;
-  background: rgba(138, 171, 131, 0.04) !important;
-}
-
-body[data-theme="ghibli"] .topnav__suggestion-more:hover {
-  background: rgba(138, 171, 131, 0.1) !important;
-}
-
-body[data-theme="ghibli"] .topnav__hamburger {
-  color: #3d3a31 !important;
-}
-
-body[data-theme="ghibli"] .topnav__mobile-menu {
-  background: rgba(250, 246, 237, 0.98) !important;
-  border-top-color: rgba(122, 142, 110, 0.15) !important;
-}
-
-body[data-theme="ghibli"] .topnav__mobile-link {
-  color: #8a8478 !important;
-}
-
-body[data-theme="ghibli"] .topnav__mobile-link--active {
-  color: #5a7a52 !important;
-  background: rgba(138, 171, 131, 0.1) !important;
-}
-
-body[data-theme="ghibli"] .library-page__title,
-body[data-theme="ghibli"] .home__hero-title,
-body[data-theme="ghibli"] .stats-page__title {
-  color: #3d3a31 !important;
-  -webkit-text-fill-color: #3d3a31 !important;
-}
-
-body[data-theme="ghibli"] .home__hero-title-accent {
-  background: linear-gradient(135deg, #8aab83, #c9a87c) !important;
+body[data-theme="ghibli"] .topnav__brand-text {
+  background: linear-gradient(135deg, #5a8a52, #a07840) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
 }
 
-body[data-theme="ghibli"] .home__hero-sub,
-body[data-theme="ghibli"] .library-page__subtitle {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .topnav__link {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .topnav__link:hover {
+  color: #2c2a24 !important;
+  background: rgba(90, 138, 82, 0.08) !important;
+}
+
+body[data-theme="ghibli"] .topnav__link--active {
+  color: #3a6834 !important;
+  background: rgba(90, 138, 82, 0.12) !important;
+  border-color: rgba(90, 138, 82, 0.3) !important;
+}
+
+body[data-theme="ghibli"] .topnav__username {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .topnav__logout {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .topnav__logout:hover {
+  color: #a85848 !important;
+}
+
+body[data-theme="ghibli"] .topnav__search {
+  background: rgba(100, 115, 85, 0.08) !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+}
+
+body[data-theme="ghibli"] .topnav__search:focus-within {
+  border-color: rgba(90, 138, 82, 0.5) !important;
+}
+
+body[data-theme="ghibli"] .topnav__search-input {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .topnav__search-input::placeholder {
+  color: #9a9080 !important;
+}
+
+body[data-theme="ghibli"] .topnav__search-icon {
+  color: #9a9080 !important;
+}
+
+body[data-theme="ghibli"] .topnav__suggestions {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(100, 115, 85, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .topnav__suggestion-title {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .topnav__suggestion-meta {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .topnav__suggestion-more {
+  color: #5a8a52 !important;
+  background: rgba(90, 138, 82, 0.05) !important;
+}
+
+body[data-theme="ghibli"] .topnav__mobile-menu {
+  background: rgba(240, 235, 224, 0.98) !important;
+}
+
+body[data-theme="ghibli"] .topnav__mobile-link {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .topnav__mobile-link--active {
+  color: #3a6834 !important;
+  background: rgba(90, 138, 82, 0.1) !important;
+}
+
+/* Hero */
+body[data-theme="ghibli"] .home__hero {
+  background: linear-gradient(135deg, rgba(90, 138, 82, 0.08) 0%, rgba(160, 120, 64, 0.06) 100%) !important;
+}
+
+body[data-theme="ghibli"] .home__hero-title {
+  color: #2c2a24 !important;
+  -webkit-text-fill-color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .home__hero-title-accent {
+  background: linear-gradient(135deg, #5a8a52, #a07840) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body[data-theme="ghibli"] .home__hero-sub {
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .home__greeting {
-  color: #8a8478 !important;
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .home__greeting-name {
-  color: #5a7a52 !important;
+  color: #3a6834 !important;
 }
 
 body[data-theme="ghibli"] .home__hero-eyebrow {
-  background: rgba(138, 171, 131, 0.08) !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #8a8478 !important;
+  background: rgba(90, 138, 82, 0.08) !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .home__hero-dot {
+  background: #5a8a52 !important;
+  box-shadow: 0 0 8px rgba(90, 138, 82, 0.6) !important;
 }
 
 body[data-theme="ghibli"] .home__hero-btn--primary {
-  background: #8aab83 !important;
+  background: #5a8a52 !important;
   color: #fff !important;
-  box-shadow: 0 4px 16px rgba(138, 171, 131, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(90, 138, 82, 0.3) !important;
+}
+
+body[data-theme="ghibli"] .home__hero-btn--primary:hover {
+  box-shadow: 0 6px 20px rgba(90, 138, 82, 0.4) !important;
 }
 
 body[data-theme="ghibli"] .home__hero-btn--secondary {
-  background: #fff !important;
-  color: #3d3a31 !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-}
-
-body[data-theme="ghibli"] .home__section-title {
-  color: #3d3a31 !important;
-}
-
-body[data-theme="ghibli"] .home__see-all {
-  color: #8aab83 !important;
-}
-
-body[data-theme="ghibli"] .home__continue-title {
-  color: #3d3a31 !important;
-}
-
-body[data-theme="ghibli"] .home__continue-eps {
-  color: #8a8478 !important;
-}
-
-body[data-theme="ghibli"] .home__continue-bar {
-  background: rgba(122, 142, 110, 0.1) !important;
-}
-
-body[data-theme="ghibli"] .home__continue-bar-fill {
-  background: #8aab83 !important;
-}
-
-body[data-theme="ghibli"] .home__recent-title {
-  color: #3d3a31 !important;
-}
-
-body[data-theme="ghibli"] .home__toprated-title {
-  color: #3d3a31 !important;
-}
-
-body[data-theme="ghibli"] .home__toprated-rank {
-  color: #a09890 !important;
+  background: #e8e2d5 !important;
+  color: #2c2a24 !important;
+  border-color: rgba(100, 115, 85, 0.25) !important;
 }
 
 body[data-theme="ghibli"] .home__hero-strip {
-  background: rgba(255, 255, 255, 0.8) !important;
-  border-color: rgba(122, 142, 110, 0.15) !important;
+  background: rgba(232, 226, 213, 0.8) !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
 }
 
 body[data-theme="ghibli"] .home__hero-strip-value {
-  color: #8aab83 !important;
+  color: #5a8a52 !important;
 }
 
 body[data-theme="ghibli"] .home__hero-strip-label {
-  color: #8a8478 !important;
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .home__hero-strip-divider {
-  background: rgba(122, 142, 110, 0.15) !important;
+  background: rgba(100, 115, 85, 0.15) !important;
 }
 
-body[data-theme="ghibli"] .library-page__tab {
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #8a8478 !important;
+/* Ticker in hero */
+body[data-theme="ghibli"] .home__ticker-item {
+  color: #5a8a52 !important;
 }
 
-body[data-theme="ghibli"] .library-page__tab:hover {
-  border-color: #8aab83 !important;
-  color: #5a7a52 !important;
+body[data-theme="ghibli"] .home__ticker-dot {
+  color: #a07840 !important;
 }
 
-body[data-theme="ghibli"] .library-page__tab--active {
-  background: #8aab83 !important;
-  border-color: #8aab83 !important;
-  color: #fff !important;
+body[data-theme="ghibli"] .home__hero-orb--1 {
+  background: rgba(90, 138, 82, 0.12) !important;
 }
 
-body[data-theme="ghibli"] .library-card__title {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .home__hero-orb--2 {
+  background: rgba(160, 120, 64, 0.1) !important;
 }
 
-body[data-theme="ghibli"] .library-card__genre-tag {
-  background: rgba(138, 171, 131, 0.12) !important;
-  color: #5a7a52 !important;
-  border-color: rgba(138, 171, 131, 0.25) !important;
+body[data-theme="ghibli"] .home__hero-orb--3 {
+  background: rgba(74, 122, 138, 0.08) !important;
 }
 
-body[data-theme="ghibli"] .library-card__eps {
-  color: #8a8478 !important;
+/* Sections */
+body[data-theme="ghibli"] .home__section {
+  border-bottom-color: rgba(100, 115, 85, 0.12) !important;
 }
 
-body[data-theme="ghibli"] .library-page__select-btn {
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .home__section-title {
+  color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .library-page__select-btn:hover {
-  border-color: #8aab83 !important;
-  color: #5a7a52 !important;
+body[data-theme="ghibli"] .home__see-all {
+  color: #5a8a52 !important;
 }
 
-body[data-theme="ghibli"] .library-page__group-btn {
-  background: #8aab83 !important;
-  color: #fff !important;
+body[data-theme="ghibli"] .home__continue-card {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
 }
 
-body[data-theme="ghibli"] .library-modal {
-  background: #fff !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
+body[data-theme="ghibli"] .home__continue-card:hover {
+  border-color: #5a8a52 !important;
 }
 
-body[data-theme="ghibli"] .library-modal__title {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .home__continue-title {
+  color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .library-modal__sub {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .home__continue-eps {
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .library-modal__input {
-  background: #faf6ed !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .home__continue-bar {
+  background: rgba(100, 115, 85, 0.12) !important;
 }
 
-body[data-theme="ghibli"] .library-modal__confirm {
-  background: #8aab83 !important;
-  color: #fff !important;
+body[data-theme="ghibli"] .home__continue-bar-fill {
+  background: #5a8a52 !important;
+}
+
+body[data-theme="ghibli"] .home__recent-title {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .home__toprated-card {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .home__toprated-card:hover {
+  border-color: rgba(160, 120, 64, 0.4) !important;
+}
+
+body[data-theme="ghibli"] .home__toprated-title {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .home__toprated-rank {
+  color: #9a9080 !important;
+}
+
+/* Cards */
+body[data-theme="ghibli"] .anime-card {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
+  box-shadow: 0 2px 8px rgba(100, 115, 85, 0.08) !important;
+}
+
+body[data-theme="ghibli"] .anime-card:hover {
+  box-shadow: 0 6px 20px rgba(100, 115, 85, 0.15) !important;
 }
 
 body[data-theme="ghibli"] .anime-card__title {
-  color: #3d3a31 !important;
+  color: #2c2a24 !important;
 }
 
 body[data-theme="ghibli"] .anime-card__title:hover {
-  color: #5a7a52 !important;
+  color: #3a6834 !important;
 }
 
 body[data-theme="ghibli"] .anime-card__meta {
-  color: #8a8478 !important;
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .anime-card__genre-tag {
-  background: rgba(138, 171, 131, 0.12) !important;
-  color: #5a7a52 !important;
-  border-color: rgba(138, 171, 131, 0.25) !important;
+  background: rgba(90, 138, 82, 0.1) !important;
+  color: #3a6834 !important;
+  border-color: rgba(90, 138, 82, 0.2) !important;
 }
 
 body[data-theme="ghibli"] .anime-card__btn {
-  border-color: #8aab83 !important;
-  color: #8aab83 !important;
+  border-color: #5a8a52 !important;
+  color: #5a8a52 !important;
 }
 
 body[data-theme="ghibli"] .anime-card__btn:hover:not(:disabled) {
-  background: #8aab83 !important;
+  background: #5a8a52 !important;
   color: #fff !important;
 }
 
 body[data-theme="ghibli"] .anime-card__btn--added {
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #a09890 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #9a9080 !important;
 }
 
 body[data-theme="ghibli"] .anime-card__dropdown {
-  background: #fff !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(100, 115, 85, 0.15) !important;
 }
 
 body[data-theme="ghibli"] .anime-card__dropdown-item {
-  color: #3d3a31 !important;
+  color: #2c2a24 !important;
 }
 
 body[data-theme="ghibli"] .anime-card__dropdown-item:hover {
-  background: rgba(138, 171, 131, 0.08) !important;
-  color: #5a7a52 !important;
+  background: rgba(90, 138, 82, 0.08) !important;
+  color: #3a6834 !important;
 }
 
 body[data-theme="ghibli"] .anime-card__rating-select {
-  background: #faf6ed !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #3d3a31 !important;
+  background: #dfd8c8 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #2c2a24 !important;
 }
 
 body[data-theme="ghibli"] .anime-card__rating-confirm {
-  background: #8aab83 !important;
+  background: #5a8a52 !important;
   color: #fff !important;
 }
 
-body[data-theme="ghibli"] .search-page__title {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .anime-card__rating-label {
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .search-page__subtitle {
-  color: #8a8478 !important;
+/* Library */
+body[data-theme="ghibli"] .library-page__title {
+  color: #2c2a24 !important;
+  -webkit-text-fill-color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .search-page__input {
-  background: #fff !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .library-page__subtitle {
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .search-page__input:focus {
-  border-color: #8aab83 !important;
+body[data-theme="ghibli"] .library-page__unique-count {
+  color: #5a8a52 !important;
 }
 
-body[data-theme="ghibli"] .search-page__btn {
-  background: #8aab83 !important;
+body[data-theme="ghibli"] .library-page__tab {
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .library-page__tab:hover {
+  border-color: #5a8a52 !important;
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .library-page__tab--active {
+  background: #5a8a52 !important;
+  border-color: #5a8a52 !important;
   color: #fff !important;
 }
 
-body[data-theme="ghibli"] .stats-page__subtitle {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .library-card {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
 }
 
-body[data-theme="ghibli"] .stats-card__title {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .library-card:hover {
+  box-shadow: 0 6px 20px rgba(100, 115, 85, 0.12) !important;
 }
 
-body[data-theme="ghibli"] .stats-card__legend-label {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .library-card__title {
+  color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .stats-card__legend-value {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .library-card__eps {
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .bento-cell__title {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .library-card__genre-tag {
+  background: rgba(90, 138, 82, 0.1) !important;
+  color: #3a6834 !important;
+  border-color: rgba(90, 138, 82, 0.2) !important;
 }
 
-body[data-theme="ghibli"] .bento-cell__big-label {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .library-page__select-btn {
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .bento-cell__big-value {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .library-page__select-btn:hover {
+  border-color: #5a8a52 !important;
+  color: #3a6834 !important;
 }
 
-body[data-theme="ghibli"] .ring-hero__pct {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .library-page__group-btn {
+  background: #5a8a52 !important;
+  color: #fff !important;
 }
 
-body[data-theme="ghibli"] .ring-hero__sub {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .library-modal {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
 }
 
-body[data-theme="ghibli"] .ring-hero__fill {
-  stroke: #8aab83 !important;
-  filter: drop-shadow(0 0 8px rgba(138, 171, 131, 0.4)) !important;
+body[data-theme="ghibli"] .library-modal__title {
+  color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .ring-hero__stat-label {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .library-modal__sub {
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .ring-hero__stat-row {
-  border-bottom-color: rgba(122, 142, 110, 0.12) !important;
+body[data-theme="ghibli"] .library-modal__input {
+  background: #dfd8c8 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .bento-status__label {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .library-modal__confirm {
+  background: #5a8a52 !important;
+  color: #fff !important;
 }
 
-body[data-theme="ghibli"] .bento-status__track {
-  background: rgba(122, 142, 110, 0.1) !important;
+/* Detail page */
+body[data-theme="ghibli"] .detail-page__title {
+  color: #2c2a24 !important;
+  -webkit-text-fill-color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .footer {
-  border-top-color: rgba(122, 142, 110, 0.15) !important;
-  background: #faf6ed !important;
-}
-
-body[data-theme="ghibli"] .footer__logo-text {
-  color: #8aab83 !important;
-}
-
-body[data-theme="ghibli"] .footer__copy,
-body[data-theme="ghibli"] .footer__link {
-  color: #8a8478 !important;
-}
-
-body[data-theme="ghibli"] .footer__link:hover {
-  color: #5a7a52 !important;
-}
-
-body[data-theme="ghibli"] .detail-page__title,
 body[data-theme="ghibli"] .detail-page__title-en {
-  color: #3d3a31 !important;
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .detail-page__synopsis {
-  color: #8a8478 !important;
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .detail-page__label {
-  color: #8a8478 !important;
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__back {
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__back:hover {
+  border-color: #5a8a52 !important;
+  color: #3a6834 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__quick-meta {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
 }
 
 body[data-theme="ghibli"] .detail-page__input,
 body[data-theme="ghibli"] .detail-page__textarea,
 body[data-theme="ghibli"] .detail-page__rating-select {
-  background: #fff !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #3d3a31 !important;
+  background: #dfd8c8 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__input:focus,
+body[data-theme="ghibli"] .detail-page__textarea:focus {
+  border-color: #5a8a52 !important;
 }
 
 body[data-theme="ghibli"] .detail-page__status-btn {
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #8a8478 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__status-btn:hover {
+  border-color: #5a8a52 !important;
+  color: #2c2a24 !important;
 }
 
 body[data-theme="ghibli"] .detail-page__status-btn--active {
-  background: #8aab83 !important;
-  border-color: #8aab83 !important;
+  background: #5a8a52 !important;
+  border-color: #5a8a52 !important;
   color: #fff !important;
 }
 
 body[data-theme="ghibli"] .detail-page__save-btn {
-  background: #8aab83 !important;
+  background: #5a8a52 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .detail-page__save-btn--saved {
+  background: #a07840 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__divider {
+  background: rgba(100, 115, 85, 0.12) !important;
+}
+
+body[data-theme="ghibli"] .detail-page__add-btn {
+  background: #5a8a52 !important;
   color: #fff !important;
 }
 
 body[data-theme="ghibli"] .meta-row__icon {
-  color: #8aab83 !important;
+  color: #5a8a52 !important;
 }
 
 body[data-theme="ghibli"] .meta-row__label {
-  color: #8a8478 !important;
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .meta-row__value {
-  color: #3d3a31 !important;
+  color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .rec-page__title {
-  color: #3d3a31 !important;
+/* Stats */
+body[data-theme="ghibli"] .stats-page__title {
+  color: #2c2a24 !important;
+  -webkit-text-fill-color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .rec-page__subtitle {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .stats-page__subtitle {
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .rec-section__title {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .stats-card {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
 }
 
-body[data-theme="ghibli"] .bulk-page__title {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .stats-card__title {
+  color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .bulk-page__subtitle {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .stats-card__legend-label {
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .bulk-step__label {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .stats-card__legend-value {
+  color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .bulk-step__textarea,
-body[data-theme="ghibli"] .bulk-step__select {
-  background: #fff !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .summary-pill {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
 }
 
-body[data-theme="ghibli"] .bulk-step__btn {
-  background: #8aab83 !important;
-  color: #fff !important;
+body[data-theme="ghibli"] .summary-pill__value {
+  color: #5a8a52 !important;
 }
 
-body[data-theme="ghibli"] .bulk-item {
-  background: #fff !important;
-  border-color: rgba(122, 142, 110, 0.15) !important;
+body[data-theme="ghibli"] .summary-pill__label {
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .bulk-item__match-title {
-  color: #3d3a31 !important;
+body[data-theme="ghibli"] .ring-hero {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
 }
 
-body[data-theme="ghibli"] .bulk-item__query,
-body[data-theme="ghibli"] .bulk-item__match-meta {
-  color: #8a8478 !important;
+body[data-theme="ghibli"] .ring-hero__pct {
+  color: #2c2a24 !important;
 }
 
-body[data-theme="ghibli"] .bulk-item__toggle {
-  color: rgba(122, 142, 110, 0.3) !important;
+body[data-theme="ghibli"] .ring-hero__sub {
+  color: #6b6358 !important;
 }
 
-body[data-theme="ghibli"] .bulk-item__toggle--confirmed {
-  color: #8aab83 !important;
+body[data-theme="ghibli"] .ring-hero__track {
+  stroke: rgba(100, 115, 85, 0.15) !important;
 }
 
-body[data-theme="ghibli"] .bulk-review__import-btn {
-  background: #8aab83 !important;
-  color: #fff !important;
+body[data-theme="ghibli"] .ring-hero__fill {
+  stroke: #5a8a52 !important;
+  filter: drop-shadow(0 0 8px rgba(90, 138, 82, 0.4)) !important;
+}
+
+body[data-theme="ghibli"] .ring-hero__stat-label {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .ring-hero__stat-value {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .ring-hero__stat-row {
+  border-bottom-color: rgba(100, 115, 85, 0.12) !important;
+}
+
+body[data-theme="ghibli"] .stats-status__label {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .stats-status__track {
+  background: rgba(100, 115, 85, 0.1) !important;
+}
+
+body[data-theme="ghibli"] .stats-status__row--clickable:hover {
+  background: rgba(90, 138, 82, 0.05) !important;
+}
+
+/* Auth */
+body[data-theme="ghibli"] .auth-page {
+  background: #f0ebe0 !important;
 }
 
 body[data-theme="ghibli"] .auth-card {
-  background: #fff !important;
-  border-color: rgba(122, 142, 110, 0.15) !important;
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(100, 115, 85, 0.1) !important;
+}
+
+body[data-theme="ghibli"] .auth-logo__text {
+  color: #5a8a52 !important;
 }
 
 body[data-theme="ghibli"] .auth-title {
-  color: #3d3a31 !important;
+  color: #2c2a24 !important;
 }
 
 body[data-theme="ghibli"] .auth-subtitle {
-  color: #8a8478 !important;
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .auth-label {
-  color: #8a8478 !important;
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .auth-input {
-  background: #faf6ed !important;
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #3d3a31 !important;
+  background: #dfd8c8 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #2c2a24 !important;
 }
 
 body[data-theme="ghibli"] .auth-input:focus {
-  border-color: #8aab83 !important;
+  border-color: #5a8a52 !important;
 }
 
 body[data-theme="ghibli"] .auth-btn {
-  background: #8aab83 !important;
+  background: #5a8a52 !important;
   color: #fff !important;
 }
 
 body[data-theme="ghibli"] .auth-switch {
-  color: #8a8478 !important;
+  color: #6b6358 !important;
 }
 
 body[data-theme="ghibli"] .auth-link {
-  color: #5a7a52 !important;
+  color: #3a6834 !important;
 }
 
 body[data-theme="ghibli"] .auth-google-btn {
-  border-color: rgba(122, 142, 110, 0.2) !important;
-  color: #3d3a31 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .auth-divider {
+  color: #9a9080 !important;
+}
+
+body[data-theme="ghibli"] .auth-divider::before,
+body[data-theme="ghibli"] .auth-divider::after {
+  background: rgba(100, 115, 85, 0.2) !important;
+}
+
+/* Footer */
+body[data-theme="ghibli"] .footer {
+  border-top-color: rgba(100, 115, 85, 0.15) !important;
+  background: #ebe5d8 !important;
+}
+
+body[data-theme="ghibli"] .footer__logo-text {
+  color: #5a8a52 !important;
+}
+
+body[data-theme="ghibli"] .footer__copy,
+body[data-theme="ghibli"] .footer__link {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .footer__link:hover {
+  color: #3a6834 !important;
+}
+
+/* Search */
+body[data-theme="ghibli"] .search-page__title {
+  color: #2c2a24 !important;
+  -webkit-text-fill-color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .search-page__subtitle {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .search-page__input {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .search-page__input:focus {
+  border-color: #5a8a52 !important;
+}
+
+body[data-theme="ghibli"] .search-page__btn {
+  background: #5a8a52 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .search-page__error {
+  background: rgba(168, 88, 72, 0.08) !important;
+  border-color: rgba(168, 88, 72, 0.2) !important;
+  color: #a85848 !important;
+}
+
+/* Bulk import */
+body[data-theme="ghibli"] .bulk-page__title {
+  color: #2c2a24 !important;
+  -webkit-text-fill-color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .bulk-page__subtitle {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .bulk-step__label {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .bulk-step__textarea,
+body[data-theme="ghibli"] .bulk-step__select {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .bulk-step__btn {
+  background: #5a8a52 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .bulk-item {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .bulk-item--confirmed {
+  border-color: rgba(90, 138, 82, 0.4) !important;
+}
+
+body[data-theme="ghibli"] .bulk-item__match-title {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .bulk-item__query,
+body[data-theme="ghibli"] .bulk-item__match-meta {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .bulk-item__toggle {
+  color: rgba(100, 115, 85, 0.3) !important;
+}
+
+body[data-theme="ghibli"] .bulk-item__toggle--confirmed {
+  color: #5a8a52 !important;
+}
+
+body[data-theme="ghibli"] .bulk-review__import-btn {
+  background: #5a8a52 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .bulk-matching__bar-fill {
+  background: #5a8a52 !important;
+}
+
+/* Recommendations */
+body[data-theme="ghibli"] .rec-page__title {
+  color: #2c2a24 !important;
+  -webkit-text-fill-color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .rec-page__subtitle {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .rec-page__genres {
+  color: #5a8a52 !important;
+}
+
+body[data-theme="ghibli"] .rec-section__title {
+  color: #2c2a24 !important;
+}
+
+/* Theme picker */
+body[data-theme="ghibli"] .theme-picker {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+}
+
+body[data-theme="ghibli"] .theme-picker__header {
+  border-bottom-color: rgba(100, 115, 85, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .theme-picker__title {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .theme-picker__close {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .theme-picker__card {
+  border-color: rgba(100, 115, 85, 0.2) !important;
+}
+
+body[data-theme="ghibli"] .theme-picker__card:hover {
+  border-color: #5a8a52 !important;
+}
+
+body[data-theme="ghibli"] .theme-picker__card--active {
+  border-color: #5a8a52 !important;
+  box-shadow: 0 0 0 1px #5a8a52 !important;
+}
+
+body[data-theme="ghibli"] .theme-picker__name {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .theme-picker__desc {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .theme-picker__active-badge {
+  background: #5a8a52 !important;
+  color: #fff !important;
+}
+
+/* Avatar picker */
+body[data-theme="ghibli"] .avatar-picker {
+  background: #e8e2d5 !important;
+  border-color: rgba(100, 115, 85, 0.2) !important;
+}
+
+body[data-theme="ghibli"] .avatar-picker__header {
+  border-bottom-color: rgba(100, 115, 85, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .avatar-picker__title {
+  color: #2c2a24 !important;
+}
+
+body[data-theme="ghibli"] .avatar-picker__item--selected {
+  border-color: #5a8a52 !important;
+  background: rgba(90, 138, 82, 0.08) !important;
+}
+
+body[data-theme="ghibli"] .avatar-picker__name {
+  color: #6b6358 !important;
+}
+
+body[data-theme="ghibli"] .avatar-picker__footer {
+  border-top-color: rgba(100, 115, 85, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .avatar-picker__save {
+  background: #5a8a52 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .avatar-picker__cancel {
+  border-color: rgba(100, 115, 85, 0.2) !important;
+  color: #6b6358 !important;
 }
 
 /* ══════════════════════════════════════════
