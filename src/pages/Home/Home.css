@@ -606,11 +606,11 @@
     display: inline-flex;
     align-items: center;
     gap: 1rem;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--color-accent-mint);
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--color-text);
     padding: 0 1.5rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 

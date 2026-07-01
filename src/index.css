@@ -616,6 +616,11 @@ body[data-theme="ghibli"] .home__ticker-dot {
   color: #a07840 !important;
 }
 
+body[data-theme="ghibli"] .home__ticker-wrapper {
+  opacity: 0.15;
+}
+
+
 body[data-theme="ghibli"] .home__hero-orb--1 {
   background: rgba(90, 138, 82, 0.12) !important;
 }
@@ -2151,4 +2156,8 @@ body[data-theme="nord"] .auth-btn {
 
 body[data-theme="nord"] .auth-link {
   color: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .home__ticker-wrapper {
+  opacity: 0.08;
 }
