@@ -406,8 +406,8 @@
 
 .topnav__theme-btn {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-text-muted);
     border-radius: 8px;
     padding: 0.35rem 0.5rem;
     cursor: pointer;
@@ -419,4 +419,5 @@
 .topnav__theme-btn:hover {
     border-color: var(--color-accent-mint);
     color: var(--color-accent-mint);
+    background: var(--active-bg);
 }
