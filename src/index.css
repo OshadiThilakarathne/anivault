@@ -28,7 +28,6 @@ body[data-theme="dark"] {
   --color-border-strong: rgba(255, 255, 255, 0.14);
   --color-text: #e8eaf0;
   --color-text-muted: #6b7280;
-  --color-text-faint: rgba(255, 255, 255, 0.3);
   --color-accent-mint: #5eeab0;
   --color-accent-lavender: #b794f6;
   --color-accent-blue: #60a5fa;
@@ -36,10 +35,6 @@ body[data-theme="dark"] {
   --color-accent-rose: #f87171;
   --glow-mint: 0 0 24px rgba(94, 234, 176, 0.35);
   --glow-lavender: 0 0 24px rgba(183, 148, 246, 0.35);
-  --nav-glass-bg: rgba(9, 11, 18, 0.92);
-  --hover-bg: rgba(255, 255, 255, 0.05);
-  --danger-bg: rgba(248, 113, 113, 0.1);
-  --text-on-accent: #090b12;
   --bg-primary: var(--color-bg);
   --bg-secondary: var(--color-surface);
   --bg-card: var(--color-surface-raised);
@@ -78,16 +73,11 @@ body[data-theme="ghibli"] {
   --color-border-strong: rgba(122, 142, 110, 0.3);
   --color-text: #3d3a31;
   --color-text-muted: #8a8478;
-  --color-text-faint: rgba(61, 58, 49, 0.4);
   --color-accent-mint: #8aab83;
   --color-accent-lavender: #c9a87c;
   --color-accent-blue: #8fb8c9;
   --color-accent-amber: #e8a854;
   --color-accent-rose: #d98a7a;
-  --nav-glass-bg: rgba(250, 246, 237, 0.92);
-  --hover-bg: rgba(122, 142, 110, 0.08);
-  --danger-bg: rgba(217, 138, 122, 0.15);
-  --text-on-accent: #3d3a31;
   --bg-primary: var(--color-bg);
   --bg-secondary: var(--color-surface);
   --bg-card: var(--color-surface-raised);
@@ -100,6 +90,40 @@ body[data-theme="ghibli"] {
   --active-border: rgba(138, 171, 131, 0.3);
   --radius-pill: 20px;
   --radius-md: 12px;
+}
+
+body[data-theme="ghibli"] .topnav {
+  background: rgba(250, 246, 237, 0.92) !important;
+  border-bottom: 1px solid rgba(122, 142, 110, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .topnav__link {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .topnav__link--active {
+  color: #5a7a52 !important;
+  background: rgba(138, 171, 131, 0.12) !important;
+  border-color: rgba(138, 171, 131, 0.25) !important;
+}
+
+body[data-theme="ghibli"] .topnav__brand-text {
+  background: linear-gradient(135deg, #8aab83, #c9a87c) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body[data-theme="ghibli"] .topnav__search {
+  background: rgba(122, 142, 110, 0.06) !important;
+  border: 1px solid rgba(122, 142, 110, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .topnav__search-input {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .topnav__username {
+  color: #3d3a31 !important;
 }
 
 body[data-theme="ghibli"] .anime-card,
@@ -136,16 +160,11 @@ body[data-theme="otaku"] {
   --color-border-strong: #000000;
   --color-text: #ffffff;
   --color-text-muted: #a3a3a3;
-  --color-text-faint: rgba(255, 255, 255, 0.4);
   --color-accent-mint: #ffd60a;
   --color-accent-lavender: #e63946;
   --color-accent-blue: #3a86ff;
   --color-accent-amber: #ffd60a;
   --color-accent-rose: #e63946;
-  --nav-glass-bg: #0a0a0a;
-  --hover-bg: rgba(255, 255, 255, 0.08);
-  --danger-bg: rgba(230, 57, 70, 0.15);
-  --text-on-accent: #0a0a0a;
   --bg-primary: var(--color-bg);
   --bg-secondary: var(--color-surface);
   --bg-card: var(--color-surface-raised);
@@ -160,10 +179,6 @@ body[data-theme="otaku"] {
   --radius-md: 6px;
 }
 
-body[data-theme="otaku"] .topnav {
-  border-bottom: 3px solid #ffd60a !important;
-}
-
 body[data-theme="otaku"] .anime-card,
 body[data-theme="otaku"] .library-card,
 body[data-theme="otaku"] .stats-card {
@@ -176,6 +191,17 @@ body[data-theme="otaku"] .anime-card:hover,
 body[data-theme="otaku"] .library-card:hover {
   transform: translate(-3px, -3px) !important;
   box-shadow: 8px 8px 0 #000 !important;
+}
+
+body[data-theme="otaku"] .topnav {
+  background: #0a0a0a !important;
+  border-bottom: 3px solid #ffd60a !important;
+}
+
+body[data-theme="otaku"] .topnav__link--active {
+  color: #ffd60a !important;
+  background: rgba(255, 214, 10, 0.1) !important;
+  border-color: #ffd60a !important;
 }
 
 /* ── CYBERPUNK ── */
@@ -205,16 +231,11 @@ body[data-theme="cyberpunk"] {
   --color-border-strong: rgba(255, 20, 147, 0.4);
   --color-text: #e0e0ff;
   --color-text-muted: #7070a0;
-  --color-text-faint: rgba(224, 224, 255, 0.35);
   --color-accent-mint: #00ffcc;
   --color-accent-lavender: #ff1493;
   --color-accent-blue: #00bfff;
   --color-accent-amber: #ffee00;
   --color-accent-rose: #ff1493;
-  --nav-glass-bg: rgba(5, 5, 16, 0.95);
-  --hover-bg: rgba(0, 255, 204, 0.06);
-  --danger-bg: rgba(255, 20, 147, 0.12);
-  --text-on-accent: #050510;
   --bg-primary: var(--color-bg);
   --bg-secondary: var(--color-surface);
   --bg-card: var(--color-surface-raised);
@@ -243,6 +264,23 @@ body[data-theme="cyberpunk"] .library-card:hover {
   box-shadow: 0 0 30px rgba(0, 255, 204, 0.1) !important;
 }
 
+body[data-theme="cyberpunk"] .topnav {
+  background: rgba(5, 5, 16, 0.95) !important;
+  border-bottom: 1px solid rgba(255, 20, 147, 0.3) !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__link--active {
+  color: #00ffcc !important;
+  background: rgba(0, 255, 204, 0.08) !important;
+  border-color: rgba(0, 255, 204, 0.3) !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__brand-text {
+  background: linear-gradient(135deg, #00ffcc, #ff1493) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
 /* ── NORD ── */
 body[data-theme="nord"] {
   background-color: #2e3440;
@@ -266,16 +304,11 @@ body[data-theme="nord"] {
   --color-border-strong: rgba(216, 222, 233, 0.2);
   --color-text: #eceff4;
   --color-text-muted: #7b88a1;
-  --color-text-faint: rgba(236, 239, 244, 0.35);
   --color-accent-mint: #88c0d0;
   --color-accent-lavender: #b48ead;
   --color-accent-blue: #81a1c1;
   --color-accent-amber: #ebcb8b;
   --color-accent-rose: #bf616a;
-  --nav-glass-bg: rgba(46, 52, 64, 0.95);
-  --hover-bg: rgba(216, 222, 233, 0.06);
-  --danger-bg: rgba(191, 97, 106, 0.15);
-  --text-on-accent: #2e3440;
   --bg-primary: var(--color-bg);
   --bg-secondary: var(--color-surface);
   --bg-card: var(--color-surface-raised);
@@ -288,4 +321,1552 @@ body[data-theme="nord"] {
   --active-border: rgba(136, 192, 208, 0.3);
   --radius-pill: 20px;
   --radius-md: 12px;
+}
+
+body[data-theme="nord"] .topnav {
+  background: rgba(46, 52, 64, 0.95) !important;
+  border-bottom: 1px solid rgba(216, 222, 233, 0.08) !important;
+}
+
+body[data-theme="nord"] .topnav__link--active {
+  color: #88c0d0 !important;
+  background: rgba(136, 192, 208, 0.12) !important;
+  border-color: rgba(136, 192, 208, 0.25) !important;
+}
+
+body[data-theme="nord"] .topnav__brand-text {
+  background: linear-gradient(135deg, #88c0d0, #b48ead) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* ══════════════════════════════════════════
+   DARK THEME — full element overrides
+══════════════════════════════════════════ */
+body[data-theme="dark"] .topnav {
+  background: rgba(8, 9, 15, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body[data-theme="dark"] .topnav__link {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+body[data-theme="dark"] .topnav__link--active {
+  color: #5eeab0;
+  background: rgba(94, 234, 176, 0.1);
+  border-color: rgba(94, 234, 176, 0.2);
+}
+
+body[data-theme="dark"] .topnav__brand-text {
+  background: linear-gradient(135deg, #5eeab0, #b794f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body[data-theme="dark"] .topnav__search {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+body[data-theme="dark"] .topnav__search-input {
+  color: #e8eaf0;
+}
+
+body[data-theme="dark"] .topnav__username {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+body[data-theme="dark"] .topnav__suggestions {
+  background: #0f1218;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body[data-theme="dark"] .topnav__suggestion-title {
+  color: #e8eaf0;
+}
+
+body[data-theme="dark"] .topnav__suggestion-meta {
+  color: #6b7280;
+}
+
+body[data-theme="dark"] .topnav__suggestion-more {
+  color: #5eeab0;
+}
+
+body[data-theme="dark"] .library-page__tab {
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #6b7280;
+}
+
+body[data-theme="dark"] .library-page__tab--active {
+  background: #5eeab0;
+  color: #08090f;
+  border-color: #5eeab0;
+}
+
+body[data-theme="dark"] .library-card__genre-tag {
+  background: rgba(183, 148, 246, 0.1);
+  color: #b794f6;
+  border-color: rgba(183, 148, 246, 0.2);
+}
+
+body[data-theme="dark"] .anime-card__genre-tag {
+  background: rgba(183, 148, 246, 0.1);
+  color: #b794f6;
+  border-color: rgba(183, 148, 246, 0.2);
+}
+
+body[data-theme="dark"] .anime-card__btn {
+  border-color: #5eeab0;
+  color: #5eeab0;
+}
+
+body[data-theme="dark"] .anime-card__btn:hover:not(:disabled) {
+  background: #5eeab0;
+  color: #08090f;
+}
+
+body[data-theme="dark"] .footer {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+body[data-theme="dark"] .footer__copy,
+body[data-theme="dark"] .footer__link {
+  color: #6b7280;
+}
+
+body[data-theme="dark"] .footer__link:hover {
+  color: #5eeab0;
+}
+
+/* ══════════════════════════════════════════
+   GHIBLI THEME — full element overrides
+══════════════════════════════════════════ */
+body[data-theme="ghibli"] .topnav {
+  background: rgba(250, 246, 237, 0.95) !important;
+  border-bottom: 1px solid rgba(122, 142, 110, 0.2) !important;
+  box-shadow: 0 2px 12px rgba(122, 142, 110, 0.1);
+}
+
+body[data-theme="ghibli"] .topnav__brand-icon {
+  color: #8aab83;
+}
+
+body[data-theme="ghibli"] .topnav__link {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .topnav__link:hover {
+  color: #5a7a52 !important;
+  background: rgba(138, 171, 131, 0.08) !important;
+}
+
+body[data-theme="ghibli"] .topnav__link--active {
+  color: #5a7a52 !important;
+  background: rgba(138, 171, 131, 0.12) !important;
+  border-color: rgba(138, 171, 131, 0.3) !important;
+}
+
+body[data-theme="ghibli"] .topnav__username {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .topnav__logout {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .topnav__logout:hover {
+  color: #d98a7a !important;
+  background: rgba(217, 138, 122, 0.1) !important;
+}
+
+body[data-theme="ghibli"] .topnav__search {
+  background: rgba(122, 142, 110, 0.07) !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+}
+
+body[data-theme="ghibli"] .topnav__search:focus-within {
+  border-color: rgba(138, 171, 131, 0.5) !important;
+}
+
+body[data-theme="ghibli"] .topnav__search-input {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .topnav__search-input::placeholder {
+  color: #a09890 !important;
+}
+
+body[data-theme="ghibli"] .topnav__search-icon {
+  color: #a09890 !important;
+}
+
+body[data-theme="ghibli"] .topnav__suggestions {
+  background: #fff !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(122, 142, 110, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .topnav__suggestion-title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .topnav__suggestion-meta {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .topnav__suggestion-more {
+  color: #8aab83 !important;
+  border-top-color: rgba(122, 142, 110, 0.1) !important;
+  background: rgba(138, 171, 131, 0.04) !important;
+}
+
+body[data-theme="ghibli"] .topnav__suggestion-more:hover {
+  background: rgba(138, 171, 131, 0.1) !important;
+}
+
+body[data-theme="ghibli"] .topnav__hamburger {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .topnav__mobile-menu {
+  background: rgba(250, 246, 237, 0.98) !important;
+  border-top-color: rgba(122, 142, 110, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .topnav__mobile-link {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .topnav__mobile-link--active {
+  color: #5a7a52 !important;
+  background: rgba(138, 171, 131, 0.1) !important;
+}
+
+body[data-theme="ghibli"] .library-page__title,
+body[data-theme="ghibli"] .home__hero-title,
+body[data-theme="ghibli"] .stats-page__title {
+  color: #3d3a31 !important;
+  -webkit-text-fill-color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .home__hero-title-accent {
+  background: linear-gradient(135deg, #8aab83, #c9a87c) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body[data-theme="ghibli"] .home__hero-sub,
+body[data-theme="ghibli"] .library-page__subtitle {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .home__greeting {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .home__greeting-name {
+  color: #5a7a52 !important;
+}
+
+body[data-theme="ghibli"] .home__hero-eyebrow {
+  background: rgba(138, 171, 131, 0.08) !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .home__hero-btn--primary {
+  background: #8aab83 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(138, 171, 131, 0.3) !important;
+}
+
+body[data-theme="ghibli"] .home__hero-btn--secondary {
+  background: #fff !important;
+  color: #3d3a31 !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+}
+
+body[data-theme="ghibli"] .home__section-title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .home__see-all {
+  color: #8aab83 !important;
+}
+
+body[data-theme="ghibli"] .home__continue-title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .home__continue-eps {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .home__continue-bar {
+  background: rgba(122, 142, 110, 0.1) !important;
+}
+
+body[data-theme="ghibli"] .home__continue-bar-fill {
+  background: #8aab83 !important;
+}
+
+body[data-theme="ghibli"] .home__recent-title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .home__toprated-title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .home__toprated-rank {
+  color: #a09890 !important;
+}
+
+body[data-theme="ghibli"] .home__hero-strip {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(122, 142, 110, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .home__hero-strip-value {
+  color: #8aab83 !important;
+}
+
+body[data-theme="ghibli"] .home__hero-strip-label {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .home__hero-strip-divider {
+  background: rgba(122, 142, 110, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .library-page__tab {
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .library-page__tab:hover {
+  border-color: #8aab83 !important;
+  color: #5a7a52 !important;
+}
+
+body[data-theme="ghibli"] .library-page__tab--active {
+  background: #8aab83 !important;
+  border-color: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .library-card__title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .library-card__genre-tag {
+  background: rgba(138, 171, 131, 0.12) !important;
+  color: #5a7a52 !important;
+  border-color: rgba(138, 171, 131, 0.25) !important;
+}
+
+body[data-theme="ghibli"] .library-card__eps {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .library-page__select-btn {
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .library-page__select-btn:hover {
+  border-color: #8aab83 !important;
+  color: #5a7a52 !important;
+}
+
+body[data-theme="ghibli"] .library-page__group-btn {
+  background: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .library-modal {
+  background: #fff !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+}
+
+body[data-theme="ghibli"] .library-modal__title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .library-modal__sub {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .library-modal__input {
+  background: #faf6ed !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .library-modal__confirm {
+  background: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .anime-card__title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .anime-card__title:hover {
+  color: #5a7a52 !important;
+}
+
+body[data-theme="ghibli"] .anime-card__meta {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .anime-card__genre-tag {
+  background: rgba(138, 171, 131, 0.12) !important;
+  color: #5a7a52 !important;
+  border-color: rgba(138, 171, 131, 0.25) !important;
+}
+
+body[data-theme="ghibli"] .anime-card__btn {
+  border-color: #8aab83 !important;
+  color: #8aab83 !important;
+}
+
+body[data-theme="ghibli"] .anime-card__btn:hover:not(:disabled) {
+  background: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .anime-card__btn--added {
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #a09890 !important;
+}
+
+body[data-theme="ghibli"] .anime-card__dropdown {
+  background: #fff !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+}
+
+body[data-theme="ghibli"] .anime-card__dropdown-item {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .anime-card__dropdown-item:hover {
+  background: rgba(138, 171, 131, 0.08) !important;
+  color: #5a7a52 !important;
+}
+
+body[data-theme="ghibli"] .anime-card__rating-select {
+  background: #faf6ed !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .anime-card__rating-confirm {
+  background: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .search-page__title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .search-page__subtitle {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .search-page__input {
+  background: #fff !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .search-page__input:focus {
+  border-color: #8aab83 !important;
+}
+
+body[data-theme="ghibli"] .search-page__btn {
+  background: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .stats-page__subtitle {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .stats-card__title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .stats-card__legend-label {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .stats-card__legend-value {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .bento-cell__title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .bento-cell__big-label {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .bento-cell__big-value {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .ring-hero__pct {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .ring-hero__sub {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .ring-hero__fill {
+  stroke: #8aab83 !important;
+  filter: drop-shadow(0 0 8px rgba(138, 171, 131, 0.4)) !important;
+}
+
+body[data-theme="ghibli"] .ring-hero__stat-label {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .ring-hero__stat-row {
+  border-bottom-color: rgba(122, 142, 110, 0.12) !important;
+}
+
+body[data-theme="ghibli"] .bento-status__label {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .bento-status__track {
+  background: rgba(122, 142, 110, 0.1) !important;
+}
+
+body[data-theme="ghibli"] .footer {
+  border-top-color: rgba(122, 142, 110, 0.15) !important;
+  background: #faf6ed !important;
+}
+
+body[data-theme="ghibli"] .footer__logo-text {
+  color: #8aab83 !important;
+}
+
+body[data-theme="ghibli"] .footer__copy,
+body[data-theme="ghibli"] .footer__link {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .footer__link:hover {
+  color: #5a7a52 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__title,
+body[data-theme="ghibli"] .detail-page__title-en {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__synopsis {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__label {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__input,
+body[data-theme="ghibli"] .detail-page__textarea,
+body[data-theme="ghibli"] .detail-page__rating-select {
+  background: #fff !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__status-btn {
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .detail-page__status-btn--active {
+  background: #8aab83 !important;
+  border-color: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .detail-page__save-btn {
+  background: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .meta-row__icon {
+  color: #8aab83 !important;
+}
+
+body[data-theme="ghibli"] .meta-row__label {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .meta-row__value {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .rec-page__title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .rec-page__subtitle {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .rec-section__title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .bulk-page__title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .bulk-page__subtitle {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .bulk-step__label {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .bulk-step__textarea,
+body[data-theme="ghibli"] .bulk-step__select {
+  background: #fff !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .bulk-step__btn {
+  background: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .bulk-item {
+  background: #fff !important;
+  border-color: rgba(122, 142, 110, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .bulk-item__match-title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .bulk-item__query,
+body[data-theme="ghibli"] .bulk-item__match-meta {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .bulk-item__toggle {
+  color: rgba(122, 142, 110, 0.3) !important;
+}
+
+body[data-theme="ghibli"] .bulk-item__toggle--confirmed {
+  color: #8aab83 !important;
+}
+
+body[data-theme="ghibli"] .bulk-review__import-btn {
+  background: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .auth-card {
+  background: #fff !important;
+  border-color: rgba(122, 142, 110, 0.15) !important;
+}
+
+body[data-theme="ghibli"] .auth-title {
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .auth-subtitle {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .auth-label {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .auth-input {
+  background: #faf6ed !important;
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #3d3a31 !important;
+}
+
+body[data-theme="ghibli"] .auth-input:focus {
+  border-color: #8aab83 !important;
+}
+
+body[data-theme="ghibli"] .auth-btn {
+  background: #8aab83 !important;
+  color: #fff !important;
+}
+
+body[data-theme="ghibli"] .auth-switch {
+  color: #8a8478 !important;
+}
+
+body[data-theme="ghibli"] .auth-link {
+  color: #5a7a52 !important;
+}
+
+body[data-theme="ghibli"] .auth-google-btn {
+  border-color: rgba(122, 142, 110, 0.2) !important;
+  color: #3d3a31 !important;
+}
+
+/* ══════════════════════════════════════════
+   OTAKU THEME — full element overrides
+══════════════════════════════════════════ */
+body[data-theme="otaku"] .topnav {
+  background: #0a0a0a !important;
+  border-bottom: 3px solid #ffd60a !important;
+}
+
+body[data-theme="otaku"] .topnav__brand-text {
+  background: linear-gradient(135deg, #ffd60a, #e63946) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body[data-theme="otaku"] .topnav__link {
+  color: #a3a3a3 !important;
+}
+
+body[data-theme="otaku"] .topnav__link:hover {
+  color: #ffd60a !important;
+  background: rgba(255, 214, 10, 0.1) !important;
+}
+
+body[data-theme="otaku"] .topnav__link--active {
+  color: #ffd60a !important;
+  background: rgba(255, 214, 10, 0.12) !important;
+  border-color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .topnav__search {
+  background: #161616 !important;
+  border: 2px solid #333 !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .topnav__search:focus-within {
+  border-color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .topnav__search-input {
+  color: #fff !important;
+}
+
+body[data-theme="otaku"] .topnav__suggestions {
+  background: #161616 !important;
+  border: 2px solid #333 !important;
+}
+
+body[data-theme="otaku"] .topnav__suggestion-title {
+  color: #fff !important;
+}
+
+body[data-theme="otaku"] .topnav__suggestion-meta {
+  color: #a3a3a3 !important;
+}
+
+body[data-theme="otaku"] .topnav__suggestion-more {
+  color: #ffd60a !important;
+  border-top-color: #333 !important;
+}
+
+body[data-theme="otaku"] .topnav__suggestion-item:hover {
+  background: rgba(255, 214, 10, 0.05) !important;
+}
+
+body[data-theme="otaku"] .topnav__username {
+  color: #fff !important;
+}
+
+body[data-theme="otaku"] .library-page__tab {
+  border: 2px solid #333 !important;
+  border-radius: 4px !important;
+  color: #a3a3a3 !important;
+}
+
+body[data-theme="otaku"] .library-page__tab:hover {
+  border-color: #ffd60a !important;
+  color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .library-page__tab--active {
+  background: #ffd60a !important;
+  border-color: #ffd60a !important;
+  color: #0a0a0a !important;
+  font-weight: 800 !important;
+}
+
+body[data-theme="otaku"] .library-card__title {
+  color: #fff !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.03em !important;
+}
+
+body[data-theme="otaku"] .library-card__genre-tag {
+  background: rgba(255, 214, 10, 0.1) !important;
+  color: #ffd60a !important;
+  border: 1px solid rgba(255, 214, 10, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .anime-card__title {
+  color: #fff !important;
+}
+
+body[data-theme="otaku"] .anime-card__title:hover {
+  color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .anime-card__meta {
+  color: #a3a3a3 !important;
+}
+
+body[data-theme="otaku"] .anime-card__genre-tag {
+  background: rgba(255, 214, 10, 0.1) !important;
+  color: #ffd60a !important;
+  border: 1px solid rgba(255, 214, 10, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .anime-card__btn {
+  border: 2px solid #ffd60a !important;
+  color: #ffd60a !important;
+  border-radius: 4px !important;
+  font-weight: 800 !important;
+}
+
+body[data-theme="otaku"] .anime-card__btn:hover:not(:disabled) {
+  background: #ffd60a !important;
+  color: #0a0a0a !important;
+  box-shadow: 4px 4px 0 #000 !important;
+}
+
+body[data-theme="otaku"] .anime-card__dropdown {
+  background: #161616 !important;
+  border: 2px solid #333 !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .anime-card__dropdown-item {
+  color: #fff !important;
+}
+
+body[data-theme="otaku"] .anime-card__dropdown-item:hover {
+  background: rgba(255, 214, 10, 0.1) !important;
+  color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .home__hero-title {
+  color: #fff !important;
+  text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+body[data-theme="otaku"] .home__hero-title-accent {
+  background: linear-gradient(135deg, #ffd60a, #e63946) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body[data-theme="otaku"] .home__hero-btn--primary {
+  background: #e63946 !important;
+  color: #fff !important;
+  border: 3px solid #000 !important;
+  box-shadow: 5px 5px 0 #000 !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .home__hero-btn--primary:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 7px 7px 0 #000 !important;
+}
+
+body[data-theme="otaku"] .home__hero-btn--secondary {
+  background: #ffd60a !important;
+  color: #0a0a0a !important;
+  border: 3px solid #000 !important;
+  box-shadow: 5px 5px 0 #000 !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .home__section-title {
+  color: #fff !important;
+}
+
+body[data-theme="otaku"] .home__see-all {
+  color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .home__continue-card {
+  border: 2px solid #333 !important;
+}
+
+body[data-theme="otaku"] .home__continue-card:hover {
+  border-color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .home__continue-title {
+  color: #fff !important;
+}
+
+body[data-theme="otaku"] .home__continue-eps {
+  color: #a3a3a3 !important;
+}
+
+body[data-theme="otaku"] .home__continue-bar-fill {
+  background: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .home__toprated-card {
+  border: 2px solid #333 !important;
+}
+
+body[data-theme="otaku"] .home__toprated-card:hover {
+  border-color: #e63946 !important;
+}
+
+body[data-theme="otaku"] .home__toprated-title {
+  color: #fff !important;
+}
+
+body[data-theme="otaku"] .home__toprated-rank {
+  color: #ffd60a !important;
+  font-weight: 800 !important;
+}
+
+body[data-theme="otaku"] .footer {
+  border-top: 3px solid #ffd60a !important;
+  background: #0a0a0a !important;
+}
+
+body[data-theme="otaku"] .footer__logo-text {
+  color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .footer__copy,
+body[data-theme="otaku"] .footer__link {
+  color: #a3a3a3 !important;
+}
+
+body[data-theme="otaku"] .footer__link:hover {
+  color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .detail-page__title {
+  color: #fff !important;
+}
+
+body[data-theme="otaku"] .detail-page__synopsis {
+  color: #a3a3a3 !important;
+}
+
+body[data-theme="otaku"] .detail-page__status-btn {
+  border: 2px solid #333 !important;
+  color: #a3a3a3 !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .detail-page__status-btn--active {
+  background: #ffd60a !important;
+  border-color: #ffd60a !important;
+  color: #0a0a0a !important;
+  font-weight: 800 !important;
+}
+
+body[data-theme="otaku"] .detail-page__input,
+body[data-theme="otaku"] .detail-page__textarea,
+body[data-theme="otaku"] .detail-page__rating-select {
+  background: #161616 !important;
+  border: 2px solid #333 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .detail-page__save-btn {
+  background: #e63946 !important;
+  color: #fff !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 #000 !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .auth-card {
+  background: #161616 !important;
+  border: 3px solid #ffd60a !important;
+  box-shadow: 8px 8px 0 #000 !important;
+  border-radius: 8px !important;
+}
+
+body[data-theme="otaku"] .auth-title {
+  color: #ffd60a !important;
+  text-shadow: 2px 2px 0 #000 !important;
+}
+
+body[data-theme="otaku"] .auth-subtitle {
+  color: #a3a3a3 !important;
+}
+
+body[data-theme="otaku"] .auth-input {
+  background: #0a0a0a !important;
+  border: 2px solid #333 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="otaku"] .auth-input:focus {
+  border-color: #ffd60a !important;
+}
+
+body[data-theme="otaku"] .auth-btn {
+  background: #e63946 !important;
+  color: #fff !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 #000 !important;
+  border-radius: 4px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+body[data-theme="otaku"] .auth-link {
+  color: #ffd60a !important;
+}
+
+/* ══════════════════════════════════════════
+   CYBERPUNK THEME — full element overrides
+══════════════════════════════════════════ */
+body[data-theme="cyberpunk"] .topnav {
+  background: rgba(5, 5, 16, 0.97) !important;
+  border-bottom: 1px solid rgba(255, 20, 147, 0.3) !important;
+  box-shadow: 0 0 20px rgba(255, 20, 147, 0.1) !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__brand-text {
+  background: linear-gradient(135deg, #00ffcc, #ff1493) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__link {
+  color: #7070a0 !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__link:hover {
+  color: #00ffcc !important;
+  background: rgba(0, 255, 204, 0.06) !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__link--active {
+  color: #00ffcc !important;
+  background: rgba(0, 255, 204, 0.08) !important;
+  border-color: rgba(0, 255, 204, 0.3) !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__search {
+  background: rgba(0, 255, 204, 0.04) !important;
+  border-color: rgba(0, 255, 204, 0.15) !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__search:focus-within {
+  border-color: rgba(0, 255, 204, 0.5) !important;
+  box-shadow: 0 0 12px rgba(0, 255, 204, 0.1) !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__search-input {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__suggestions {
+  background: #0a0a1a !important;
+  border-color: rgba(255, 20, 147, 0.2) !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__suggestion-title {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__suggestion-meta {
+  color: #7070a0 !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__suggestion-more {
+  color: #00ffcc !important;
+}
+
+body[data-theme="cyberpunk"] .topnav__username {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .library-page__tab {
+  border-color: rgba(255, 20, 147, 0.2) !important;
+  color: #7070a0 !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="cyberpunk"] .library-page__tab:hover {
+  border-color: #00ffcc !important;
+  color: #00ffcc !important;
+}
+
+body[data-theme="cyberpunk"] .library-page__tab--active {
+  background: rgba(0, 255, 204, 0.1) !important;
+  border-color: #00ffcc !important;
+  color: #00ffcc !important;
+  box-shadow: 0 0 12px rgba(0, 255, 204, 0.2) !important;
+}
+
+body[data-theme="cyberpunk"] .library-card__title {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .library-card__genre-tag {
+  background: rgba(255, 20, 147, 0.08) !important;
+  color: #ff1493 !important;
+  border-color: rgba(255, 20, 147, 0.2) !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="cyberpunk"] .anime-card__title {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .anime-card__title:hover {
+  color: #00ffcc !important;
+}
+
+body[data-theme="cyberpunk"] .anime-card__genre-tag {
+  background: rgba(255, 20, 147, 0.08) !important;
+  color: #ff1493 !important;
+  border-color: rgba(255, 20, 147, 0.2) !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="cyberpunk"] .anime-card__btn {
+  border-color: #00ffcc !important;
+  color: #00ffcc !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="cyberpunk"] .anime-card__btn:hover:not(:disabled) {
+  background: rgba(0, 255, 204, 0.1) !important;
+  box-shadow: 0 0 12px rgba(0, 255, 204, 0.2) !important;
+}
+
+body[data-theme="cyberpunk"] .anime-card__dropdown {
+  background: #0a0a1a !important;
+  border-color: rgba(255, 20, 147, 0.2) !important;
+}
+
+body[data-theme="cyberpunk"] .anime-card__dropdown-item {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .anime-card__dropdown-item:hover {
+  background: rgba(0, 255, 204, 0.06) !important;
+  color: #00ffcc !important;
+}
+
+body[data-theme="cyberpunk"] .home__hero-title {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .home__hero-title-accent {
+  background: linear-gradient(135deg, #00ffcc, #ff1493) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body[data-theme="cyberpunk"] .home__hero-btn--primary {
+  background: linear-gradient(135deg, #00ffcc, #00bfff) !important;
+  color: #050510 !important;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.4) !important;
+}
+
+body[data-theme="cyberpunk"] .home__hero-btn--secondary {
+  background: rgba(255, 20, 147, 0.08) !important;
+  color: #e0e0ff !important;
+  border-color: rgba(255, 20, 147, 0.3) !important;
+}
+
+body[data-theme="cyberpunk"] .home__section-title {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .home__see-all {
+  color: #00ffcc !important;
+}
+
+body[data-theme="cyberpunk"] .home__continue-bar-fill {
+  background: linear-gradient(90deg, #00ffcc, #00bfff) !important;
+}
+
+body[data-theme="cyberpunk"] .home__continue-title {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .home__toprated-title {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .home__toprated-rank {
+  color: #ff1493 !important;
+}
+
+body[data-theme="cyberpunk"] .footer {
+  border-top-color: rgba(255, 20, 147, 0.2) !important;
+}
+
+body[data-theme="cyberpunk"] .footer__logo-text {
+  color: #00ffcc !important;
+}
+
+body[data-theme="cyberpunk"] .footer__copy,
+body[data-theme="cyberpunk"] .footer__link {
+  color: #7070a0 !important;
+}
+
+body[data-theme="cyberpunk"] .footer__link:hover {
+  color: #00ffcc !important;
+}
+
+body[data-theme="cyberpunk"] .detail-page__title {
+  color: #e0e0ff !important;
+}
+
+body[data-theme="cyberpunk"] .detail-page__synopsis {
+  color: #7070a0 !important;
+}
+
+body[data-theme="cyberpunk"] .detail-page__status-btn {
+  border-color: rgba(255, 20, 147, 0.2) !important;
+  color: #7070a0 !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="cyberpunk"] .detail-page__status-btn--active {
+  background: rgba(0, 255, 204, 0.1) !important;
+  border-color: #00ffcc !important;
+  color: #00ffcc !important;
+}
+
+body[data-theme="cyberpunk"] .detail-page__input,
+body[data-theme="cyberpunk"] .detail-page__textarea,
+body[data-theme="cyberpunk"] .detail-page__rating-select {
+  background: #0a0a1a !important;
+  border-color: rgba(255, 20, 147, 0.2) !important;
+  color: #e0e0ff !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="cyberpunk"] .detail-page__save-btn {
+  background: linear-gradient(135deg, #00ffcc, #00bfff) !important;
+  color: #050510 !important;
+  box-shadow: 0 0 16px rgba(0, 255, 204, 0.3) !important;
+}
+
+body[data-theme="cyberpunk"] .auth-card {
+  background: #0a0a1a !important;
+  border-color: rgba(255, 20, 147, 0.2) !important;
+  box-shadow: 0 0 40px rgba(255, 20, 147, 0.05) !important;
+}
+
+body[data-theme="cyberpunk"] .auth-title {
+  color: #00ffcc !important;
+  text-shadow: 0 0 20px rgba(0, 255, 204, 0.5) !important;
+}
+
+body[data-theme="cyberpunk"] .auth-subtitle {
+  color: #7070a0 !important;
+}
+
+body[data-theme="cyberpunk"] .auth-input {
+  background: #050510 !important;
+  border-color: rgba(255, 20, 147, 0.2) !important;
+  color: #e0e0ff !important;
+  border-radius: 4px !important;
+}
+
+body[data-theme="cyberpunk"] .auth-input:focus {
+  border-color: #00ffcc !important;
+  box-shadow: 0 0 8px rgba(0, 255, 204, 0.2) !important;
+}
+
+body[data-theme="cyberpunk"] .auth-btn {
+  background: linear-gradient(135deg, #00ffcc, #00bfff) !important;
+  color: #050510 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 16px rgba(0, 255, 204, 0.3) !important;
+}
+
+body[data-theme="cyberpunk"] .auth-link {
+  color: #00ffcc !important;
+}
+
+/* ══════════════════════════════════════════
+   NORD THEME — full element overrides
+══════════════════════════════════════════ */
+body[data-theme="nord"] .topnav {
+  background: rgba(46, 52, 64, 0.97) !important;
+  border-bottom: 1px solid rgba(216, 222, 233, 0.08) !important;
+}
+
+body[data-theme="nord"] .topnav__brand-text {
+  background: linear-gradient(135deg, #88c0d0, #b48ead) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body[data-theme="nord"] .topnav__link {
+  color: #7b88a1 !important;
+}
+
+body[data-theme="nord"] .topnav__link:hover {
+  color: #eceff4 !important;
+  background: rgba(216, 222, 233, 0.06) !important;
+}
+
+body[data-theme="nord"] .topnav__link--active {
+  color: #88c0d0 !important;
+  background: rgba(136, 192, 208, 0.12) !important;
+  border-color: rgba(136, 192, 208, 0.25) !important;
+}
+
+body[data-theme="nord"] .topnav__search {
+  background: rgba(59, 66, 82, 0.8) !important;
+  border-color: rgba(216, 222, 233, 0.1) !important;
+}
+
+body[data-theme="nord"] .topnav__search:focus-within {
+  border-color: rgba(136, 192, 208, 0.4) !important;
+}
+
+body[data-theme="nord"] .topnav__search-input {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .topnav__suggestions {
+  background: #3b4252 !important;
+  border-color: rgba(216, 222, 233, 0.1) !important;
+}
+
+body[data-theme="nord"] .topnav__suggestion-title {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .topnav__suggestion-meta {
+  color: #7b88a1 !important;
+}
+
+body[data-theme="nord"] .topnav__suggestion-more {
+  color: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .topnav__username {
+  color: #d8dee9 !important;
+}
+
+body[data-theme="nord"] .library-page__tab {
+  border-color: rgba(216, 222, 233, 0.1) !important;
+  color: #7b88a1 !important;
+}
+
+body[data-theme="nord"] .library-page__tab:hover {
+  border-color: #88c0d0 !important;
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .library-page__tab--active {
+  background: #88c0d0 !important;
+  border-color: #88c0d0 !important;
+  color: #2e3440 !important;
+}
+
+body[data-theme="nord"] .library-card__title {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .library-card__genre-tag {
+  background: rgba(136, 192, 208, 0.1) !important;
+  color: #88c0d0 !important;
+  border-color: rgba(136, 192, 208, 0.2) !important;
+}
+
+body[data-theme="nord"] .anime-card__title {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .anime-card__title:hover {
+  color: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .anime-card__genre-tag {
+  background: rgba(136, 192, 208, 0.1) !important;
+  color: #88c0d0 !important;
+  border-color: rgba(136, 192, 208, 0.2) !important;
+}
+
+body[data-theme="nord"] .anime-card__btn {
+  border-color: #88c0d0 !important;
+  color: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .anime-card__btn:hover:not(:disabled) {
+  background: #88c0d0 !important;
+  color: #2e3440 !important;
+}
+
+body[data-theme="nord"] .anime-card__dropdown {
+  background: #3b4252 !important;
+  border-color: rgba(216, 222, 233, 0.1) !important;
+}
+
+body[data-theme="nord"] .anime-card__dropdown-item {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .anime-card__dropdown-item:hover {
+  background: rgba(136, 192, 208, 0.08) !important;
+  color: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .home__hero-title {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .home__hero-title-accent {
+  background: linear-gradient(135deg, #88c0d0, #b48ead) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+body[data-theme="nord"] .home__hero-btn--primary {
+  background: #88c0d0 !important;
+  color: #2e3440 !important;
+  box-shadow: 0 4px 16px rgba(136, 192, 208, 0.3) !important;
+}
+
+body[data-theme="nord"] .home__hero-btn--secondary {
+  background: rgba(216, 222, 233, 0.06) !important;
+  color: #eceff4 !important;
+  border-color: rgba(216, 222, 233, 0.1) !important;
+}
+
+body[data-theme="nord"] .home__section-title {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .home__see-all {
+  color: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .home__continue-bar-fill {
+  background: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .home__continue-title {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .home__toprated-title {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .home__toprated-rank {
+  color: #7b88a1 !important;
+}
+
+body[data-theme="nord"] .footer {
+  border-top-color: rgba(216, 222, 233, 0.08) !important;
+}
+
+body[data-theme="nord"] .footer__logo-text {
+  color: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .footer__copy,
+body[data-theme="nord"] .footer__link {
+  color: #7b88a1 !important;
+}
+
+body[data-theme="nord"] .footer__link:hover {
+  color: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .detail-page__title {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .detail-page__synopsis {
+  color: #7b88a1 !important;
+}
+
+body[data-theme="nord"] .detail-page__status-btn {
+  border-color: rgba(216, 222, 233, 0.1) !important;
+  color: #7b88a1 !important;
+}
+
+body[data-theme="nord"] .detail-page__status-btn--active {
+  background: #88c0d0 !important;
+  border-color: #88c0d0 !important;
+  color: #2e3440 !important;
+}
+
+body[data-theme="nord"] .detail-page__input,
+body[data-theme="nord"] .detail-page__textarea,
+body[data-theme="nord"] .detail-page__rating-select {
+  background: #3b4252 !important;
+  border-color: rgba(216, 222, 233, 0.1) !important;
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .detail-page__save-btn {
+  background: #88c0d0 !important;
+  color: #2e3440 !important;
+}
+
+body[data-theme="nord"] .auth-card {
+  background: #3b4252 !important;
+  border-color: rgba(216, 222, 233, 0.08) !important;
+}
+
+body[data-theme="nord"] .auth-title {
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .auth-subtitle {
+  color: #7b88a1 !important;
+}
+
+body[data-theme="nord"] .auth-input {
+  background: #2e3440 !important;
+  border-color: rgba(216, 222, 233, 0.1) !important;
+  color: #eceff4 !important;
+}
+
+body[data-theme="nord"] .auth-input:focus {
+  border-color: #88c0d0 !important;
+}
+
+body[data-theme="nord"] .auth-btn {
+  background: #88c0d0 !important;
+  color: #2e3440 !important;
+  font-weight: 700 !important;
+}
+
+body[data-theme="nord"] .auth-link {
+  color: #88c0d0 !important;
 }
