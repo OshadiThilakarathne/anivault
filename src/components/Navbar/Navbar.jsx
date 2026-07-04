@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { House, BookOpen, BarChart2, Upload, Sparkles, LogOut, Menu, X, Search, Loader } from "lucide-react";
+import { House, BookOpen, BarChart2, Upload, Sparkles, LogOut, Menu, X, Search, Loader, Palette } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import AvatarPicker from "../AvatarPicker/AvatarPicker";
+import ThemePicker from "../ThemePicker/ThemePicker";
 import { searchAnime } from "../../services/anilistService";
 import axios from "axios";
 import "./Navbar.css";
@@ -25,6 +26,10 @@ export default function Navbar() {
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [searching, setSearching] = useState(false);
+    const [showThemePicker, setShowThemePicker] = useState(false);
+    const [currentTheme, setCurrentTheme] = useState(
+        () => localStorage.getItem("anivault_theme") || "dark"
+    );
     const searchRef = useRef(null);
     const suggestRef = useRef(null);
     const debounceRef = useRef(null);
@@ -42,6 +47,16 @@ export default function Navbar() {
             })
             .catch(() => { });
     }, [user]);
+
+    useEffect(() => {
+        document.body.setAttribute("data-theme", currentTheme);
+    }, [currentTheme]);
+
+    const handleThemeSelect = (themeId) => {
+        setCurrentTheme(themeId);
+        localStorage.setItem("anivault_theme", themeId);
+        document.body.setAttribute("data-theme", themeId);
+    };
 
     // Live suggestions
     useEffect(() => {
@@ -89,6 +104,7 @@ export default function Navbar() {
         setShowSuggestions(false);
         setMenuOpen(false);
     };
+
 
     return (
         <>
@@ -178,6 +194,13 @@ export default function Navbar() {
                         {user && (
                             <>
                                 <button
+                                    className="topnav__theme-btn"
+                                    onClick={() => setShowThemePicker(true)}
+                                    title="Change theme"
+                                >
+                                    <Palette size={16} />
+                                </button>
+                                <button
                                     className="topnav__avatar-btn"
                                     onClick={() => setShowPicker(true)}
                                     title="Change avatar"
@@ -252,6 +275,14 @@ export default function Navbar() {
                     </div>
                 )}
             </header>
+
+            {showThemePicker && (
+                <ThemePicker
+                    currentTheme={currentTheme}
+                    onSelect={handleThemeSelect}
+                    onClose={() => setShowThemePicker(false)}
+                />
+            )}
 
             {showPicker && (
                 <AvatarPicker

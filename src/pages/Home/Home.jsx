@@ -85,8 +85,32 @@ export default function Home() {
                     <div className="home__hero-orb home__hero-orb--2" />
                     <div className="home__hero-orb home__hero-orb--3" />
                     <div className="home__hero-grid" />
-                </div>
 
+                    {/* Scrolling ticker rows */}
+                    <div className="home__ticker-wrapper">
+                        {[0, 1, 2].map((row) => (
+                            <div key={row} className={`home__ticker-row home__ticker-row--${row % 2 === 0 ? "left" : "right"}`}>
+                                <div className="home__ticker-track">
+                                    {[...Array(3)].map((_, copy) => (
+                                        <span key={copy} className="home__ticker-content">
+                                            {[
+                                                "Attack on Titan", "Fullmetal Alchemist", "Death Note",
+                                                "Steins;Gate", "Hunter x Hunter", "Demon Slayer",
+                                                "Jujutsu Kaisen", "Cowboy Bebop", "Naruto", "One Piece",
+                                                "Bleach", "Code Geass", "Re:Zero", "Violet Evergarden",
+                                                "Your Lie in April", "Neon Genesis Evangelion", "Spirited Away",
+                                            ].map((title) => (
+                                                <span key={title} className="home__ticker-item">
+                                                    {title} <span className="home__ticker-dot">✦</span>
+                                                </span>
+                                            ))}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
                 <div className="home__hero-content">
                     <motion.div
                         className="home__hero-eyebrow"

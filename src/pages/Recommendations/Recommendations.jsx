@@ -2,8 +2,36 @@ import { useState, useEffect } from "react";
 import { useAnime } from "../../hooks/useAnime";
 import { getAnimeByGenre, GENRE_IDS, getAiringAnime, getUpcomingAnime, getTopAnime } from "../../services/anilistService";
 import AnimeCard from "../../components/AnimeCard/AnimeCard";
-import { Loader } from "lucide-react";
+import { Loader, ChevronRight } from "lucide-react";
 import "./Recommendations.css";
+
+const PAGE_SIZE = 8;
+
+function RecSection({ section }) {
+    const [visible, setVisible] = useState(PAGE_SIZE);
+    const hasMore = visible < section.anime.length;
+
+    return (
+        <div className="rec-section">
+            <div className="rec-section__header">
+                <h2 className="rec-section__title">{section.title}</h2>
+                {hasMore && (
+                    <button
+                        className="rec-section__see-all"
+                        onClick={() => setVisible((v) => v + PAGE_SIZE)}
+                    >
+                        Load more <ChevronRight size={14} />
+                    </button>
+                )}
+            </div>
+            <div className="rec-section__grid">
+                {section.anime.slice(0, visible).map((anime) => (
+                    <AnimeCard key={anime.mal_id} anime={anime} />
+                ))}
+            </div>
+        </div>
+    );
+}
 
 export default function Recommendations() {
     const { library, isInLibrary } = useAnime();
@@ -26,28 +54,28 @@ export default function Recommendations() {
             try {
                 const anime = await getAiringAnime();
                 const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
-                if (filtered.length > 0) addSection({ title: "Top Airing Now", anime: filtered.slice(0, 8) });
+                if (filtered.length > 0) addSection({ title: "Top Airing Now", anime: filtered });
             } catch { }
 
             // ── Coming Soon ──
             try {
                 const anime = await getUpcomingAnime();
                 const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
-                if (filtered.length > 0) addSection({ title: "Coming Soon", anime: filtered.slice(0, 8) });
+                if (filtered.length > 0) addSection({ title: "Coming Soon", anime: filtered });
             } catch { }
 
             // ── Most Popular ──
             try {
                 const anime = await getTopAnime("POPULARITY_DESC");
                 const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
-                if (filtered.length > 0) addSection({ title: "Most Popular of All Time", anime: filtered.slice(0, 8) });
+                if (filtered.length > 0) addSection({ title: "Most Popular of All Time", anime: filtered });
             } catch { }
 
             // ── Highest Rated ──
             try {
                 const anime = await getTopAnime("SCORE_DESC");
                 const filtered = anime.filter((a) => !isInLibrary(a.mal_id));
-                if (filtered.length > 0) addSection({ title: "Highest Rated", anime: filtered.slice(0, 8) });
+                if (filtered.length > 0) addSection({ title: "Highest Rated", anime: filtered });
             } catch { }
 
             // ── By Top Genres ──
@@ -68,9 +96,7 @@ export default function Recommendations() {
                     try {
                         const data = await getAnimeByGenre(GENRE_IDS[genre]);
                         const filtered = (data.data || []).filter((a) => !isInLibrary(a.mal_id));
-                        if (filtered.length > 0) {
-                            addSection({ title: `Because You Like ${genre}`, anime: filtered.slice(0, 8) });
-                        }
+                        if (filtered.length > 0) addSection({ title: `Because You Like ${genre}`, anime: filtered });
                     } catch { }
                 }
             }
@@ -97,14 +123,7 @@ export default function Recommendations() {
 
             <div className="rec-page__sections">
                 {sections.map((section) => (
-                    <div key={section.title} className="rec-section">
-                        <h2 className="rec-section__title">{section.title}</h2>
-                        <div className="rec-section__grid">
-                            {section.anime.map((anime) => (
-                                <AnimeCard key={anime.mal_id} anime={anime} />
-                            ))}
-                        </div>
-                    </div>
+                    <RecSection key={section.title} section={section} />
                 ))}
 
                 {loading && sections.length > 0 && (
