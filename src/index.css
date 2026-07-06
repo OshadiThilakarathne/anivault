@@ -2778,8 +2778,9 @@ body[data-theme="midnight-tokyo"] .topnav__suggestion-meta {
 }
 
 body[data-theme="midnight-tokyo"] .topnav__suggestion-more {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .topnav__mobile-menu {
   background: rgba(10, 8, 20, 0.98) !important;
@@ -2818,8 +2819,9 @@ body[data-theme="midnight-tokyo"] .home__greeting {
 }
 
 body[data-theme="midnight-tokyo"] .home__greeting-name {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .home__hero-eyebrow {
   background: rgba(144, 96, 240, 0.08) !important;
@@ -2833,10 +2835,11 @@ body[data-theme="midnight-tokyo"] .home__hero-dot {
 }
 
 body[data-theme="midnight-tokyo"] .home__hero-btn--primary {
-  background: linear-gradient(135deg, #9060f0, #7040d0) !important;
+  background: linear-gradient(135deg, #40d0c8, #2080c0) !important;
   color: #fff !important;
-  box-shadow: 0 4px 20px rgba(144, 96, 240, 0.4) !important;
+  box-shadow: 0 4px 20px rgba(64, 208, 200, 0.35) !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .home__hero-btn--secondary {
   background: rgba(144, 96, 240, 0.08) !important;
@@ -2850,16 +2853,19 @@ body[data-theme="midnight-tokyo"] .home__hero-strip {
 }
 
 body[data-theme="midnight-tokyo"] .home__hero-strip-value {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .home__ticker-item {
   color: #9060f0 !important;
 }
 
-body[data-theme="midnight-tokyo"] .home__ticker-dot {
-  color: #c060c0 !important;
+body[data-theme="midnight-tokyo"] .home__hero-dot {
+  background: #40d0c8 !important;
+  box-shadow: 0 0 12px rgba(64, 208, 200, 0.7) !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .home__hero-orb--1 {
   background: rgba(144, 96, 240, 0.15) !important;
@@ -2878,8 +2884,9 @@ body[data-theme="midnight-tokyo"] .home__section-title {
 }
 
 body[data-theme="midnight-tokyo"] .home__see-all {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .home__continue-card {
   background: #120e1e !important;
@@ -2895,8 +2902,9 @@ body[data-theme="midnight-tokyo"] .home__continue-title {
 }
 
 body[data-theme="midnight-tokyo"] .home__continue-bar-fill {
-  background: linear-gradient(90deg, #9060f0, #c060c0) !important;
+  background: linear-gradient(90deg, #40d0c8, #9060f0) !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .home__recent-title {
   color: #c8b8f0 !important;
@@ -2929,29 +2937,31 @@ body[data-theme="midnight-tokyo"] .anime-card__title {
 }
 
 body[data-theme="midnight-tokyo"] .anime-card__title:hover {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .anime-card__meta {
   color: #6850a0 !important;
 }
 
 body[data-theme="midnight-tokyo"] .anime-card__genre-tag {
-  background: rgba(144, 96, 240, 0.1) !important;
-  color: #9060f0 !important;
-  border-color: rgba(144, 96, 240, 0.2) !important;
+  background: rgba(224, 160, 96, 0.12) !important;
+  color: #e0a060 !important;
+  border-color: rgba(224, 160, 96, 0.25) !important;
 }
 
+
 body[data-theme="midnight-tokyo"] .anime-card__btn {
-  border-color: #9060f0 !important;
-  color: #9060f0 !important;
+  border-color: #40d0c8 !important;
+  color: #40d0c8 !important;
   background: transparent !important;
 }
 
 body[data-theme="midnight-tokyo"] .anime-card__btn:hover:not(:disabled) {
-  background: #9060f0 !important;
-  color: #fff !important;
-  box-shadow: 0 0 16px rgba(144, 96, 240, 0.3) !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
+  box-shadow: 0 0 16px rgba(64, 208, 200, 0.3) !important;
 }
 
 body[data-theme="midnight-tokyo"] .anime-card__btn--added {
@@ -2991,8 +3001,9 @@ body[data-theme="midnight-tokyo"] .library-page__title {
 }
 
 body[data-theme="midnight-tokyo"] .library-page__unique-count {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .library-page__tab {
   border-color: rgba(144, 96, 240, 0.2) !important;
@@ -3001,15 +3012,17 @@ body[data-theme="midnight-tokyo"] .library-page__tab {
 }
 
 body[data-theme="midnight-tokyo"] .library-page__tab:hover {
-  border-color: #9060f0 !important;
-  color: #c8b8f0 !important;
+  border-color: #40d0c8 !important;
+  color: #40d0c8 !important;
 }
 
+
 body[data-theme="midnight-tokyo"] .library-page__tab--active {
-  background: #9060f0 !important;
-  border-color: #9060f0 !important;
-  color: #fff !important;
+  background: #40d0c8 !important;
+  border-color: #40d0c8 !important;
+  color: #0a0814 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .library-card {
   background: #120e1e !important;
@@ -3025,15 +3038,17 @@ body[data-theme="midnight-tokyo"] .library-card__title {
 }
 
 body[data-theme="midnight-tokyo"] .library-card__genre-tag {
-  background: rgba(144, 96, 240, 0.1) !important;
-  color: #9060f0 !important;
-  border-color: rgba(144, 96, 240, 0.2) !important;
+  background: rgba(224, 160, 96, 0.12) !important;
+  color: #e0a060 !important;
+  border-color: rgba(224, 160, 96, 0.25) !important;
 }
 
+
 body[data-theme="midnight-tokyo"] .library-page__group-btn {
-  background: #9060f0 !important;
-  color: #fff !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .library-modal {
   background: #120e1e !important;
@@ -3051,9 +3066,19 @@ body[data-theme="midnight-tokyo"] .library-modal__input {
 }
 
 body[data-theme="midnight-tokyo"] .library-modal__confirm {
-  background: #9060f0 !important;
-  color: #fff !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
 }
+
+body[data-theme="midnight-tokyo"] .library-card__group-badge {
+  background: rgba(224, 160, 96, 0.8) !important;
+}
+
+body[data-theme="midnight-tokyo"] .library-card__expand-hint {
+  color: #e0a060 !important;
+}
+
+
 
 body[data-theme="midnight-tokyo"] .detail-page__title {
   color: #c8b8f0 !important;
@@ -3079,15 +3104,21 @@ body[data-theme="midnight-tokyo"] .detail-page__status-btn {
 }
 
 body[data-theme="midnight-tokyo"] .detail-page__status-btn--active {
-  background: #9060f0 !important;
-  border-color: #9060f0 !important;
-  color: #fff !important;
+  background: #40d0c8 !important;
+  border-color: #40d0c8 !important;
+  color: #0a0814 !important;
 }
 
+
 body[data-theme="midnight-tokyo"] .detail-page__save-btn {
-  background: #9060f0 !important;
-  color: #fff !important;
-  box-shadow: 0 0 16px rgba(144, 96, 240, 0.3) !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
+  box-shadow: 0 0 16px rgba(64, 208, 200, 0.3) !important;
+}
+
+body[data-theme="midnight-tokyo"] .detail-page__add-btn {
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
 }
 
 body[data-theme="midnight-tokyo"] .meta-row__icon {
@@ -3122,7 +3153,7 @@ body[data-theme="midnight-tokyo"] .summary-pill {
 }
 
 body[data-theme="midnight-tokyo"] .summary-pill__value {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
 
 body[data-theme="midnight-tokyo"] .ring-hero {
@@ -3131,9 +3162,10 @@ body[data-theme="midnight-tokyo"] .ring-hero {
 }
 
 body[data-theme="midnight-tokyo"] .ring-hero__fill {
-  stroke: #9060f0 !important;
-  filter: drop-shadow(0 0 10px rgba(144, 96, 240, 0.6)) !important;
+  stroke: #40d0c8 !important;
+  filter: drop-shadow(0 0 10px rgba(64, 208, 200, 0.5)) !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .ring-hero__pct {
   color: #c8b8f0 !important;
@@ -3173,14 +3205,16 @@ body[data-theme="midnight-tokyo"] .auth-input:focus {
 }
 
 body[data-theme="midnight-tokyo"] .auth-btn {
-  background: #9060f0 !important;
-  color: #fff !important;
-  box-shadow: 0 0 16px rgba(144, 96, 240, 0.3) !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
+  box-shadow: 0 0 16px rgba(64, 208, 200, 0.3) !important;
 }
 
+
 body[data-theme="midnight-tokyo"] .auth-link {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .auth-google-btn {
   border-color: rgba(144, 96, 240, 0.2) !important;
@@ -3193,8 +3227,9 @@ body[data-theme="midnight-tokyo"] .footer {
 }
 
 body[data-theme="midnight-tokyo"] .footer__logo-text {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .footer__copy,
 body[data-theme="midnight-tokyo"] .footer__link {
@@ -3202,8 +3237,9 @@ body[data-theme="midnight-tokyo"] .footer__link {
 }
 
 body[data-theme="midnight-tokyo"] .footer__link:hover {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .search-page__title {
   color: #c8b8f0 !important;
@@ -3217,9 +3253,10 @@ body[data-theme="midnight-tokyo"] .search-page__input {
 }
 
 body[data-theme="midnight-tokyo"] .search-page__btn {
-  background: #9060f0 !important;
-  color: #fff !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .rec-page__title {
   color: #c8b8f0 !important;
@@ -3228,6 +3265,11 @@ body[data-theme="midnight-tokyo"] .rec-page__title {
 
 body[data-theme="midnight-tokyo"] .rec-section__title {
   color: #c8b8f0 !important;
+}
+
+body[data-theme="midnight-tokyo"] .rec-page__empty-btn {
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
 }
 
 body[data-theme="midnight-tokyo"] .bulk-page__title {
@@ -3243,9 +3285,10 @@ body[data-theme="midnight-tokyo"] .bulk-step__select {
 }
 
 body[data-theme="midnight-tokyo"] .bulk-step__btn {
-  background: #9060f0 !important;
-  color: #fff !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .bulk-item {
   background: #120e1e !important;
@@ -3257,13 +3300,15 @@ body[data-theme="midnight-tokyo"] .bulk-item__match-title {
 }
 
 body[data-theme="midnight-tokyo"] .bulk-item__toggle--confirmed {
-  color: #9060f0 !important;
+  color: #40d0c8 !important;
 }
 
+
 body[data-theme="midnight-tokyo"] .bulk-review__import-btn {
-  background: #9060f0 !important;
-  color: #fff !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .theme-picker {
   background: #120e1e !important;
@@ -3287,14 +3332,16 @@ body[data-theme="midnight-tokyo"] .theme-picker__card:hover {
 }
 
 body[data-theme="midnight-tokyo"] .theme-picker__card--active {
-  border-color: #9060f0 !important;
-  box-shadow: 0 0 0 1px #9060f0 !important;
+  border-color: #40d0c8 !important;
+  box-shadow: 0 0 0 1px #40d0c8 !important;
 }
 
+
 body[data-theme="midnight-tokyo"] .theme-picker__active-badge {
-  background: #9060f0 !important;
-  color: #fff !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
 }
+
 
 body[data-theme="midnight-tokyo"] .avatar-picker {
   background: #120e1e !important;
@@ -3306,13 +3353,14 @@ body[data-theme="midnight-tokyo"] .avatar-picker__title {
 }
 
 body[data-theme="midnight-tokyo"] .avatar-picker__item--selected {
-  border-color: #9060f0 !important;
-  background: rgba(144, 96, 240, 0.08) !important;
+  border-color: #40d0c8 !important;
+  background: rgba(64, 208, 200, 0.08) !important;
 }
 
+
 body[data-theme="midnight-tokyo"] .avatar-picker__save {
-  background: #9060f0 !important;
-  color: #fff !important;
+  background: #40d0c8 !important;
+  color: #0a0814 !important;
 }
 
 body[data-theme="midnight-tokyo"] .topnav__theme-btn {
@@ -3321,6 +3369,6 @@ body[data-theme="midnight-tokyo"] .topnav__theme-btn {
 }
 
 body[data-theme="midnight-tokyo"] .topnav__theme-btn:hover {
-  border-color: #9060f0 !important;
-  color: #9060f0 !important;
+  border-color: #40d0c8 !important;
+  color: #40d0c8 !important;
 }
