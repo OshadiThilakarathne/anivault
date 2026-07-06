@@ -9,9 +9,21 @@ const THEMES = [
     },
     {
         id: "ghibli",
-        name: "Studio Ghibli",
-        description: "Warm cream tones, soft and dreamy",
-        preview: { bg: "#faf6ed", accent: "#8aab83", surface: "#ffffff", text: "#3d3a31" },
+        name: "Ghibli Forest",
+        description: "Dark forest green — Totoro's woodland",
+        preview: { bg: "#1e2818", accent: "#7ec860", surface: "#263020", text: "#d8e8c8" },
+    },
+    {
+        id: "ghibli-warm",
+        name: "Ghibli Warm",
+        description: "Golden amber tones — Spirited Away dusk",
+        preview: { bg: "#1e1808", accent: "#d4a030", surface: "#261e0a", text: "#e8d8a8" },
+    },
+    {
+        id: "ghibli-cool",
+        name: "Ghibli Cool",
+        description: "Teal blue-green — Ponyo ocean depths",
+        preview: { bg: "#0e1e22", accent: "#40c8b8", surface: "#162428", text: "#b8dce0" },
     },
     {
         id: "otaku",
@@ -26,10 +38,16 @@ const THEMES = [
         preview: { bg: "#050510", accent: "#00ffcc", surface: "#0a0a1a", text: "#e0e0ff" },
     },
     {
-        id: "nord",
-        name: "Nord",
-        description: "Cool blue-grey Arctic palette",
-        preview: { bg: "#2e3440", accent: "#88c0d0", surface: "#3b4252", text: "#eceff4" },
+        id: "sakura",
+        name: "Sakura",
+        description: "Soft pink cherry blossom spring",
+        preview: { bg: "#1a0e12", accent: "#f08080", surface: "#221218", text: "#f0d0d8" },
+    },
+    {
+        id: "midnight-tokyo",
+        name: "Midnight Tokyo",
+        description: "Deep purple indigo city lights",
+        preview: { bg: "#0a0814", accent: "#9060f0", surface: "#120e1e", text: "#c8b8f0" },
     },
 ];
 
