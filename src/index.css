@@ -2249,6 +2249,7 @@ body[data-theme="sakura"] .home__greeting-name {
   color: #f08080 !important;
 }
 
+
 body[data-theme="sakura"] .home__hero-eyebrow {
   background: rgba(240, 128, 128, 0.08) !important;
   border-color: rgba(240, 128, 128, 0.2) !important;
@@ -2257,8 +2258,9 @@ body[data-theme="sakura"] .home__hero-eyebrow {
 
 body[data-theme="sakura"] .home__hero-dot {
   background: #f08080 !important;
-  box-shadow: 0 0 8px rgba(240, 128, 128, 0.6) !important;
+  box-shadow: 0 0 12px rgba(240, 128, 128, 0.6) !important;
 }
+
 
 body[data-theme="sakura"] .home__hero-btn--primary {
   background: #f08080 !important;
@@ -2278,8 +2280,9 @@ body[data-theme="sakura"] .home__hero-strip {
 }
 
 body[data-theme="sakura"] .home__hero-strip-value {
-  color: #f08080 !important;
+  color: #e8a060 !important;
 }
+
 
 body[data-theme="sakura"] .home__ticker-item {
   color: #f08080 !important;
@@ -2344,15 +2347,17 @@ body[data-theme="sakura"] .anime-card__title:hover {
   color: #f08080 !important;
 }
 
+
 body[data-theme="sakura"] .anime-card__meta {
   color: #905868 !important;
 }
 
 body[data-theme="sakura"] .anime-card__genre-tag {
-  background: rgba(240, 128, 128, 0.1) !important;
-  color: #f08080 !important;
-  border-color: rgba(240, 128, 128, 0.2) !important;
+  background: rgba(160, 128, 208, 0.12) !important;
+  color: #a080d0 !important;
+  border-color: rgba(160, 128, 208, 0.25) !important;
 }
+
 
 body[data-theme="sakura"] .anime-card__btn {
   border-color: #f08080 !important;
@@ -2404,6 +2409,7 @@ body[data-theme="sakura"] .library-page__unique-count {
   color: #f08080 !important;
 }
 
+
 body[data-theme="sakura"] .library-page__tab {
   border-color: rgba(240, 128, 128, 0.2) !important;
   color: #905868 !important;
@@ -2431,10 +2437,19 @@ body[data-theme="sakura"] .library-card__title {
 }
 
 body[data-theme="sakura"] .library-card__genre-tag {
-  background: rgba(240, 128, 128, 0.1) !important;
-  color: #f08080 !important;
-  border-color: rgba(240, 128, 128, 0.2) !important;
+  background: rgba(160, 128, 208, 0.12) !important;
+  color: #a080d0 !important;
+  border-color: rgba(160, 128, 208, 0.25) !important;
 }
+
+body[data-theme="sakura"] .library-card__group-badge {
+  background: rgba(160, 128, 208, 0.8) !important;
+}
+
+body[data-theme="sakura"] .library-card__expand-hint {
+  color: #a080d0 !important;
+}
+
 
 body[data-theme="sakura"] .library-page__group-btn {
   background: #f08080 !important;
@@ -2527,7 +2542,7 @@ body[data-theme="sakura"] .summary-pill {
 }
 
 body[data-theme="sakura"] .summary-pill__value {
-  color: #f08080 !important;
+  color: #e8a060 !important;
 }
 
 body[data-theme="sakura"] .ring-hero {
@@ -2536,8 +2551,8 @@ body[data-theme="sakura"] .ring-hero {
 }
 
 body[data-theme="sakura"] .ring-hero__fill {
-  stroke: #f08080 !important;
-  filter: drop-shadow(0 0 8px rgba(240, 128, 128, 0.5)) !important;
+  stroke: #e8a060 !important;
+  filter: drop-shadow(0 0 8px rgba(232, 160, 96, 0.5)) !important;
 }
 
 body[data-theme="sakura"] .ring-hero__pct {
